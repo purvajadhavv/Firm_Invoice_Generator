@@ -15,10 +15,10 @@ state.items.push(newItem());
 
 /* ============================= TEMPLATES ============================= */
 const templates = [
-  {key:'modern', label:'Modern', color:'#8a5cf6', file:'templates/modern.html'},
-  {key:'classic', label:'Classic', color:'#5a1c1c', file:'templates/classic.html'},
-  {key:'minimal', label:'Minimal', color:'#1c1b19', file:'templates/minimal.html'},
-  {key:'bold', label:'Bold', color:'#ff6b35', file:'templates/bold.html'}
+  {key:'modern', label:'Modern', color:'#8a5cf6', file:'modern.html'},
+  {key:'classic', label:'Classic', color:'#5a1c1c', file:'classic.html'},
+  {key:'minimal', label:'Minimal', color:'#1c1b19', file:'minimal.html'},
+  {key:'bold', label:'Bold', color:'#ff6b35', file:'bold.html'}
 ];
 
 const templateBar = document.getElementById('templateBar');
