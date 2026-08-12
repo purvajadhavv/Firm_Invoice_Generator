@@ -337,6 +337,152 @@ table.inv-items tbody .item-desc{color:#7d7a70;font-size:11.5px;margin-top:2px;}
 .theme-bold .inv-totals .r.grand{color:#ff6b35;border-top-color:#14213d;}
 .theme-bold .inv-parties h4,.theme-bold .inv-meta-strip .lbl{color:#ff6b35;}
 
+
+/* ---------- Phase 1: Profile home ---------- */
+#homeScreen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+  background:var(--app-bg);
+}
+.home-card{
+  width:min(920px,100%);
+  background:#fff;
+  border:1px solid var(--app-line);
+  border-radius:18px;
+  padding:42px;
+  box-shadow:0 12px 40px rgba(0,0,0,.06);
+}
+.home-eyebrow{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--app-sub);
+  font-weight:700;
+  margin-bottom:10px;
+}
+.home-title{
+  margin:0;
+  font-size:34px;
+  letter-spacing:-.03em;
+}
+.home-description{
+  margin:12px 0 30px;
+  color:var(--app-sub);
+  line-height:1.6;
+  max-width:650px;
+}
+.profile-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.profile-card{
+  text-align:left;
+  border:1.5px solid var(--app-line);
+  border-radius:14px;
+  background:#fff;
+  padding:20px;
+  cursor:pointer;
+  transition:.15s ease;
+}
+.profile-card:hover{
+  border-color:var(--app-ink);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+.profile-card .profile-icon{
+  width:40px;height:40px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f4f2ed;
+  margin-bottom:18px;
+  font-weight:800;
+}
+.profile-card h3{margin:0 0 6px;font-size:15px;}
+.profile-card p{margin:0;color:var(--app-sub);font-size:12.5px;line-height:1.5;}
+.profile-card .profile-action{
+  display:block;margin-top:18px;font-size:12px;font-weight:700;
+}
+#appScreen{display:none;}
+.profile-strip{
+  max-width:1400px;
+  margin:10px auto 0;
+  padding:0 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.current-profile{
+  font-size:12px;color:var(--app-sub);
+}
+.current-profile strong{color:var(--app-ink);}
+.change-profile-btn{
+  border:1px solid var(--app-line);
+  background:#fff;
+  border-radius:999px;
+  padding:7px 12px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+/* ---------- Sub-items ---------- */
+.subitems-wrap{
+  margin:0 0 8px 12px;
+  padding-left:12px;
+  border-left:2px solid var(--app-line);
+}
+.subitem-row{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:7px;
+  align-items:center;
+  margin-bottom:7px;
+}
+.subitem-row input{
+  width:100%;
+  padding:8px 9px;
+  border:1.5px solid var(--app-line);
+  border-radius:7px;
+  font-size:12px;
+  font-family:inherit;
+  color:var(--app-ink);
+  background:#fff;
+}
+.subitem-row button{
+  border:none;background:none;color:#b3413e;
+  font-size:11px;font-weight:700;cursor:pointer;
+}
+.add-subitem-btn{
+  border:1px dashed var(--app-line);
+  background:#fff;
+  color:var(--app-accent);
+  border-radius:7px;
+  padding:7px 9px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
+}
+.inv-subitems{
+  margin-top:4px;
+  padding-left:15px;
+  color:#77736a;
+  font-size:10.5px;
+  line-height:1.6;
+}
+.inv-subitems div::before{content:'• ';}
+
+@media (max-width:700px){
+  .home-card{padding:28px 22px;}
+  .home-title{font-size:28px;}
+  .profile-grid{grid-template-columns:1fr;}
+  .subitem-row{grid-template-columns:1fr auto;}
+  .subitem-row input:nth-child(2){grid-column:1;}
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width:980px){
   .layout{grid-template-columns:1fr;}
@@ -353,6 +499,42 @@ table.inv-items tbody .item-desc{color:#7d7a70;font-size:11.5px;margin-top:2px;}
 </head>
 <body>
 
+<div id="homeScreen">
+  <div class="home-card">
+    <div class="home-eyebrow">Simple • Private • Browser-based</div>
+    <h1 class="home-title">Invoice Generator</h1>
+    <p class="home-description">
+      Create professional invoices quickly. Choose a saved business profile to automatically
+      fill in business and payment details, or start a completely new invoice.
+    </p>
+
+    <div class="profile-grid">
+      <button class="profile-card" type="button" data-profile="purva">
+        <span class="profile-icon">P</span>
+        <h3>Invoice by Purva</h3>
+        <p>Use Purva's saved business and bank details automatically.</p>
+        <span class="profile-action">Use saved details →</span>
+      </button>
+
+      <button class="profile-card" type="button" data-profile="person2">
+        <span class="profile-icon">2</span>
+        <h3>Invoice by Person 2</h3>
+        <p>Use Person 2's saved business and bank details automatically.</p>
+        <span class="profile-action">Use saved details →</span>
+      </button>
+
+      <button class="profile-card" type="button" data-profile="new">
+        <span class="profile-icon">+</span>
+        <h3>Create New Invoice</h3>
+        <p>Start with blank business and payment details for a new user.</p>
+        <span class="profile-action">Start from scratch →</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="appScreen">
+
 <div class="app-header">
   <h1>Invoice Generator</h1>
   <p>Pick a template, fill in your details, download a PDF. Runs entirely in this browser tab.</p>
@@ -360,6 +542,11 @@ table.inv-items tbody .item-desc{color:#7d7a70;font-size:11.5px;margin-top:2px;}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 9 4.6-.4 8-4 8-9V5l-8-3z"/></svg>
     Nothing is saved or sent anywhere — reload the page and it's all gone
   </div>
+</div>
+
+<div class="profile-strip">
+  <div class="current-profile">Profile: <strong id="currentProfileName">New Invoice</strong></div>
+  <button class="change-profile-btn" type="button" id="changeProfileBtn">← Change profile</button>
 </div>
 
 <div class="template-bar" id="templateBar"></div>
@@ -487,6 +674,7 @@ table.inv-items tbody .item-desc{color:#7d7a70;font-size:11.5px;margin-top:2px;}
     </div>
   </div>
 </div>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -502,7 +690,7 @@ const state = {
 
 function newItem(){
   itemSeq++;
-  return { id: itemSeq, name:'', desc:'', qty:1, rate:0 };
+  return { id: itemSeq, name:'', desc:'', qty:1, rate:0, subitems:[] };
 }
 state.items.push(newItem());
 
@@ -545,48 +733,117 @@ function renderItemsUI(){
   state.items.forEach((item, idx)=>{
     const card = document.createElement('div');
     card.className = 'item-card';
+
+    const subitemsHtml = (item.subitems || []).map((sub, sidx)=>`
+      <div class="subitem-row">
+        <input data-subfield="name" data-item-id="${item.id}" data-sub-id="${sub.id}"
+               value="${escapeAttr(sub.name)}" placeholder="Sub-item name">
+        <input data-subfield="desc" data-item-id="${item.id}" data-sub-id="${sub.id}"
+               value="${escapeAttr(sub.desc)}" placeholder="Optional detail">
+        <button type="button" data-remove-sub="${sub.id}" data-item-id="${item.id}">Remove</button>
+      </div>
+    `).join('');
+
     card.innerHTML = `
       <div class="item-card-head">
         <span>Item ${idx+1}</span>
         <button type="button" data-remove="${item.id}">Remove</button>
       </div>
-      <div class="field"><label>Product / service</label><input data-field="name" data-id="${item.id}" value="${escapeAttr(item.name)}" placeholder="e.g. Logo design"></div>
-      <div class="field"><label>Description</label><input data-field="desc" data-id="${item.id}" value="${escapeAttr(item.desc)}" placeholder="Optional short description"></div>
+      <div class="field"><label>Product / service</label>
+        <input data-field="name" data-id="${item.id}" value="${escapeAttr(item.name)}" placeholder="e.g. Website Development">
+      </div>
+      <div class="field"><label>Description</label>
+        <input data-field="desc" data-id="${item.id}" value="${escapeAttr(item.desc)}" placeholder="Optional short description">
+      </div>
+
+      <div class="subitems-wrap">
+        ${subitemsHtml}
+        <button class="add-subitem-btn" type="button" data-add-sub="${item.id}">+ Add Sub-item</button>
+      </div>
+
       <div class="row3">
-        <div class="field"><label>Qty</label><input data-field="qty" data-id="${item.id}" type="number" min="0" step="1" value="${item.qty}"></div>
-        <div class="field"><label>Rate (₹)</label><input data-field="rate" data-id="${item.id}" type="number" min="0" step="0.01" value="${item.rate}"></div>
-        <div class="field"><label>Amount</label><input value="₹ ${(item.qty*item.rate).toFixed(2)}" disabled></div>
+        <div class="field"><label>Qty</label>
+          <input data-field="qty" data-id="${item.id}" type="number" min="0" step="1" value="${item.qty}">
+        </div>
+        <div class="field"><label>Rate (₹)</label>
+          <input data-field="rate" data-id="${item.id}" type="number" min="0" step="0.01" value="${item.rate}">
+        </div>
+        <div class="field"><label>Amount</label>
+          <input value="₹ ${(item.qty*item.rate).toFixed(2)}" disabled>
+        </div>
       </div>
     `;
     itemsList.appendChild(card);
   });
 }
+
 itemsList.addEventListener('input', (e)=>{
   const f = e.target.dataset.field;
   const id = Number(e.target.dataset.id);
-  if(!f) return;
-  const item = state.items.find(i=>i.id===id);
-  if(!item) return;
-  item[f] = (f==='qty'||f==='rate') ? Number(e.target.value||0) : e.target.value;
-  // update just the amount field without full re-render (keeps focus)
-  const card = e.target.closest('.item-card');
-  const amtInput = card.querySelector('.row3 .field:last-child input');
-  amtInput.value = '₹ ' + (item.qty*item.rate).toFixed(2);
-  render();
+
+  if(f){
+    const item = state.items.find(i=>i.id===id);
+    if(!item) return;
+    item[f] = (f==='qty'||f==='rate') ? Number(e.target.value||0) : e.target.value;
+    const card = e.target.closest('.item-card');
+    const amtInput = card.querySelector('.row3 .field:last-child input');
+    amtInput.value = '₹ ' + (item.qty*item.rate).toFixed(2);
+    render();
+    return;
+  }
+
+  const sf = e.target.dataset.subfield;
+  if(sf){
+    const item = state.items.find(i=>i.id===Number(e.target.dataset.itemId));
+    if(!item) return;
+    const sub = (item.subitems || []).find(s=>s.id===Number(e.target.dataset.subId));
+    if(!sub) return;
+    sub[sf] = e.target.value;
+    render();
+  }
 });
+
 itemsList.addEventListener('click', (e)=>{
   const rid = e.target.dataset.remove;
-  if(!rid) return;
-  state.items = state.items.filter(i=>i.id !== Number(rid));
-  if(state.items.length===0) state.items.push(newItem());
-  renderItemsUI();
-  render();
+  if(rid){
+    state.items = state.items.filter(i=>i.id !== Number(rid));
+    if(state.items.length===0) state.items.push(newItem());
+    renderItemsUI();
+    render();
+    return;
+  }
+
+  const addSub = e.target.dataset.addSub;
+  if(addSub){
+    const item = state.items.find(i=>i.id===Number(addSub));
+    if(!item) return;
+    item.subitems = item.subitems || [];
+    item.subitems.push({
+      id: Date.now() + Math.floor(Math.random()*1000),
+      name:'',
+      desc:''
+    });
+    renderItemsUI();
+    render();
+    return;
+  }
+
+  const removeSub = e.target.dataset.removeSub;
+  if(removeSub){
+    const item = state.items.find(i=>i.id===Number(e.target.dataset.itemId));
+    if(!item) return;
+    item.subitems = (item.subitems || []).filter(s=>s.id !== Number(removeSub));
+    renderItemsUI();
+    render();
+  }
 });
+
 document.getElementById('addItemBtn').onclick = ()=>{
   state.items.push(newItem());
   renderItemsUI();
   render();
 };
+
 renderItemsUI();
 
 /* ============================= SIGNATURE ============================= */
@@ -708,6 +965,9 @@ function render(){
       <td>
         <div class="item-name">${esc(it.name)||'—'}</div>
         ${it.desc ? `<div class="item-desc">${esc(it.desc)}</div>` : ''}
+        ${(it.subitems && it.subitems.length) ? `<div class="inv-subitems">${
+          it.subitems.filter(s=>s.name||s.desc).map(s=>`<div>${esc(s.name)}${s.desc ? ' — '+esc(s.desc) : ''}</div>`).join('')
+        }</div>` : ''}
       </td>
       <td class="num">${Number(it.qty)||0}</td>
       <td class="num">${fmt(it.rate)}</td>
@@ -828,6 +1088,83 @@ function render(){
     preview.innerHTML = headerBlock + bodyBlock;
   }
 }
+
+
+/* ============================= PHASE 1 PROFILES ============================= */
+/*
+  Replace the placeholder values below with the real saved details.
+  "new" intentionally starts blank.
+*/
+const profiles = {
+  purva: {
+    label: 'Invoice by Purva',
+    bizName: 'Purva',
+    bizEmail: '',
+    bizPhone: '',
+    bizAddress: '',
+    bankName: '',
+    bankAcc: '',
+    bankIfsc: '',
+    upiId: ''
+  },
+  person2: {
+    label: 'Invoice by Person 2',
+    bizName: 'Person 2',
+    bizEmail: '',
+    bizPhone: '',
+    bizAddress: '',
+    bankName: '',
+    bankAcc: '',
+    bankIfsc: '',
+    upiId: ''
+  },
+  new: {
+    label: 'New Invoice',
+    bizName: '',
+    bizEmail: '',
+    bizPhone: '',
+    bizAddress: '',
+    bankName: '',
+    bankAcc: '',
+    bankIfsc: '',
+    upiId: ''
+  }
+};
+
+function setField(id, value){
+  const el = document.getElementById(id);
+  if(el) el.value = value || '';
+}
+
+function loadProfile(key){
+  const p = profiles[key] || profiles.new;
+
+  setField('bizName', p.bizName);
+  setField('bizEmail', p.bizEmail);
+  setField('bizPhone', p.bizPhone);
+  setField('bizAddress', p.bizAddress);
+  setField('bankName', p.bankName);
+  setField('bankAcc', p.bankAcc);
+  setField('bankIfsc', p.bankIfsc);
+  setField('upiId', p.upiId);
+
+  document.getElementById('currentProfileName').textContent = p.label;
+  document.getElementById('homeScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'block';
+
+  render();
+}
+
+document.querySelectorAll('[data-profile]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    loadProfile(btn.dataset.profile);
+  });
+});
+
+document.getElementById('changeProfileBtn').addEventListener('click', ()=>{
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('homeScreen').style.display = 'flex';
+});
 
 document.getElementById('formPanel').addEventListener('input', render);
 document.getElementById('formPanel').addEventListener('change', render);
