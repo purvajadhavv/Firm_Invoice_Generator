@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -9,8 +10,7 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Invoice Generator</title>
-
+<title>Professional Invoice Generator</title>
 
 <style>
 
@@ -29,9 +29,12 @@ body {
 }
 
 body {
-    background: #eeeeee;
+    background: #f1f2f4;
     color: #222;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 }
 
 
@@ -40,7 +43,7 @@ body {
 ========================================================= */
 
 .app {
-    padding: 25px;
+    padding: 24px;
 }
 
 
@@ -49,16 +52,17 @@ body {
 ========================================================= */
 
 .toolbar {
-    width: min(900px, 100%);
+    width: min(960px, 100%);
     margin: 0 auto 18px;
 
-    background: #ffffff;
+    background: #fff;
 
-    padding: 15px 18px;
+    padding: 14px 18px;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    box-shadow:
+        0 3px 15px rgba(0,0,0,.07);
 
     display: flex;
     align-items: center;
@@ -71,6 +75,7 @@ body {
     margin: 0;
 
     font-size: 17px;
+    font-weight: 800;
 }
 
 .toolbar-actions {
@@ -83,9 +88,10 @@ button {
     cursor: pointer;
 
     font-family: Arial, sans-serif;
+
     font-weight: 600;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
     padding: 9px 14px;
 }
@@ -96,13 +102,17 @@ button {
 }
 
 .btn-secondary {
-    background: #eeeeee;
+    background: #ededed;
     color: #222;
 }
 
 .btn-danger {
-    background: #f3dddd;
-    color: #8b1e1e;
+    background: #f8e2e2;
+    color: #8d2222;
+
+    padding: 6px 10px;
+
+    font-size: 11px;
 }
 
 
@@ -111,37 +121,45 @@ button {
 ========================================================= */
 
 .editor {
-    width: min(900px, 100%);
+    width: min(960px, 100%);
     margin: 0 auto 25px;
 
-    background: #ffffff;
+    background: #fff;
 
-    padding: 20px;
+    padding: 22px;
 
-    border-radius: 8px;
+    border-radius: 10px;
 
-    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    box-shadow:
+        0 3px 15px rgba(0,0,0,.07);
 }
 
 .editor h3 {
-    margin: 0 0 15px;
+    margin: 0 0 18px;
 
-    font-size: 15px;
+    font-size: 16px;
 }
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
 
 .form-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
-    gap: 12px;
+    gap: 14px;
 }
 
 .field {
     display: flex;
+
     flex-direction: column;
 
-    gap: 5px;
+    gap: 6px;
 }
 
 .field.full {
@@ -161,11 +179,11 @@ textarea,
 select {
     width: 100%;
 
-    border: 1px solid #cccccc;
+    border: 1px solid #d4d4d4;
 
-    border-radius: 5px;
+    border-radius: 6px;
 
-    padding: 9px;
+    padding: 10px 11px;
 
     background: #fff;
 
@@ -174,52 +192,67 @@ select {
     font-size: 13px;
 
     outline: none;
+
+    transition:
+        border .15s,
+        box-shadow .15s;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
     border-color: #68233f;
+
+    box-shadow:
+        0 0 0 2px rgba(104,35,63,.08);
 }
 
 textarea {
     resize: vertical;
 
-    min-height: 65px;
+    min-height: 70px;
 }
 
 .section-title {
     grid-column: 1 / -1;
 
-    margin-top: 8px;
+    margin-top: 10px;
 
-    padding-bottom: 6px;
+    padding-bottom: 7px;
 
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #e4e4e4;
 
     font-size: 12px;
 
     font-weight: 800;
+
+    color: #333;
 }
 
 
 /* =========================================================
-   ITEM EDITOR
+   ITEMS
 ========================================================= */
 
 .items-editor {
     grid-column: 1 / -1;
 
     display: flex;
+
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
 }
 
-.item-editor {
-    border: 1px solid #ddd;
 
-    border-radius: 6px;
+/* =========================================================
+   ITEM CARD
+========================================================= */
+
+.item-editor {
+    border: 1px solid #e2e2e2;
+
+    border-radius: 7px;
 
     padding: 12px;
 
@@ -233,37 +266,48 @@ textarea {
 
     justify-content: space-between;
 
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 }
 
 .item-editor-title {
     font-size: 12px;
 
     font-weight: 800;
+
+    color: #333;
 }
 
 .item-editor-grid {
     display: grid;
 
     grid-template-columns:
-        100px
-        1fr
+        105px
+        minmax(180px, 1fr)
         90px
-        110px;
+        120px;
 
-    gap: 10px;
+    gap: 9px;
 }
 
+
+/* =========================================================
+   ADD ITEM
+========================================================= */
+
 .add-item-wrap {
+    grid-column: 1 / -1;
+
     display: flex;
+
     justify-content: flex-start;
 }
 
 .add-item-btn {
     background: #68233f;
+
     color: #fff;
 
-    padding: 8px 13px;
+    padding: 8px 14px;
 
     font-size: 12px;
 }
@@ -276,11 +320,11 @@ textarea {
 .optional-box {
     grid-column: 1 / -1;
 
-    border: 1px solid #ddd;
+    border: 1px solid #e1e1e1;
 
-    border-radius: 6px;
+    border-radius: 7px;
 
-    padding: 12px;
+    padding: 14px;
 
     background: #fafafa;
 }
@@ -290,7 +334,7 @@ textarea {
 
     font-weight: 800;
 
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .optional-grid {
@@ -298,9 +342,9 @@ textarea {
 
     grid-template-columns:
         1fr
-        120px
-        120px
-        100px;
+        1fr
+        1fr
+        1fr;
 
     gap: 10px;
 
@@ -325,34 +369,30 @@ textarea {
 /* =========================================================
    INVOICE VIEWPORT
 
-   IMPORTANT:
-   The viewport allows horizontal scrolling on phones.
-   The invoice itself ALWAYS remains A4 width.
+   Mobile = responsive A4 preview
 ========================================================= */
 
 .invoice-viewport {
     width: 100%;
 
-    overflow-x: auto;
+    display: flex;
 
-    overflow-y: hidden;
+    justify-content: center;
 
-    padding: 5px 0 30px;
+    overflow: hidden;
 
-    -webkit-overflow-scrolling: touch;
+    padding: 5px 0 35px;
 }
 
 .invoice-wrapper {
-    width: max-content;
+    width: 210mm;
 
-    margin: 0 auto;
+    flex: 0 0 210mm;
 }
 
 
 /* =========================================================
    A4 INVOICE
-
-   210 x 297 mm
 ========================================================= */
 
 .invoice {
@@ -361,6 +401,7 @@ textarea {
     height: 297mm;
 
     min-width: 210mm;
+
     max-width: 210mm;
 
     background: #fff;
@@ -375,7 +416,7 @@ textarea {
         10mm;
 
     box-shadow:
-        0 2px 15px rgba(0,0,0,.15);
+        0 4px 22px rgba(0,0,0,.16);
 
     color: #222;
 
@@ -472,13 +513,15 @@ textarea {
 
     border-bottom: none;
 
-    height: 24px;
+    min-height: 24px;
 
     display: flex;
 
     align-items: center;
 
     justify-content: center;
+
+    padding: 4px;
 
     font-size: 14px;
 
@@ -493,7 +536,7 @@ textarea {
 ========================================================= */
 
 .meta {
-    height: 123px;
+    min-height: 123px;
 
     display: grid;
 
@@ -507,7 +550,7 @@ textarea {
 }
 
 .seller-block {
-    height: 67px;
+    min-height: 67px;
 
     padding: 5px 7px;
 
@@ -519,7 +562,7 @@ textarea {
 }
 
 .buyer-block {
-    height: 54px;
+    min-height: 54px;
 
     padding: 5px 7px;
 
@@ -581,6 +624,8 @@ textarea {
     margin-top: 9px;
 
     font-size: 9.5px;
+
+    table-layout: fixed;
 }
 
 .items-table th,
@@ -642,10 +687,8 @@ textarea {
     white-space: pre-line;
 
     line-height: 1.15;
-}
 
-.item-empty {
-    height: 63px;
+    overflow-wrap: anywhere;
 }
 
 .number-cell {
@@ -710,7 +753,7 @@ textarea {
 
 
 /* =========================================================
-   NOTE + SIGNATURE
+   BOTTOM
 ========================================================= */
 
 .bottom-section {
@@ -832,7 +875,7 @@ textarea {
 
 
 /* =========================================================
-   MOBILE
+   MOBILE EDITOR
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -845,6 +888,8 @@ textarea {
         flex-direction: column;
 
         align-items: stretch;
+
+        padding: 14px;
     }
 
     .toolbar-actions {
@@ -855,8 +900,16 @@ textarea {
         flex: 1;
     }
 
+    .editor {
+        padding: 15px;
+
+        border-radius: 8px;
+    }
+
     .form-grid {
         grid-template-columns: 1fr;
+
+        gap: 12px;
     }
 
     .field.full {
@@ -867,31 +920,50 @@ textarea {
         grid-column: auto;
     }
 
-    .item-editor-grid {
-        grid-template-columns: 1fr 1fr;
+    .items-editor {
+        grid-column: auto;
+    }
+
+    .add-item-wrap {
+        grid-column: auto;
+    }
+
+    .optional-box {
+        grid-column: auto;
     }
 
     .optional-grid {
         grid-template-columns: 1fr 1fr;
     }
 
+    .item-editor-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
     /*
-       IMPORTANT:
-       Do NOT scale the A4 invoice down.
-       Let the user swipe horizontally.
+       A4 preview is scaled to fit screen.
+       The actual invoice remains 210mm x 297mm.
     */
 
     .invoice-viewport {
-        margin-left: -10px;
-        width: calc(100% + 20px);
+        width: 100%;
 
-        padding-left: 10px;
-        padding-right: 10px;
+        display: block;
+
+        overflow: hidden;
+
+        padding:
+            0
+            0
+            30px;
     }
 
     .invoice-wrapper {
+        width: 210mm;
+
+        transform-origin: top left;
+
         margin-left: 0;
-        margin-right: 0;
     }
 }
 
@@ -933,6 +1005,8 @@ textarea {
     }
 
     .invoice-viewport {
+        display: block !important;
+
         overflow: visible !important;
 
         padding: 0 !important;
@@ -948,6 +1022,8 @@ textarea {
         width: 210mm !important;
 
         margin: 0 !important;
+
+        transform: none !important;
     }
 
     .invoice {
@@ -1006,7 +1082,6 @@ textarea {
         Invoice Generator
     </h2>
 
-
     <div class="toolbar-actions">
 
         <button
@@ -1016,7 +1091,6 @@ textarea {
             Reset
 
         </button>
-
 
         <button
             class="btn-primary"
@@ -1029,7 +1103,6 @@ textarea {
     </div>
 
 </div>
-
 
 
 <!-- =========================================================
@@ -1093,7 +1166,6 @@ textarea {
                 id="invoiceNumber">
 
         </div>
-
 
 
         <!-- =====================================================
@@ -1185,7 +1257,6 @@ textarea {
         </div>
 
 
-
         <!-- =====================================================
              ITEMS
         ====================================================== -->
@@ -1198,7 +1269,6 @@ textarea {
         <div
             class="items-editor"
             id="itemsEditor">
-
         </div>
 
 
@@ -1207,7 +1277,6 @@ textarea {
             <button
                 type="button"
                 class="add-item-btn"
-                id="addItemButton"
                 onclick="addItem()">
 
                 + Add Item
@@ -1217,9 +1286,8 @@ textarea {
         </div>
 
 
-
         <!-- =====================================================
-             OPTIONAL ADJUSTMENTS
+             ADJUSTMENTS
         ====================================================== -->
 
         <div class="section-title">
@@ -1229,9 +1297,8 @@ textarea {
 
         <div class="optional-box">
 
-
             <div class="optional-title">
-                Add adjustments to the invoice total
+                Adjust the invoice total
             </div>
 
 
@@ -1243,7 +1310,7 @@ textarea {
                 <div class="field">
 
                     <label>
-                        Discount
+                        Discount — Amount
                     </label>
 
                     <input
@@ -1251,7 +1318,7 @@ textarea {
                         id="discount"
                         min="0"
                         step="0.01"
-                        placeholder="Optional">
+                        placeholder="₹">
 
                 </div>
 
@@ -1261,15 +1328,16 @@ textarea {
                 <div class="field">
 
                     <label>
-                        Less / Rebate
+                        Less / Rebate — %
                     </label>
 
                     <input
                         type="number"
                         id="rebate"
                         min="0"
+                        max="100"
                         step="0.01"
-                        placeholder="Optional">
+                        placeholder="%">
 
                 </div>
 
@@ -1295,7 +1363,7 @@ textarea {
                 <div class="field">
 
                     <label>
-                        Amount
+                        Custom Amount
                     </label>
 
                     <input
@@ -1303,10 +1371,9 @@ textarea {
                         id="customAmount"
                         min="0"
                         step="0.01"
-                        placeholder="Optional">
+                        placeholder="₹">
 
                 </div>
-
 
             </div>
 
@@ -1316,11 +1383,9 @@ textarea {
 
             <div class="checkbox-field">
 
-
                 <input
                     type="checkbox"
                     id="customLess">
-
 
                 <label for="customLess">
 
@@ -1328,12 +1393,9 @@ textarea {
 
                 </label>
 
-
             </div>
 
-
         </div>
-
 
 
         <!-- =====================================================
@@ -1377,7 +1439,6 @@ textarea {
         </div>
 
 
-
         <!-- =====================================================
              NOTE
         ====================================================== -->
@@ -1400,15 +1461,18 @@ textarea {
 </div>
 
 
-
 <!-- =========================================================
      INVOICE PREVIEW
 ========================================================= -->
 
-<div class="invoice-viewport">
+<div
+    class="invoice-viewport"
+    id="invoiceViewport">
 
 
-<div class="invoice-wrapper">
+<div
+    class="invoice-wrapper"
+    id="invoiceWrapper">
 
 
 <div class="invoice">
@@ -1419,24 +1483,19 @@ textarea {
     <div class="top-line"></div>
 
 
-
     <!-- HEADER -->
 
     <div class="header">
 
-
         <div class="brand">
-
 
             <div class="logo-circle">
                 R
             </div>
 
-
             <div class="seller-name">
                 Randhir U. Jadhav
             </div>
-
 
         </div>
 
@@ -1449,9 +1508,7 @@ textarea {
 
         </div>
 
-
     </div>
-
 
 
     <!-- TITLE -->
@@ -1465,10 +1522,7 @@ textarea {
     </div>
 
 
-
-    <!-- =====================================================
-         META
-    ====================================================== -->
+    <!-- META -->
 
     <div class="meta">
 
@@ -1504,7 +1558,6 @@ textarea {
             </div>
 
 
-
             <div class="buyer-block">
 
                 <strong>
@@ -1529,9 +1582,7 @@ textarea {
 
             </div>
 
-
         </div>
-
 
 
         <div class="meta-right">
@@ -1609,17 +1660,12 @@ textarea {
 
         </div>
 
-
     </div>
 
 
-
-    <!-- =====================================================
-         ITEMS
-    ====================================================== -->
+    <!-- ITEMS -->
 
     <table class="items-table">
-
 
         <thead>
 
@@ -1655,17 +1701,12 @@ textarea {
 
 
         <tbody id="invoiceItemsBody">
-
         </tbody>
-
 
     </table>
 
 
-
-    <!-- =====================================================
-         AMOUNT WORDS
-    ====================================================== -->
+    <!-- AMOUNT WORDS -->
 
     <div class="amount-words">
 
@@ -1680,10 +1721,7 @@ textarea {
     </div>
 
 
-
-    <!-- =====================================================
-         BANK
-    ====================================================== -->
+    <!-- BANK -->
 
     <div class="bank-details">
 
@@ -1696,10 +1734,7 @@ textarea {
     </div>
 
 
-
-    <!-- =====================================================
-         NOTE + SIGNATURE
-    ====================================================== -->
+    <!-- NOTE + SIGNATURE -->
 
     <div class="bottom-section">
 
@@ -1711,7 +1746,6 @@ textarea {
 
 
         <div class="signature">
-
 
             <div class="signature-label">
                 Signature
@@ -1742,12 +1776,9 @@ textarea {
                 Proprietor
             </div>
 
-
         </div>
 
-
     </div>
-
 
 
     <!-- FOOTER -->
@@ -1782,7 +1813,6 @@ textarea {
 </div>
 
 
-
 <script>
 
 /* =========================================================
@@ -1790,6 +1820,8 @@ textarea {
 ========================================================= */
 
 let items = [];
+
+let itemCounter = 0;
 
 
 /* =========================================================
@@ -1805,13 +1837,13 @@ function formatNumber(number) {
 
     number = Number(number) || 0;
 
-    return number.toLocaleString("en-IN", {
-
-        minimumFractionDigits: 2,
-
-        maximumFractionDigits: 2
-
-    });
+    return number.toLocaleString(
+        "en-IN",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
 }
 
 
@@ -1825,15 +1857,35 @@ function formatDate(dateString) {
         new Date(dateString + "T00:00:00");
 
     const day =
-        String(date.getDate()).padStart(2, "0");
+        String(
+            date.getDate()
+        ).padStart(2, "0");
 
     const month =
-        String(date.getMonth() + 1).padStart(2, "0");
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
 
     const year =
         date.getFullYear();
 
     return `${day}/${month}/${year}`;
+}
+
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
 }
 
 
@@ -1843,13 +1895,21 @@ function formatDate(dateString) {
 
 function numberToWords(num) {
 
-    num = Math.floor(Number(num) || 0);
+    num =
+        Math.floor(
+            Number(num) || 0
+        );
+
 
     if (num === 0) {
+
         return "Zero Rupees only";
+
     }
 
+
     const ones = [
+
         "",
         "One",
         "Two",
@@ -1870,9 +1930,12 @@ function numberToWords(num) {
         "Seventeen",
         "Eighteen",
         "Nineteen"
+
     ];
 
+
     const tens = [
+
         "",
         "",
         "Twenty",
@@ -1883,19 +1946,33 @@ function numberToWords(num) {
         "Seventy",
         "Eighty",
         "Ninety"
+
     ];
 
 
     function twoDigits(n) {
 
         if (n < 20) {
+
             return ones[n];
+
         }
 
-        return tens[Math.floor(n / 10)] +
-            (n % 10
-                ? " " + ones[n % 10]
-                : "");
+
+        return tens[
+            Math.floor(n / 10)
+        ]
+
+        +
+
+        (
+            n % 10
+            ?
+            " " + ones[n % 10]
+            :
+            ""
+        );
+
     }
 
 
@@ -1903,24 +1980,41 @@ function numberToWords(num) {
 
         let result = "";
 
+
         if (n >= 100) {
 
             result +=
-                ones[Math.floor(n / 100)] +
+
+                ones[
+                    Math.floor(n / 100)
+                ]
+
+                +
+
                 " Hundred";
+
 
             n %= 100;
 
+
             if (n) {
+
                 result += " ";
+
             }
+
         }
+
 
         if (n) {
+
             result += twoDigits(n);
+
         }
 
+
         return result;
+
     }
 
 
@@ -1928,19 +2022,25 @@ function numberToWords(num) {
 
 
     const crore =
-        Math.floor(num / 10000000);
+        Math.floor(
+            num / 10000000
+        );
 
     num %= 10000000;
 
 
     const lakh =
-        Math.floor(num / 100000);
+        Math.floor(
+            num / 100000
+        );
 
     num %= 100000;
 
 
     const thousand =
-        Math.floor(num / 1000);
+        Math.floor(
+            num / 1000
+        );
 
     num %= 1000;
 
@@ -1948,24 +2048,30 @@ function numberToWords(num) {
     if (crore) {
 
         result +=
-            threeDigits(crore) +
+            threeDigits(crore)
+            +
             " Crore ";
+
     }
 
 
     if (lakh) {
 
         result +=
-            threeDigits(lakh) +
+            threeDigits(lakh)
+            +
             " Lakh ";
+
     }
 
 
     if (thousand) {
 
         result +=
-            threeDigits(thousand) +
+            threeDigits(thousand)
+            +
             " Thousand ";
+
     }
 
 
@@ -1973,10 +2079,12 @@ function numberToWords(num) {
 
         result +=
             threeDigits(num);
+
     }
 
 
-    return result.trim() +
+    return result.trim()
+        +
         " Rupees only";
 }
 
@@ -1987,53 +2095,69 @@ function numberToWords(num) {
 
 function setDefaults() {
 
-    const today = new Date();
+    const today =
+        new Date();
+
 
     byId("invoiceTitle").value =
         "PROFORMA INVOICE";
 
+
     byId("invoiceDate").value =
-        today.toISOString().split("T")[0];
+        today
+            .toISOString()
+            .split("T")[0];
+
 
     byId("invoiceNumber").value =
         "RJ/01/2026-27";
 
+
     byId("invoiceNote").value =
         "NOTE: GST will be paid at the time of final bill.";
 
-    byId("cgst").value = "0";
 
-    byId("sgst").value = "0";
+    byId("cgst").value =
+        "0";
 
-    byId("discount").value = "";
 
-    byId("rebate").value = "";
+    byId("sgst").value =
+        "0";
 
-    byId("customLabel").value = "";
 
-    byId("customAmount").value = "";
+    byId("discount").value =
+        "";
 
-    byId("customLess").checked = false;
+
+    byId("rebate").value =
+        "";
+
+
+    byId("customLabel").value =
+        "";
+
+
+    byId("customAmount").value =
+        "";
+
+
+    byId("customLess").checked =
+        false;
 }
 
 
 /* =========================================================
-   ADD ITEM
+   CREATE ITEM
 ========================================================= */
 
-function addItem() {
+function createItem() {
 
-    if (items.length >= 2) {
-
-        alert("Maximum 2 items can be added.");
-
-        return;
-    }
+    itemCounter++;
 
 
-    const item = {
+    return {
 
-        id: Date.now(),
+        id: itemCounter,
 
         fy: "2026-2027",
 
@@ -2046,6 +2170,17 @@ function addItem() {
         rate: 0
 
     };
+}
+
+
+/* =========================================================
+   ADD ITEM
+========================================================= */
+
+function addItem() {
+
+    const item =
+        createItem();
 
 
     items.push(item);
@@ -2054,6 +2189,7 @@ function addItem() {
     renderItemEditors();
 
     updateInvoice();
+
 }
 
 
@@ -2066,19 +2202,22 @@ function removeItem(id) {
     if (items.length <= 1) {
 
         return;
+
     }
 
 
     items =
         items.filter(
-            item => item.id !== id
+            item =>
+                item.id !== id
         );
 
 
     items.forEach(
         (item, index) => {
 
-            item.serial = index + 1;
+            item.serial =
+                index + 1;
 
         }
     );
@@ -2087,6 +2226,7 @@ function removeItem(id) {
     renderItemEditors();
 
     updateInvoice();
+
 }
 
 
@@ -2106,9 +2246,10 @@ function renderItemEditors() {
     items.forEach(
         (item, index) => {
 
-
             const box =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             box.className =
@@ -2170,6 +2311,7 @@ function renderItemEditors() {
                         <input
                             type="text"
                             value="${escapeHtml(item.description)}"
+                            placeholder="Optional"
                             data-item="${item.id}"
                             data-field="description">
 
@@ -2228,22 +2370,22 @@ function renderItemEditors() {
         .forEach(
             input => {
 
-
                 input.addEventListener(
                     "input",
                     function() {
 
-
                         const item =
                             items.find(
                                 x =>
-                                x.id ==
-                                this.dataset.item
+                                    x.id ==
+                                    this.dataset.item
                             );
 
 
                         if (!item) {
+
                             return;
+
                         }
 
 
@@ -2252,12 +2394,15 @@ function renderItemEditors() {
 
 
                         if (
-                            field === "qty" ||
+                            field === "qty"
+                            ||
                             field === "rate"
                         ) {
 
                             item[field] =
-                                Number(this.value) || 0;
+                                Number(
+                                    this.value
+                                ) || 0;
 
                         }
 
@@ -2277,31 +2422,6 @@ function renderItemEditors() {
             }
         );
 
-
-    byId("addItemButton").style.display =
-        items.length >= 2
-        ? "none"
-        : "inline-block";
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(/&/g, "&amp;")
-
-        .replace(/</g, "&lt;")
-
-        .replace(/>/g, "&gt;")
-
-        .replace(/"/g, "&quot;")
-
-        .replace(/'/g, "&#039;");
 }
 
 
@@ -2312,74 +2432,115 @@ function escapeHtml(value) {
 function updateInvoice() {
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        TITLE
-    ------------------------------------------------------- */
+    ===================================================== */
 
-    byId("previewInvoiceTitle")
-        .textContent =
-        byId("invoiceTitle").value ||
+    byId(
+        "previewInvoiceTitle"
+    ).textContent =
+
+        byId(
+            "invoiceTitle"
+        ).value
+        ||
         "INVOICE";
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        BUYER
-    ------------------------------------------------------- */
+    ===================================================== */
 
-    byId("previewBuyerName")
-        .textContent =
-        byId("buyerName").value ||
+    byId(
+        "previewBuyerName"
+    ).textContent =
+
+        byId(
+            "buyerName"
+        ).value
+        ||
         "Vendor / Buyer Name";
 
 
-    byId("previewBuyerAddress")
-        .textContent =
-        byId("buyerAddress").value ||
+    byId(
+        "previewBuyerAddress"
+    ).textContent =
+
+        byId(
+            "buyerAddress"
+        ).value
+        ||
         "Vendor / Buyer Address";
 
 
-    byId("previewBuyerCity")
-        .textContent =
-        byId("buyerCity").value;
+    byId(
+        "previewBuyerCity"
+    ).textContent =
+
+        byId(
+            "buyerCity"
+        ).value;
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        META
-    ------------------------------------------------------- */
+    ===================================================== */
 
-    byId("previewDate")
-        .textContent =
+    byId(
+        "previewDate"
+    ).textContent =
+
         formatDate(
-            byId("invoiceDate").value
+            byId(
+                "invoiceDate"
+            ).value
         );
 
 
-    byId("previewInvoiceNo")
-        .textContent =
-        byId("invoiceNumber").value;
+    byId(
+        "previewInvoiceNo"
+    ).textContent =
+
+        byId(
+            "invoiceNumber"
+        ).value;
 
 
-    byId("previewDelivery")
-        .textContent =
-        byId("deliveryNote").value;
+    byId(
+        "previewDelivery"
+    ).textContent =
+
+        byId(
+            "deliveryNote"
+        ).value;
 
 
-    byId("previewSupplierRef")
-        .textContent =
-        byId("supplierRef").value;
+    byId(
+        "previewSupplierRef"
+    ).textContent =
+
+        byId(
+            "supplierRef"
+        ).value;
 
 
-    byId("previewBuyerOrder")
-        .textContent =
-        byId("buyerOrder").value;
+    byId(
+        "previewBuyerOrder"
+    ).textContent =
+
+        byId(
+            "buyerOrder"
+        ).value;
 
 
-    /* -------------------------------------------------------
-       ITEM TABLE
-    ------------------------------------------------------- */
+    /* =====================================================
+       TABLE
+    ===================================================== */
 
     const tbody =
-        byId("invoiceItemsBody");
+        byId(
+            "invoiceItemsBody"
+        );
 
 
     tbody.innerHTML = "";
@@ -2388,20 +2549,33 @@ function updateInvoice() {
     let subtotal = 0;
 
 
+    /* =====================================================
+       ITEMS
+    ===================================================== */
+
     items.forEach(
         item => {
 
-
             const amount =
-                Number(item.qty || 0) *
-                Number(item.rate || 0);
+
+                Number(
+                    item.qty || 0
+                )
+
+                *
+
+                Number(
+                    item.rate || 0
+                );
 
 
             subtotal += amount;
 
 
             const row =
-                document.createElement("tr");
+                document.createElement(
+                    "tr"
+                );
 
 
             row.className =
@@ -2418,9 +2592,15 @@ function updateInvoice() {
 
                     <div class="item-description">
 
-                        ${escapeHtml(
+                        ${
                             item.description
-                        )}
+                            ?
+                            escapeHtml(
+                                item.description
+                            )
+                            :
+                            ""
+                        }
 
                     </div>
 
@@ -2451,90 +2631,95 @@ function updateInvoice() {
     );
 
 
-    /*
-       If only one item exists,
-       add an empty row to keep the
-       invoice visually balanced.
-    */
-
-    if (items.length === 1) {
-
-        const emptyRow =
-            document.createElement("tr");
-
-
-        emptyRow.className =
-            "item-row";
-
-
-        emptyRow.innerHTML = `
-
-            <td></td>
-
-            <td></td>
-
-            <td></td>
-
-            <td></td>
-
-            <td></td>
-
-            <td></td>
-
-        `;
-
-
-        tbody.appendChild(emptyRow);
-    }
-
-
-    /* -------------------------------------------------------
+    /* =====================================================
        DISCOUNT
-    ------------------------------------------------------- */
+    ===================================================== */
 
     const discount =
+
         Number(
-            byId("discount").value
-        ) || 0;
+            byId(
+                "discount"
+            ).value
+        )
+        ||
+        0;
 
 
-    /* -------------------------------------------------------
-       REBATE
-    ------------------------------------------------------- */
+    /* =====================================================
+       REBATE %
+    ===================================================== */
 
-    const rebate =
+    let rebateRate =
+
         Number(
-            byId("rebate").value
-        ) || 0;
+            byId(
+                "rebate"
+            ).value
+        )
+        ||
+        0;
 
 
-    /* -------------------------------------------------------
+    rebateRate =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                rebateRate
+            )
+        );
+
+
+    const rebateAmount =
+
+        subtotal *
+        rebateRate /
+        100;
+
+
+    /* =====================================================
        CUSTOM
-    ------------------------------------------------------- */
+    ===================================================== */
 
     const customAmount =
+
         Number(
-            byId("customAmount").value
-        ) || 0;
+            byId(
+                "customAmount"
+            ).value
+        )
+        ||
+        0;
 
 
     const customLabel =
-        byId("customLabel").value ||
+
+        byId(
+            "customLabel"
+        ).value
+        ||
         "Adjustment";
 
 
     const customLess =
-        byId("customLess").checked;
+
+        byId(
+            "customLess"
+        ).checked;
 
 
-    /*
-       Amount before GST
-    */
+    /* =====================================================
+       TAXABLE AMOUNT
+    ===================================================== */
 
     let taxableAmount =
-        subtotal -
-        discount -
-        rebate;
+
+        subtotal
+        -
+        discount
+        -
+        rebateAmount;
 
 
     if (customLess) {
@@ -2552,16 +2737,16 @@ function updateInvoice() {
     }
 
 
-    if (taxableAmount < 0) {
+    taxableAmount =
+        Math.max(
+            0,
+            taxableAmount
+        );
 
-        taxableAmount = 0;
 
-    }
-
-
-    /* -------------------------------------------------------
+    /* =====================================================
        ADJUSTMENT ROWS
-    ------------------------------------------------------- */
+    ===================================================== */
 
     if (discount > 0) {
 
@@ -2575,12 +2760,14 @@ function updateInvoice() {
     }
 
 
-    if (rebate > 0) {
+    if (rebateAmount > 0) {
 
         addSummaryRow(
             tbody,
-            "Less / Rebate",
-            rebate,
+            "Less / Rebate @ " +
+            rebateRate +
+            "%",
+            rebateAmount,
             true
         );
 
@@ -2599,43 +2786,62 @@ function updateInvoice() {
     }
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        GST
-    ------------------------------------------------------- */
+    ===================================================== */
 
     const cgstRate =
+
         Number(
-            byId("cgst").value
-        ) || 0;
+            byId(
+                "cgst"
+            ).value
+        )
+        ||
+        0;
 
 
     const sgstRate =
+
         Number(
-            byId("sgst").value
-        ) || 0;
+            byId(
+                "sgst"
+            ).value
+        )
+        ||
+        0;
 
 
     const cgst =
-        taxableAmount *
-        cgstRate /
+
+        taxableAmount
+        *
+        cgstRate
+        /
         100;
 
 
     const sgst =
-        taxableAmount *
-        sgstRate /
+
+        taxableAmount
+        *
+        sgstRate
+        /
         100;
 
 
     const grandTotal =
-        taxableAmount +
-        cgst +
+
+        taxableAmount
+        +
+        cgst
+        +
         sgst;
 
 
-    /* -------------------------------------------------------
-       TOTAL SUMMARY
-    ------------------------------------------------------- */
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
 
     addSummaryRow(
         tbody,
@@ -2647,7 +2853,9 @@ function updateInvoice() {
 
     addSummaryRow(
         tbody,
-        "CGST @ " + cgstRate + "%",
+        "CGST @ " +
+        cgstRate +
+        "%",
         cgst,
         false
     );
@@ -2655,7 +2863,9 @@ function updateInvoice() {
 
     addSummaryRow(
         tbody,
-        "SGST @ " + sgstRate + "%",
+        "SGST @ " +
+        sgstRate +
+        "%",
         sgst,
         false
     );
@@ -2670,22 +2880,38 @@ function updateInvoice() {
     );
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        WORDS
-    ------------------------------------------------------- */
+    ===================================================== */
 
-    byId("previewWords")
-        .textContent =
-        numberToWords(grandTotal);
+    byId(
+        "previewWords"
+    ).textContent =
+
+        numberToWords(
+            grandTotal
+        );
 
 
-    /* -------------------------------------------------------
+    /* =====================================================
        NOTE
-    ------------------------------------------------------- */
+    ===================================================== */
 
-    byId("previewNote")
-        .textContent =
-        byId("invoiceNote").value;
+    byId(
+        "previewNote"
+    ).textContent =
+
+        byId(
+            "invoiceNote"
+        ).value;
+
+
+    /* =====================================================
+       MOBILE A4 SCALE
+    ===================================================== */
+
+    scaleInvoice();
+
 }
 
 
@@ -2702,7 +2928,9 @@ function addSummaryRow(
 ) {
 
     const row =
-        document.createElement("tr");
+        document.createElement(
+            "tr"
+        );
 
 
     row.className =
@@ -2711,14 +2939,15 @@ function addSummaryRow(
 
     const sign =
         isLess
-        ? "-"
-        : "";
+        ?
+        "-"
+        :
+        "";
 
 
     row.innerHTML = `
 
-        <td
-            colspan="4">
+        <td colspan="4">
         </td>
 
         <td class="summary-label">
@@ -2741,10 +2970,112 @@ function addSummaryRow(
 
         row.style.fontWeight =
             "bold";
+
     }
 
 
     tbody.appendChild(row);
+}
+
+
+/* =========================================================
+   MOBILE A4 SCALE
+========================================================= */
+
+function scaleInvoice() {
+
+    const viewport =
+        byId(
+            "invoiceViewport"
+        );
+
+
+    const wrapper =
+        byId(
+            "invoiceWrapper"
+        );
+
+
+    if (
+        !viewport ||
+        !wrapper
+    ) {
+
+        return;
+
+    }
+
+
+    const width =
+        viewport.clientWidth;
+
+
+    if (
+        window.innerWidth <= 700
+    ) {
+
+        const invoiceWidth =
+            793.7;
+
+
+        const scale =
+            Math.min(
+                1,
+                width /
+                invoiceWidth
+            );
+
+
+        wrapper.style.transform =
+            `scale(${scale})`;
+
+
+        wrapper.style.transformOrigin =
+            "top left";
+
+
+        wrapper.style.marginLeft =
+            "0";
+
+
+        wrapper.style.marginBottom =
+
+            (
+                1122.5 *
+                scale
+            )
+            -
+            1122.5
+            +
+            "px";
+
+
+        viewport.style.height =
+
+            (
+                1122.5 *
+                scale
+            )
+            +
+            "px";
+
+    }
+
+    else {
+
+        wrapper.style.transform =
+            "none";
+
+
+        wrapper.style.marginBottom =
+            "0";
+
+
+        viewport.style.height =
+            "auto";
+
+    }
+
 }
 
 
@@ -2754,46 +3085,66 @@ function addSummaryRow(
 
 function resetForm() {
 
+    byId(
+        "buyerName"
+    ).value = "";
 
-    byId("buyerName").value = "";
 
-    byId("buyerAddress").value = "";
+    byId(
+        "buyerAddress"
+    ).value = "";
 
-    byId("buyerCity").value = "";
 
-    byId("supplierRef").value = "";
+    byId(
+        "buyerCity"
+    ).value = "";
 
-    byId("buyerOrder").value = "";
 
-    byId("deliveryNote").value = "";
+    byId(
+        "supplierRef"
+    ).value = "";
+
+
+    byId(
+        "buyerOrder"
+    ).value = "";
+
+
+    byId(
+        "deliveryNote"
+    ).value = "";
 
 
     setDefaults();
 
 
-    items = [
+    itemCounter = 0;
 
-        {
 
-            id: Date.now(),
+    items = [];
 
-            fy: "2026-2027",
 
-            description:
-                "1st RA Bill for Proposed Civil\n" +
-                "Works of VVIP Guest House\n" +
-                "For State Bank of India @\n" +
-                "MYCO CIRCLE, Nashik",
+    const firstItem =
+        createItem();
 
-            serial: 1,
 
-            qty: 1,
+    firstItem.description =
 
-            rate: 1500000
+        "1st RA Bill for Proposed Civil\n" +
+        "Works of VVIP Guest House\n" +
+        "For State Bank of India @\n" +
+        "MYCO CIRCLE, Nashik";
 
-        }
 
-    ];
+    firstItem.qty = 1;
+
+
+    firstItem.rate = 1500000;
+
+
+    items.push(
+        firstItem
+    );
 
 
     renderItemEditors();
@@ -2803,6 +3154,7 @@ function resetForm() {
 
 
     updateInvoice();
+
 }
 
 
@@ -2822,6 +3174,7 @@ document
                 updateInvoice
             );
 
+
             element.addEventListener(
                 "change",
                 updateInvoice
@@ -2836,23 +3189,34 @@ document
 ========================================================= */
 
 const canvas =
-    byId("signatureCanvas");
+    byId(
+        "signatureCanvas"
+    );
 
 
 const ctx =
-    canvas.getContext("2d");
+    canvas.getContext(
+        "2d"
+    );
 
 
 let drawing = false;
 
 
-ctx.strokeStyle = "#111";
+ctx.strokeStyle =
+    "#111";
 
-ctx.lineWidth = 2;
 
-ctx.lineCap = "round";
+ctx.lineWidth =
+    2;
 
-ctx.lineJoin = "round";
+
+ctx.lineCap =
+    "round";
+
+
+ctx.lineJoin =
+    "round";
 
 
 function getSignaturePosition(e) {
@@ -2874,6 +3238,7 @@ function getSignaturePosition(e) {
         clientX =
             e.touches[0].clientX;
 
+
         clientY =
             e.touches[0].clientY;
 
@@ -2884,6 +3249,7 @@ function getSignaturePosition(e) {
         clientX =
             e.clientX;
 
+
         clientY =
             e.clientY;
 
@@ -2893,14 +3259,29 @@ function getSignaturePosition(e) {
     return {
 
         x:
-            (clientX - rect.left) *
-            (canvas.width / rect.width),
+            (
+                clientX -
+                rect.left
+            )
+            *
+            (
+                canvas.width /
+                rect.width
+            ),
 
         y:
-            (clientY - rect.top) *
-            (canvas.height / rect.height)
+            (
+                clientY -
+                rect.top
+            )
+            *
+            (
+                canvas.height /
+                rect.height
+            )
 
     };
+
 }
 
 
@@ -2908,7 +3289,9 @@ function startSignature(e) {
 
     e.preventDefault();
 
-    drawing = true;
+
+    drawing =
+        true;
 
 
     const pos =
@@ -2922,13 +3305,16 @@ function startSignature(e) {
         pos.x,
         pos.y
     );
+
 }
 
 
 function drawSignature(e) {
 
     if (!drawing) {
+
         return;
+
     }
 
 
@@ -2946,19 +3332,25 @@ function drawSignature(e) {
 
 
     ctx.stroke();
+
 }
 
 
 function stopSignature(e) {
 
     if (e) {
+
         e.preventDefault();
+
     }
 
 
-    drawing = false;
+    drawing =
+        false;
+
 
     ctx.beginPath();
+
 }
 
 
@@ -2969,15 +3361,18 @@ canvas.addEventListener(
     startSignature
 );
 
+
 canvas.addEventListener(
     "mousemove",
     drawSignature
 );
 
+
 canvas.addEventListener(
     "mouseup",
     stopSignature
 );
+
 
 canvas.addEventListener(
     "mouseleave",
@@ -2995,6 +3390,7 @@ canvas.addEventListener(
     }
 );
 
+
 canvas.addEventListener(
     "touchmove",
     drawSignature,
@@ -3002,6 +3398,7 @@ canvas.addEventListener(
         passive: false
     }
 );
+
 
 canvas.addEventListener(
     "touchend",
@@ -3024,7 +3421,18 @@ function clearSignature() {
         canvas.width,
         canvas.height
     );
+
 }
+
+
+/* =========================================================
+   WINDOW RESIZE
+========================================================= */
+
+window.addEventListener(
+    "resize",
+    scaleInvoice
+);
 
 
 /* =========================================================
@@ -3034,37 +3442,44 @@ function clearSignature() {
 setDefaults();
 
 
-items = [
+itemCounter = 0;
 
-    {
 
-        id: Date.now(),
+items = [];
 
-        fy: "2026-2027",
 
-        description:
-            "1st RA Bill for Proposed Civil\n" +
-            "Works of VVIP Guest House\n" +
-            "For State Bank of India @\n" +
-            "MYCO CIRCLE, Nashik",
+const firstItem =
+    createItem();
 
-        serial: 1,
 
-        qty: 1,
+firstItem.description =
 
-        rate: 1500000
+    "1st RA Bill for Proposed Civil\n" +
+    "Works of VVIP Guest House\n" +
+    "For State Bank of India @\n" +
+    "MYCO CIRCLE, Nashik";
 
-    }
 
-];
+firstItem.qty =
+    1;
+
+
+firstItem.rate =
+    1500000;
+
+
+items.push(
+    firstItem
+);
 
 
 renderItemEditors();
+
 
 updateInvoice();
 
 </script>
 
-
 </body>
+
 </html>
