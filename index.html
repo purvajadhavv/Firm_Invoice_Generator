@@ -4,1072 +4,1801 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Proforma Invoice Generator</title>
+<title>Invoice Generator</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        background: #e9e9e9;
-        font-family: "Times New Roman", Times, serif;
-        color: #222;
-    }
+/* ============================================================
+   GLOBAL
+============================================================ */
 
-    /* =========================
-       APP CONTROLS
-    ========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #e9e9e9;
+    color: #222;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.app {
+    padding: 30px;
+}
+
+
+/* ============================================================
+   TOOLBAR
+============================================================ */
+
+.toolbar {
+    max-width: 900px;
+    margin: 0 auto 20px;
+
+    background: #fff;
+
+    padding: 18px 20px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.toolbar h2 {
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 18px;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    border: 0;
+
+    padding: 10px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-family: Arial, sans-serif;
+
+    font-weight: 600;
+}
+
+.btn-print {
+    background: #222;
+    color: #fff;
+}
+
+.btn-reset {
+    background: #eee;
+    color: #222;
+}
+
+
+/* ============================================================
+   EDITOR
+============================================================ */
+
+.editor {
+    max-width: 900px;
+
+    margin: 0 auto 25px;
+
+    background: #fff;
+
+    padding: 20px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+
+    font-family: Arial, sans-serif;
+}
+
+.editor h3 {
+    margin: 0 0 15px;
+
+    font-size: 15px;
+}
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+.field label {
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #555;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 4px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    background: #fff;
+}
+
+textarea {
+    resize: vertical;
+
+    min-height: 70px;
+}
+
+.section-title {
+    grid-column: 1 / -1;
+
+    margin-top: 8px;
+
+    padding-bottom: 6px;
+
+    border-bottom: 1px solid #ddd;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   INVOICE WRAPPER
+============================================================ */
+
+.invoice-wrapper {
+    display: flex;
+
+    justify-content: center;
+}
+
+
+/* ============================================================
+   A4 INVOICE
+============================================================ */
+
+.invoice {
+    width: 210mm;
+
+    min-height: 297mm;
+
+    background: #fff;
+
+    padding: 12mm 12mm 10mm;
+
+    position: relative;
+
+    box-shadow: 0 2px 15px rgba(0,0,0,.15);
+}
+
+
+/* ============================================================
+   TOP LINE
+============================================================ */
+
+.top-line {
+    height: 1.5px;
+
+    background: #68233f;
+
+    margin-bottom: 7px;
+}
+
+
+/* ============================================================
+   HEADER
+============================================================ */
+
+.header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 5px 0 8px;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.logo-circle {
+    width: 54px;
+    height: 54px;
+
+    border-radius: 50%;
+
+    background: #68233f;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 38px;
+
+    font-weight: bold;
+
+    line-height: 1;
+}
+
+.seller-name {
+    font-family: Arial, sans-serif;
+
+    font-size: 24px;
+
+    font-weight: 800;
+
+    color: #292929;
+}
+
+.seller-title {
+    text-align: right;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    line-height: 1.4;
+
+    color: #333;
+}
+
+
+/* ============================================================
+   INVOICE TITLE
+============================================================ */
+
+.invoice-title {
+    border: 1px solid #333;
+
+    border-bottom: none;
+
+    text-align: center;
+
+    padding: 5px;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    letter-spacing: .4px;
+}
+
+
+/* ============================================================
+   META
+============================================================ */
+
+.meta {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    border: 1px solid #333;
+}
+
+.meta-left,
+.meta-right {
+    min-height: 190px;
+}
+
+.meta-left {
+    border-right: 1px solid #333;
+}
+
+.seller-block {
+    padding: 8px;
+
+    height: 105px;
+
+    border-bottom: 1px solid #333;
+
+    font-size: 12px;
+
+    line-height: 1.25;
+}
+
+.buyer-block {
+    padding: 8px;
+
+    min-height: 85px;
+
+    font-size: 12px;
+
+    line-height: 1.3;
+}
+
+.meta-right {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.meta-row {
+    min-height: 25px;
+
+    border-bottom: 1px solid #333;
+
+    display: grid;
+
+    grid-template-columns: 100px 1fr;
+
+    font-size: 12px;
+}
+
+.meta-row:last-child {
+    border-bottom: none;
+}
+
+.meta-label {
+    padding: 5px;
+
+    border-right: 1px solid #333;
+}
+
+.meta-value {
+    padding: 5px;
+}
+
+.delivery {
+    flex: 1;
+}
+
+
+/* ============================================================
+   ITEMS TABLE
+============================================================ */
+
+.items-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 15px;
+
+    font-size: 12px;
+}
+
+.items-table th,
+.items-table td {
+    border: 1px solid #333;
+}
+
+.items-table th {
+    height: 35px;
+
+    text-align: center;
+
+    font-weight: bold;
+}
+
+.items-table td {
+    padding: 5px;
+
+    vertical-align: top;
+}
+
+.fy-col {
+    width: 11%;
+
+    text-align: center;
+}
+
+.description-col {
+    width: 30%;
+}
+
+.serial-col {
+    width: 9%;
+
+    text-align: center;
+}
+
+.qty-col {
+    width: 10%;
+
+    text-align: center;
+}
+
+.rate-col {
+    width: 20%;
+}
+
+.amount-col {
+    width: 20%;
+}
+
+.item-description {
+    min-height: 160px;
+
+    white-space: pre-line;
+}
+
+.number-cell {
+    text-align: right;
+
+    padding-right: 8px !important;
+}
+
+.summary-row td {
+    height: 26px;
+
+    vertical-align: middle;
+}
+
+.summary-label {
+    text-align: center;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   AMOUNT WORDS
+============================================================ */
+
+.amount-words {
+    border: 1px solid #333;
+
+    border-top: none;
+
+    min-height: 35px;
+
+    padding: 8px;
+
+    font-size: 12px;
+}
+
+.amount-words strong {
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   BANK
+============================================================ */
+
+.bank-details {
+    border: 1px solid #333;
+
+    border-top: none;
+
+    min-height: 45px;
+
+    padding: 8px;
+
+    text-align: center;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    line-height: 1.4;
+}
+
+
+/* ============================================================
+   NOTE + SIGNATURE
+============================================================ */
+
+.bottom-section {
+    border: 1px solid #333;
+
+    border-top: none;
+
+    min-height: 95px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 35%;
+}
+
+.note {
+    padding: 8px;
+
+    font-size: 12px;
+
+    white-space: pre-line;
+}
+
+
+/* ============================================================
+   SIGNATURE
+============================================================ */
+
+.signature {
+    border-left: 1px solid #333;
+
+    padding: 5px;
+
+    text-align: center;
+
+    position: relative;
+}
+
+.signature-label {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 2px;
+}
+
+#signatureCanvas {
+    width: 100%;
+
+    height: 55px;
+
+    display: block;
+
+    cursor: crosshair;
+
+    touch-action: none;
+}
+
+.signature-actions {
+    text-align: right;
+
+    height: 16px;
+}
+
+.signature-actions button {
+    padding: 2px 7px;
+
+    font-size: 9px;
+
+    background: #eee;
+
+    color: #222;
+
+    border: 1px solid #aaa;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+}
+
+.signature-line {
+    border-top: 1px solid #333;
+
+    margin-top: 2px;
+
+    padding-top: 3px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* ============================================================
+   FOOTER
+============================================================ */
+
+.footer-line {
+    height: 1.5px;
+
+    background: #68233f;
+
+    position: absolute;
+
+    left: 12mm;
+
+    right: 12mm;
+
+    bottom: 13mm;
+}
+
+.footer {
+    position: absolute;
+
+    bottom: 5mm;
+
+    left: 12mm;
+
+    right: 12mm;
+
+    text-align: center;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    line-height: 1.3;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+
+@media (max-width: 900px) {
 
     .app {
-        padding: 30px;
+        padding: 10px;
     }
 
     .toolbar {
-        max-width: 900px;
-        margin: 0 auto 20px;
-        background: #fff;
-        padding: 18px 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,.08);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .toolbar h2 {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        font-size: 18px;
-    }
-
-    .toolbar-actions {
-        display: flex;
-        gap: 10px;
-    }
-
-    button {
-        border: 0;
-        padding: 10px 18px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-family: Arial, sans-serif;
-        font-weight: 600;
-    }
-
-    .btn-print {
-        background: #222;
-        color: #fff;
-    }
-
-    .btn-reset {
-        background: #eee;
-        color: #222;
-    }
-
-    /* =========================
-       EDITOR
-    ========================= */
-
-    .editor {
-        max-width: 900px;
-        margin: 0 auto 25px;
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,.08);
-        font-family: Arial, sans-serif;
-    }
-
-    .editor h3 {
-        margin: 0 0 15px;
-        font-size: 15px;
-    }
-
-    .form-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .field {
-        display: flex;
         flex-direction: column;
-        gap: 5px;
-    }
 
-    .field.full {
-        grid-column: 1 / -1;
+        align-items: stretch;
     }
-
-    .field label {
-        font-size: 12px;
-        font-weight: 600;
-        color: #555;
-    }
-
-    input,
-    textarea,
-    select {
-        width: 100%;
-        padding: 9px 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-family: Arial, sans-serif;
-        font-size: 13px;
-    }
-
-    textarea {
-        resize: vertical;
-        min-height: 70px;
-    }
-
-    .section-title {
-        grid-column: 1 / -1;
-        margin-top: 8px;
-        padding-bottom: 6px;
-        border-bottom: 1px solid #ddd;
-        font-size: 13px;
-        font-weight: bold;
-    }
-
-    /* =========================
-       A4 INVOICE
-    ========================= */
 
     .invoice-wrapper {
-        display: flex;
-        justify-content: center;
+        overflow-x: auto;
+
+        justify-content: flex-start;
+    }
+}
+
+
+/* ============================================================
+   PRINT
+============================================================ */
+
+@media print {
+
+    @page {
+        size: A4;
+
+        margin: 0;
+    }
+
+    html,
+    body {
+        margin: 0;
+
+        padding: 0;
+
+        background: white;
+    }
+
+    .app {
+        padding: 0;
+    }
+
+    .toolbar,
+    .editor {
+        display: none !important;
+    }
+
+    .invoice-wrapper {
+        display: block;
     }
 
     .invoice {
         width: 210mm;
+
         min-height: 297mm;
-        background: #fff;
-        padding: 12mm 12mm 10mm;
-        position: relative;
-        box-shadow: 0 2px 15px rgba(0,0,0,.15);
+
+        margin: 0;
+
+        box-shadow: none;
+
+        page-break-after: always;
     }
 
-    /* TOP LINE */
-
-    .top-line {
-        height: 1.5px;
-        background: #68233f;
-        margin-bottom: 7px;
+    .signature-actions {
+        display: none !important;
     }
 
-    /* HEADER */
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 5px 0 8px;
+    #signatureCanvas {
+        cursor: default;
     }
+}
 
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .logo-circle {
-        width: 54px;
-        height: 54px;
-        border-radius: 50%;
-        background: #68233f;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 38px;
-        font-weight: bold;
-        line-height: 1;
-    }
-
-    .seller-name {
-        font-family: Arial, sans-serif;
-        font-size: 24px;
-        font-weight: 800;
-        color: #292929;
-    }
-
-    .seller-title {
-        text-align: right;
-        font-family: Arial, sans-serif;
-        font-size: 13px;
-        font-weight: bold;
-        line-height: 1.4;
-        color: #333;
-    }
-
-    /* TITLE */
-
-    .invoice-title {
-        border: 1px solid #333;
-        border-bottom: none;
-        text-align: center;
-        padding: 5px;
-        font-size: 17px;
-        font-weight: bold;
-        letter-spacing: .4px;
-    }
-
-    /* META */
-
-    .meta {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        border: 1px solid #333;
-    }
-
-    .meta-left,
-    .meta-right {
-        min-height: 190px;
-    }
-
-    .meta-left {
-        border-right: 1px solid #333;
-    }
-
-    .seller-block {
-        padding: 8px;
-        height: 105px;
-        border-bottom: 1px solid #333;
-        font-size: 12px;
-        line-height: 1.25;
-    }
-
-    .buyer-block {
-        padding: 8px;
-        min-height: 85px;
-        font-size: 12px;
-        line-height: 1.3;
-    }
-
-    .meta-right {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .meta-row {
-        min-height: 25px;
-        border-bottom: 1px solid #333;
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        font-size: 12px;
-    }
-
-    .meta-row:last-child {
-        border-bottom: none;
-    }
-
-    .meta-label {
-        padding: 5px;
-        border-right: 1px solid #333;
-    }
-
-    .meta-value {
-        padding: 5px;
-    }
-
-    .delivery {
-        flex: 1;
-    }
-
-    /* TABLE */
-
-    .items-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-        font-size: 12px;
-    }
-
-    .items-table th,
-    .items-table td {
-        border: 1px solid #333;
-    }
-
-    .items-table th {
-        height: 35px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    .items-table td {
-        padding: 5px;
-        vertical-align: top;
-    }
-
-    .fy-col {
-        width: 11%;
-        text-align: center;
-    }
-
-    .description-col {
-        width: 30%;
-    }
-
-    .serial-col {
-        width: 9%;
-        text-align: center;
-    }
-
-    .qty-col {
-        width: 10%;
-        text-align: center;
-    }
-
-    .rate-col {
-        width: 20%;
-    }
-
-    .amount-col {
-        width: 20%;
-    }
-
-    .item-description {
-        min-height: 160px;
-        white-space: pre-line;
-    }
-
-    .number-cell {
-        text-align: right;
-        padding-right: 8px !important;
-    }
-
-    .summary-row td {
-        height: 26px;
-        vertical-align: middle;
-    }
-
-    .summary-label {
-        text-align: center;
-        font-weight: bold;
-    }
-
-    /* TOTALS */
-
-    .amount-words {
-        border: 1px solid #333;
-        border-top: none;
-        min-height: 35px;
-        padding: 8px;
-        font-size: 12px;
-    }
-
-    .amount-words strong {
-        font-weight: bold;
-    }
-
-    .bank-details {
-        border: 1px solid #333;
-        border-top: none;
-        min-height: 45px;
-        padding: 8px;
-        text-align: center;
-        font-size: 11px;
-        font-weight: bold;
-        line-height: 1.4;
-    }
-
-    .bottom-section {
-        border: 1px solid #333;
-        border-top: none;
-        min-height: 90px;
-        display: grid;
-        grid-template-columns: 1fr 35%;
-    }
-
-    .note {
-        padding: 8px;
-        font-size: 12px;
-    }
-
-    .signature {
-        border-left: 1px solid #333;
-        padding: 8px;
-        text-align: center;
-        position: relative;
-    }
-
-    .signature-space {
-        height: 45px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Brush Script MT", cursive;
-        font-size: 25px;
-        color: #1d2d78;
-    }
-
-    .signature-line {
-        border-top: 1px solid #333;
-        margin-top: 5px;
-        padding-top: 4px;
-        font-size: 11px;
-        font-weight: bold;
-    }
-
-    /* FOOTER */
-
-    .footer-line {
-        height: 1.5px;
-        background: #68233f;
-        position: absolute;
-        left: 12mm;
-        right: 12mm;
-        bottom: 13mm;
-    }
-
-    .footer {
-        position: absolute;
-        bottom: 5mm;
-        left: 12mm;
-        right: 12mm;
-        text-align: center;
-        font-family: Arial, sans-serif;
-        font-size: 10px;
-        font-weight: 600;
-        line-height: 1.3;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 900px) {
-        .app {
-            padding: 10px;
-        }
-
-        .invoice {
-            transform-origin: top center;
-            width: 210mm;
-        }
-
-        .toolbar {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    }
-
-    /* =========================
-       PRINT
-    ========================= */
-
-    @media print {
-
-        @page {
-            size: A4;
-            margin: 0;
-        }
-
-        body {
-            background: white;
-        }
-
-        .app {
-            padding: 0;
-        }
-
-        .toolbar,
-        .editor {
-            display: none !important;
-        }
-
-        .invoice-wrapper {
-            display: block;
-        }
-
-        .invoice {
-            width: 210mm;
-            min-height: 297mm;
-            box-shadow: none;
-            margin: 0;
-            page-break-after: always;
-        }
-    }
 </style>
 </head>
 
+
 <body>
+
 
 <div class="app">
 
-    <!-- =========================
-         EDITOR
-    ========================= -->
 
-    <div class="toolbar">
+<!-- ============================================================
+     TOOLBAR
+============================================================ -->
 
-        <h2>Proforma Invoice Generator</h2>
+<div class="toolbar">
 
-        <div class="toolbar-actions">
-            <button class="btn-reset" onclick="resetForm()">
-                Reset
-            </button>
+    <h2>
+        Invoice Generator
+    </h2>
 
-            <button class="btn-print" onclick="window.print()">
-                Print / Save PDF
-            </button>
-        </div>
 
-    </div>
+    <div class="toolbar-actions">
 
+        <button
+            class="btn-reset"
+            onclick="resetForm()">
 
-    <div class="editor">
+            Reset
 
-        <h3>Invoice Details</h3>
+        </button>
 
-        <div class="form-grid">
 
-            <div class="field">
-                <label>Invoice Date</label>
-                <input type="date" id="invoiceDate">
-            </div>
+        <button
+            class="btn-print"
+            onclick="window.print()">
 
-            <div class="field">
-                <label>Invoice Number</label>
-                <input type="text" id="invoiceNumber">
-            </div>
+            Print / Save PDF
 
-
-            <div class="section-title">
-                Vendor / Buyer Details
-            </div>
-
-            <div class="field">
-                <label>Vendor / Buyer Name</label>
-                <input
-                    type="text"
-                    id="buyerName"
-                    placeholder="Enter buyer name">
-            </div>
-
-            <div class="field">
-                <label>Buyer City</label>
-                <input
-                    type="text"
-                    id="buyerCity"
-                    placeholder="Enter city">
-            </div>
-
-            <div class="field full">
-                <label>Vendor / Buyer Address</label>
-                <textarea
-                    id="buyerAddress"
-                    placeholder="Enter buyer address"></textarea>
-            </div>
-
-            <div class="field">
-                <label>Suppliers Ref.</label>
-                <input
-                    type="text"
-                    id="supplierRef">
-            </div>
-
-            <div class="field">
-                <label>Buyer's Order No.</label>
-                <input
-                    type="text"
-                    id="buyerOrder">
-            </div>
-
-            <div class="field">
-                <label>Delivery Note</label>
-                <input
-                    type="text"
-                    id="deliveryNote">
-            </div>
-
-
-            <div class="section-title">
-                Item Details
-            </div>
-
-            <div class="field full">
-                <label>Description</label>
-                <textarea id="description"></textarea>
-            </div>
-
-            <div class="field">
-                <label>Financial Year</label>
-                <input
-                    type="text"
-                    id="financialYear"
-                    value="2025-2026">
-            </div>
-
-            <div class="field">
-                <label>Serial No.</label>
-                <input
-                    type="text"
-                    id="serialNo"
-                    value="1">
-            </div>
-
-            <div class="field">
-                <label>Quantity</label>
-                <input
-                    type="number"
-                    id="quantity"
-                    value="1"
-                    min="0"
-                    step="0.01">
-            </div>
-
-            <div class="field">
-                <label>Rate</label>
-                <input
-                    type="number"
-                    id="rate"
-                    value="1500000"
-                    min="0"
-                    step="0.01">
-            </div>
-
-
-            <div class="section-title">
-                GST
-            </div>
-
-            <div class="field">
-                <label>CGST %</label>
-                <input
-                    type="number"
-                    id="cgst"
-                    value="0"
-                    min="0"
-                    step="0.01">
-            </div>
-
-            <div class="field">
-                <label>SGST %</label>
-                <input
-                    type="number"
-                    id="sgst"
-                    value="0"
-                    min="0"
-                    step="0.01">
-            </div>
-
-
-            <div class="section-title">
-                Invoice Note
-            </div>
-
-            <div class="field full">
-                <textarea id="invoiceNote">NOTE: GST will be paid at the time of final bill.</textarea>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         INVOICE
-    ========================= -->
-
-    <div class="invoice-wrapper">
-
-        <div class="invoice">
-
-            <div class="top-line"></div>
-
-
-            <!-- HEADER -->
-
-            <div class="header">
-
-                <div class="brand">
-
-                    <div class="logo-circle">
-                        R
-                    </div>
-
-                    <div class="seller-name">
-                        Randhir U. Jadhav
-                    </div>
-
-                </div>
-
-                <div class="seller-title">
-                    B.E. CIVIL<br>
-                    Govt. Contractor
-                </div>
-
-            </div>
-
-
-            <!-- TITLE -->
-
-            <div class="invoice-title">
-                PROFORMA INVOICE
-            </div>
-
-
-            <!-- META -->
-
-            <div class="meta">
-
-                <div class="meta-left">
-
-                    <div class="seller-block">
-
-                        <strong>From Shri Randhir U Jadhav</strong><br>
-
-                        201, Rushiraj Riviera Apartment,
-                        near Makaloo Hotel<br>
-
-                        Gangapur Road, Nashik - 422013,
-                        Maharashtra, India<br>
-
-                        PAN NO- ADPJS872E.<br>
-
-                        GST NO- 27ADPJS872E1ZE
-
-                    </div>
-
-
-                    <div class="buyer-block">
-
-                        <strong>To,</strong><br>
-
-                        <span id="previewBuyerName">
-                            Vendor / Buyer Name
-                        </span><br>
-
-                        <span id="previewBuyerAddress">
-                            Vendor / Buyer Address
-                        </span><br>
-
-                        <span id="previewBuyerCity">
-                            Nashik
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="meta-right">
-
-                    <div class="meta-row">
-
-                        <div class="meta-label">
-                            Date-
-                        </div>
-
-                        <div class="meta-value"
-                             id="previewDate">
-                            16/04/2025
-                        </div>
-
-                    </div>
-
-
-                    <div class="meta-row">
-
-                        <div class="meta-label">
-                            Invoice No-
-                        </div>
-
-                        <div class="meta-value"
-                             id="previewInvoiceNo">
-                            RJ/01/2025-26
-                        </div>
-
-                    </div>
-
-
-                    <div class="meta-row delivery">
-
-                        <div class="meta-label">
-                            Delivery note
-                        </div>
-
-                        <div class="meta-value"
-                             id="previewDelivery">
-                        </div>
-
-                    </div>
-
-
-                    <div class="meta-row">
-
-                        <div class="meta-label">
-                            Suppliers Ref:
-                        </div>
-
-                        <div class="meta-value"
-                             id="previewSupplierRef">
-                        </div>
-
-                    </div>
-
-
-                    <div class="meta-row">
-
-                        <div class="meta-label">
-                            Buyer's Order No.
-                        </div>
-
-                        <div class="meta-value"
-                             id="previewBuyerOrder">
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- ITEMS -->
-
-            <table class="items-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th class="fy-col">
-                            F.Y.
-                        </th>
-
-                        <th class="description-col">
-                            Description
-                        </th>
-
-                        <th class="serial-col">
-                            Serial
-                        </th>
-
-                        <th class="qty-col">
-                            QTY (NO)
-                        </th>
-
-                        <th class="rate-col">
-                            Rate
-                        </th>
-
-                        <th class="amount-col">
-                            Amount
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    <tr>
-
-                        <td class="fy-col"
-                            id="previewFY">
-                            2025-2026
-                        </td>
-
-                        <td class="description-col">
-
-                            <div
-                                class="item-description"
-                                id="previewDescription">
-                            </div>
-
-                        </td>
-
-                        <td class="serial-col"
-                            id="previewSerial">
-                            1
-                        </td>
-
-                        <td class="qty-col"
-                            id="previewQty">
-                            1
-                        </td>
-
-                        <td class="rate-col number-cell"
-                            id="previewRate">
-                            15,00,000.00
-                        </td>
-
-                        <td class="amount-col number-cell"
-                            id="previewAmount">
-                            15,00,000.00
-                        </td>
-
-                    </tr>
-
-
-                    <tr class="summary-row">
-
-                        <td colspan="4"
-                            rowspan="3">
-                        </td>
-
-                        <td class="summary-label">
-                            Total
-                        </td>
-
-                        <td class="number-cell"
-                            id="previewTotal">
-                            15,00,000.00
-                        </td>
-
-                    </tr>
-
-
-                    <tr class="summary-row">
-
-                        <td class="summary-label">
-                            CGST @ <span id="previewCGSTPercent">0</span>%
-                        </td>
-
-                        <td class="number-cell"
-                            id="previewCGST">
-                            0.00
-                        </td>
-
-                    </tr>
-
-
-                    <tr class="summary-row">
-
-                        <td class="summary-label">
-                            SGST @ <span id="previewSGSTPercent">0</span>%
-                        </td>
-
-                        <td class="number-cell"
-                            id="previewSGST">
-                            0.00
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-
-            <!-- AMOUNT WORDS -->
-
-            <div class="amount-words">
-
-                <strong>
-                    Amount In Words:
-                </strong>
-
-                <span id="previewWords">
-                    Fifteen Lakh Rupees only
-                </span>
-
-            </div>
-
-
-            <!-- BANK -->
-
-            <div class="bank-details">
-
-                Bank- State Bank Of India,
-                Account Number - 34605977589,
-                Account Type - Current,
-                IFSC Code - SBIN0007497,
-                GANGAPUR ROAD Nashik
-
-            </div>
-
-
-            <!-- NOTE + SIGNATURE -->
-
-            <div class="bottom-section">
-
-                <div class="note"
-                     id="previewNote">
-                    NOTE: GST will be paid at the time of final bill.
-                </div>
-
-
-                <div class="signature">
-
-                    <div class="signature-space">
-                        Randhir
-                    </div>
-
-                    <div class="signature-line">
-                        Proprietor
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- FOOTER -->
-
-            <div class="footer-line"></div>
-
-            <div class="footer">
-
-                201, Rushiraj Riviera Appt., Near Makaloo Hotel,
-                Gangapur Road, Nashik 422 013<br>
-
-                Phone : 098 22 22 94 63
-                &nbsp;&nbsp;
-                Email : purvajadhav2004@gmail.com
-
-            </div>
-
-        </div>
+        </button>
 
     </div>
 
 </div>
 
 
+
+<!-- ============================================================
+     EDITOR
+============================================================ -->
+
+<div class="editor">
+
+    <h3>
+        Invoice Details
+    </h3>
+
+
+    <div class="form-grid">
+
+
+        <!-- ====================================================
+             TITLE + BASIC DETAILS
+        ===================================================== -->
+
+        <div class="section-title">
+
+            Basic Invoice Details
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Invoice Title
+            </label>
+
+            <input
+                type="text"
+                id="invoiceTitle"
+                value="PROFORMA INVOICE"
+                placeholder="Enter invoice title">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Invoice Date
+            </label>
+
+            <input
+                type="date"
+                id="invoiceDate">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Invoice Number
+            </label>
+
+            <input
+                type="text"
+                id="invoiceNumber">
+
+        </div>
+
+
+        <!-- ====================================================
+             BUYER
+        ===================================================== -->
+
+        <div class="section-title">
+
+            Vendor / Buyer Details
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Vendor / Buyer Name
+            </label>
+
+            <input
+                type="text"
+                id="buyerName"
+                placeholder="Enter buyer name">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Buyer City
+            </label>
+
+            <input
+                type="text"
+                id="buyerCity"
+                placeholder="Enter city">
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>
+                Vendor / Buyer Address
+            </label>
+
+            <textarea
+                id="buyerAddress"
+                placeholder="Enter buyer address"></textarea>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Suppliers Ref.
+            </label>
+
+            <input
+                type="text"
+                id="supplierRef">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Buyer's Order No.
+            </label>
+
+            <input
+                type="text"
+                id="buyerOrder">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Delivery Note
+            </label>
+
+            <input
+                type="text"
+                id="deliveryNote">
+
+        </div>
+
+
+
+        <!-- ====================================================
+             ITEM
+        ===================================================== -->
+
+        <div class="section-title">
+
+            Item Details
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                id="description"></textarea>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Financial Year
+            </label>
+
+            <input
+                type="text"
+                id="financialYear">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Serial No.
+            </label>
+
+            <input
+                type="text"
+                id="serialNo"
+                value="1">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Quantity
+            </label>
+
+            <input
+                type="number"
+                id="quantity"
+                value="1"
+                min="0"
+                step="0.01">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Rate
+            </label>
+
+            <input
+                type="number"
+                id="rate"
+                value="1500000"
+                min="0"
+                step="0.01">
+
+        </div>
+
+
+
+        <!-- ====================================================
+             GST
+        ===================================================== -->
+
+        <div class="section-title">
+
+            GST
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                CGST %
+            </label>
+
+            <input
+                type="number"
+                id="cgst"
+                value="0"
+                min="0"
+                step="0.01">
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                SGST %
+            </label>
+
+            <input
+                type="number"
+                id="sgst"
+                value="0"
+                min="0"
+                step="0.01">
+
+        </div>
+
+
+
+        <!-- ====================================================
+             NOTE
+        ===================================================== -->
+
+        <div class="section-title">
+
+            Invoice Note
+
+        </div>
+
+
+        <div class="field full">
+
+            <textarea
+                id="invoiceNote"></textarea>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ============================================================
+     INVOICE
+============================================================ -->
+
+<div class="invoice-wrapper">
+
+
+<div class="invoice">
+
+
+    <!-- TOP LINE -->
+
+    <div class="top-line"></div>
+
+
+
+    <!-- ========================================================
+         HEADER
+    ========================================================= -->
+
+    <div class="header">
+
+
+        <div class="brand">
+
+
+            <div class="logo-circle">
+
+                R
+
+            </div>
+
+
+            <div class="seller-name">
+
+                Randhir U. Jadhav
+
+            </div>
+
+
+        </div>
+
+
+        <div class="seller-title">
+
+            B.E. CIVIL<br>
+
+            Govt. Contractor
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ========================================================
+         EDITABLE TITLE
+    ========================================================= -->
+
+    <div
+        class="invoice-title"
+        id="previewInvoiceTitle">
+
+        PROFORMA INVOICE
+
+    </div>
+
+
+
+    <!-- ========================================================
+         META
+    ========================================================= -->
+
+    <div class="meta">
+
+
+        <div class="meta-left">
+
+
+            <!-- SELLER -->
+
+            <div class="seller-block">
+
+                <strong>
+                    From Shri Randhir U Jadhav
+                </strong>
+
+                <br>
+
+                201, Rushiraj Riviera Apartment,
+                near Makaloo hotel
+
+                <br>
+
+                Gangapur Road,
+                Nashik - 422013,
+                Maharashtra, India
+
+                <br>
+
+                PAN NO- ADPJS872E.
+
+                <br>
+
+                GST NO- 27ADPJS872E1ZE
+
+            </div>
+
+
+
+            <!-- BUYER -->
+
+            <div class="buyer-block">
+
+                <strong>
+                    To,
+                </strong>
+
+                <br>
+
+
+                <span id="previewBuyerName">
+
+                    Vendor / Buyer Name
+
+                </span>
+
+
+                <br>
+
+
+                <span id="previewBuyerAddress">
+
+                    Vendor / Buyer Address
+
+                </span>
+
+
+                <br>
+
+
+                <span id="previewBuyerCity">
+
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="meta-right">
+
+
+            <div class="meta-row">
+
+
+                <div class="meta-label">
+
+                    Date-
+
+                </div>
+
+
+                <div
+                    class="meta-value"
+                    id="previewDate">
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="meta-row">
+
+
+                <div class="meta-label">
+
+                    Invoice No-
+
+                </div>
+
+
+                <div
+                    class="meta-value"
+                    id="previewInvoiceNo">
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="meta-row delivery">
+
+
+                <div class="meta-label">
+
+                    Delivery note
+
+                </div>
+
+
+                <div
+                    class="meta-value"
+                    id="previewDelivery">
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="meta-row">
+
+
+                <div class="meta-label">
+
+                    Suppliers Ref:
+
+                </div>
+
+
+                <div
+                    class="meta-value"
+                    id="previewSupplierRef">
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="meta-row">
+
+
+                <div class="meta-label">
+
+                    Buyer's Order No.
+
+                </div>
+
+
+                <div
+                    class="meta-value"
+                    id="previewBuyerOrder">
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ========================================================
+         ITEMS TABLE
+    ========================================================= -->
+
+    <table class="items-table">
+
+
+        <thead>
+
+
+            <tr>
+
+
+                <th class="fy-col">
+
+                    F.Y.
+
+                </th>
+
+
+                <th class="description-col">
+
+                    Description
+
+                </th>
+
+
+                <th class="serial-col">
+
+                    Serial
+
+                </th>
+
+
+                <th class="qty-col">
+
+                    QTY (NO)
+
+                </th>
+
+
+                <th class="rate-col">
+
+                    Rate
+
+                </th>
+
+
+                <th class="amount-col">
+
+                    Amount
+
+                </th>
+
+
+            </tr>
+
+
+        </thead>
+
+
+
+        <tbody>
+
+
+            <tr>
+
+
+                <td
+                    class="fy-col"
+                    id="previewFY">
+
+                </td>
+
+
+                <td class="description-col">
+
+
+                    <div
+                        class="item-description"
+                        id="previewDescription">
+
+                    </div>
+
+
+                </td>
+
+
+                <td
+                    class="serial-col"
+                    id="previewSerial">
+
+                    1
+
+                </td>
+
+
+                <td
+                    class="qty-col"
+                    id="previewQty">
+
+                    1
+
+                </td>
+
+
+                <td
+                    class="rate-col number-cell"
+                    id="previewRate">
+
+                    0.00
+
+                </td>
+
+
+                <td
+                    class="amount-col number-cell"
+                    id="previewAmount">
+
+                    0.00
+
+                </td>
+
+
+            </tr>
+
+
+
+            <!-- TOTAL -->
+
+            <tr class="summary-row">
+
+
+                <td
+                    colspan="4"
+                    rowspan="3">
+
+                </td>
+
+
+                <td class="summary-label">
+
+                    Total
+
+                </td>
+
+
+                <td
+                    class="number-cell"
+                    id="previewTotal">
+
+                    0.00
+
+                </td>
+
+
+            </tr>
+
+
+
+            <!-- CGST -->
+
+            <tr class="summary-row">
+
+
+                <td class="summary-label">
+
+                    CGST @
+
+                    <span id="previewCGSTPercent">
+                        0
+                    </span>%
+
+                </td>
+
+
+                <td
+                    class="number-cell"
+                    id="previewCGST">
+
+                    0.00
+
+                </td>
+
+
+            </tr>
+
+
+
+            <!-- SGST -->
+
+            <tr class="summary-row">
+
+
+                <td class="summary-label">
+
+                    SGST @
+
+                    <span id="previewSGSTPercent">
+                        0
+                    </span>%
+
+                </td>
+
+
+                <td
+                    class="number-cell"
+                    id="previewSGST">
+
+                    0.00
+
+                </td>
+
+
+            </tr>
+
+
+        </tbody>
+
+
+    </table>
+
+
+
+    <!-- ========================================================
+         AMOUNT WORDS
+    ========================================================= -->
+
+    <div class="amount-words">
+
+
+        <strong>
+
+            Amount In Words:
+
+        </strong>
+
+
+        <span id="previewWords">
+
+            Zero Rupees only
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- ========================================================
+         BANK DETAILS
+    ========================================================= -->
+
+    <div class="bank-details">
+
+        Bank- State Bank Of India,
+        Account Number - 34605977589,
+        Account Type - Current,
+        IFSC Code - SBIN0007497,
+        GANGAPUR ROAD Nashik
+
+    </div>
+
+
+
+    <!-- ========================================================
+         NOTE + SIGNATURE
+    ========================================================= -->
+
+    <div class="bottom-section">
+
+
+        <!-- NOTE -->
+
+        <div
+            class="note"
+            id="previewNote">
+
+        </div>
+
+
+
+        <!-- SIGNATURE -->
+
+        <div class="signature">
+
+
+            <div class="signature-label">
+
+                Signature
+
+            </div>
+
+
+            <canvas
+                id="signatureCanvas"
+                width="260"
+                height="80">
+
+            </canvas>
+
+
+            <div class="signature-actions">
+
+
+                <button
+                    type="button"
+                    onclick="clearSignature()">
+
+                    Clear
+
+                </button>
+
+
+            </div>
+
+
+            <div class="signature-line">
+
+                Proprietor
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ========================================================
+         FOOTER
+    ========================================================= -->
+
+    <div class="footer-line"></div>
+
+
+    <div class="footer">
+
+        201, Rushiraj Riviera Appt.,
+        Near Makaloo Hotel,
+        Gangapur Road, Nashik 422 013
+
+        <br>
+
+        Phone : 098 22 22 94 63
+
+        &nbsp;&nbsp;&nbsp;
+
+        Email : purvajadhav2004@gmail.com
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
 <script>
 
+
 /* ============================================================
-   HELPERS
+   HELPER
 ============================================================ */
 
 function byId(id) {
+
     return document.getElementById(id);
+
 }
 
+
+
+/* ============================================================
+   NUMBER FORMAT
+============================================================ */
 
 function formatNumber(number) {
 
     number = Number(number) || 0;
 
+
     return number.toLocaleString("en-IN", {
+
         minimumFractionDigits: 2,
+
         maximumFractionDigits: 2
+
     });
 
 }
 
 
+
+/* ============================================================
+   DATE FORMAT
+============================================================ */
+
 function formatDate(dateString) {
 
-    if (!dateString) return "";
+    if (!dateString) {
 
-    const date = new Date(dateString + "T00:00:00");
+        return "";
 
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
+    }
+
+
+    const date =
+        new Date(dateString + "T00:00:00");
+
+
+    const day =
+        String(date.getDate()).padStart(2, "0");
+
+
+    const month =
+        String(date.getMonth() + 1).padStart(2, "0");
+
+
+    const year =
+        date.getFullYear();
+
 
     return `${day}/${month}/${year}`;
 
 }
+
 
 
 /* ============================================================
@@ -1078,117 +1807,228 @@ function formatDate(dateString) {
 
 function numberToWords(num) {
 
-    num = Math.floor(Number(num) || 0);
+
+    num = Math.floor(
+        Number(num) || 0
+    );
+
 
     if (num === 0) {
+
         return "Zero Rupees only";
+
     }
 
+
     const ones = [
+
         "",
+
         "One",
+
         "Two",
+
         "Three",
+
         "Four",
+
         "Five",
+
         "Six",
+
         "Seven",
+
         "Eight",
+
         "Nine",
+
         "Ten",
+
         "Eleven",
+
         "Twelve",
+
         "Thirteen",
+
         "Fourteen",
+
         "Fifteen",
+
         "Sixteen",
+
         "Seventeen",
+
         "Eighteen",
+
         "Nineteen"
+
     ];
 
+
     const tens = [
+
         "",
+
         "",
+
         "Twenty",
+
         "Thirty",
+
         "Forty",
+
         "Fifty",
+
         "Sixty",
+
         "Seventy",
+
         "Eighty",
+
         "Ninety"
+
     ];
+
 
 
     function twoDigits(n) {
 
+
         if (n < 20) {
+
             return ones[n];
+
         }
 
-        return tens[Math.floor(n / 10)] +
-            (n % 10 ? " " + ones[n % 10] : "");
+
+        return tens[
+            Math.floor(n / 10)
+        ] +
+
+        (
+            n % 10
+                ? " " + ones[n % 10]
+                : ""
+        );
 
     }
 
 
+
     function threeDigits(n) {
+
 
         let result = "";
 
+
         if (n >= 100) {
 
-            result += ones[Math.floor(n / 100)] +
+
+            result +=
+
+                ones[
+                    Math.floor(n / 100)
+                ] +
+
                 " Hundred";
+
 
             n %= 100;
 
+
             if (n) {
+
                 result += " ";
+
             }
 
         }
 
+
         if (n) {
+
             result += twoDigits(n);
+
         }
+
 
         return result;
 
     }
 
 
+
     let result = "";
 
-    const crore = Math.floor(num / 10000000);
+
+    const crore =
+        Math.floor(
+            num / 10000000
+        );
+
+
     num %= 10000000;
 
-    const lakh = Math.floor(num / 100000);
+
+    const lakh =
+        Math.floor(
+            num / 100000
+        );
+
+
     num %= 100000;
 
-    const thousand = Math.floor(num / 1000);
+
+    const thousand =
+        Math.floor(
+            num / 1000
+        );
+
+
     num %= 1000;
 
+
+
     if (crore) {
-        result += threeDigits(crore) + " Crore ";
+
+        result +=
+            threeDigits(crore) +
+            " Crore ";
+
     }
+
 
     if (lakh) {
-        result += threeDigits(lakh) + " Lakh ";
+
+        result +=
+            threeDigits(lakh) +
+            " Lakh ";
+
     }
+
 
     if (thousand) {
-        result += threeDigits(thousand) + " Thousand ";
+
+        result +=
+            threeDigits(thousand) +
+            " Thousand ";
+
     }
+
 
     if (num) {
-        result += threeDigits(num);
+
+        result +=
+            threeDigits(num);
+
     }
 
-    return result.trim() + " Rupees only";
+
+    return result.trim() +
+        " Rupees only";
 
 }
+
 
 
 /* ============================================================
@@ -1197,21 +2037,69 @@ function numberToWords(num) {
 
 function setDefaults() {
 
-    const today = new Date();
+
+    const today =
+        new Date();
+
 
     byId("invoiceDate").value =
-        today.toISOString().split("T")[0];
+
+        today.toISOString()
+        .split("T")[0];
+
+
+    byId("invoiceTitle").value =
+
+        "PROFORMA INVOICE";
+
 
     byId("invoiceNumber").value =
+
         "RJ/01/2026-27";
 
+
+    byId("financialYear").value =
+
+        "2026-2027";
+
+
+    byId("quantity").value =
+
+        "1";
+
+
+    byId("rate").value =
+
+        "1500000";
+
+
+    byId("cgst").value =
+
+        "0";
+
+
+    byId("sgst").value =
+
+        "0";
+
+
     byId("description").value =
+
         "1st RA Bill for Proposed Civil\n" +
+
         "Works of VVIP Guest House\n" +
+
         "For State Bank of India @\n" +
+
         "MYCO CIRCLE, Nashik";
 
+
+    byId("invoiceNote").value =
+
+        "NOTE: GST will be paid at the time of final bill.";
+
 }
+
 
 
 /* ============================================================
@@ -1220,113 +2108,259 @@ function setDefaults() {
 
 function updateInvoice() {
 
+
+    /* --------------------------------------------------------
+       CALCULATIONS
+    -------------------------------------------------------- */
+
+
     const quantity =
-        Number(byId("quantity").value) || 0;
+        Number(
+            byId("quantity").value
+        ) || 0;
+
 
     const rate =
-        Number(byId("rate").value) || 0;
+        Number(
+            byId("rate").value
+        ) || 0;
+
 
     const cgstRate =
-        Number(byId("cgst").value) || 0;
+        Number(
+            byId("cgst").value
+        ) || 0;
+
 
     const sgstRate =
-        Number(byId("sgst").value) || 0;
+        Number(
+            byId("sgst").value
+        ) || 0;
 
 
-    const amount = quantity * rate;
+    const amount =
+        quantity * rate;
 
-    const cgst = amount * cgstRate / 100;
 
-    const sgst = amount * sgstRate / 100;
+    const cgst =
+        amount * cgstRate / 100;
+
+
+    const sgst =
+        amount * sgstRate / 100;
+
 
     const grandTotal =
         amount + cgst + sgst;
 
 
-    /* Buyer */
 
-    byId("previewBuyerName").textContent =
+    /* --------------------------------------------------------
+       TITLE
+    -------------------------------------------------------- */
+
+
+    byId(
+        "previewInvoiceTitle"
+    ).textContent =
+
+        byId("invoiceTitle").value ||
+
+        "INVOICE";
+
+
+
+    /* --------------------------------------------------------
+       BUYER
+    -------------------------------------------------------- */
+
+
+    byId(
+        "previewBuyerName"
+    ).textContent =
+
         byId("buyerName").value ||
+
         "Vendor / Buyer Name";
 
-    byId("previewBuyerAddress").textContent =
+
+    byId(
+        "previewBuyerAddress"
+    ).textContent =
+
         byId("buyerAddress").value ||
+
         "Vendor / Buyer Address";
 
-    byId("previewBuyerCity").textContent =
-        byId("buyerCity").value ||
-        "";
+
+    byId(
+        "previewBuyerCity"
+    ).textContent =
+
+        byId("buyerCity").value;
 
 
-    /* Invoice details */
 
-    byId("previewDate").textContent =
-        formatDate(byId("invoiceDate").value);
+    /* --------------------------------------------------------
+       INVOICE DETAILS
+    -------------------------------------------------------- */
 
-    byId("previewInvoiceNo").textContent =
+
+    byId(
+        "previewDate"
+    ).textContent =
+
+        formatDate(
+            byId("invoiceDate").value
+        );
+
+
+    byId(
+        "previewInvoiceNo"
+    ).textContent =
+
         byId("invoiceNumber").value;
 
-    byId("previewDelivery").textContent =
+
+    byId(
+        "previewDelivery"
+    ).textContent =
+
         byId("deliveryNote").value;
 
-    byId("previewSupplierRef").textContent =
+
+    byId(
+        "previewSupplierRef"
+    ).textContent =
+
         byId("supplierRef").value;
 
-    byId("previewBuyerOrder").textContent =
+
+    byId(
+        "previewBuyerOrder"
+    ).textContent =
+
         byId("buyerOrder").value;
 
 
-    /* Item */
 
-    byId("previewFY").textContent =
+    /* --------------------------------------------------------
+       ITEM
+    -------------------------------------------------------- */
+
+
+    byId(
+        "previewFY"
+    ).textContent =
+
         byId("financialYear").value;
 
-    byId("previewDescription").textContent =
+
+    byId(
+        "previewDescription"
+    ).textContent =
+
         byId("description").value;
 
-    byId("previewSerial").textContent =
+
+    byId(
+        "previewSerial"
+    ).textContent =
+
         byId("serialNo").value;
 
-    byId("previewQty").textContent =
+
+    byId(
+        "previewQty"
+    ).textContent =
+
         quantity;
 
-    byId("previewRate").textContent =
+
+    byId(
+        "previewRate"
+    ).textContent =
+
         formatNumber(rate);
 
-    byId("previewAmount").textContent =
+
+    byId(
+        "previewAmount"
+    ).textContent =
+
         formatNumber(amount);
 
 
-    /* Totals */
 
-    byId("previewTotal").textContent =
+    /* --------------------------------------------------------
+       TOTALS
+    -------------------------------------------------------- */
+
+
+    byId(
+        "previewTotal"
+    ).textContent =
+
         formatNumber(amount);
 
-    byId("previewCGST").textContent =
+
+    byId(
+        "previewCGST"
+    ).textContent =
+
         formatNumber(cgst);
 
-    byId("previewSGST").textContent =
+
+    byId(
+        "previewSGST"
+    ).textContent =
+
         formatNumber(sgst);
 
-    byId("previewCGSTPercent").textContent =
+
+    byId(
+        "previewCGSTPercent"
+    ).textContent =
+
         cgstRate;
 
-    byId("previewSGSTPercent").textContent =
+
+    byId(
+        "previewSGSTPercent"
+    ).textContent =
+
         sgstRate;
 
 
-    /* Grand total in words */
 
-    byId("previewWords").textContent =
-        numberToWords(grandTotal);
+    /* --------------------------------------------------------
+       AMOUNT WORDS
+    -------------------------------------------------------- */
 
 
-    /* Note */
+    byId(
+        "previewWords"
+    ).textContent =
 
-    byId("previewNote").textContent =
+        numberToWords(
+            grandTotal
+        );
+
+
+
+    /* --------------------------------------------------------
+       NOTE
+    -------------------------------------------------------- */
+
+
+    byId(
+        "previewNote"
+    ).textContent =
+
         byId("invoiceNote").value;
 
 }
+
 
 
 /* ============================================================
@@ -1335,53 +2369,359 @@ function updateInvoice() {
 
 function resetForm() {
 
+
     byId("buyerName").value = "";
+
     byId("buyerAddress").value = "";
+
     byId("buyerCity").value = "";
 
+
     byId("supplierRef").value = "";
+
     byId("buyerOrder").value = "";
+
     byId("deliveryNote").value = "";
 
-    byId("quantity").value = "1";
 
-    byId("rate").value = "1500000";
+    byId("serialNo").value = "1";
 
-    byId("cgst").value = "0";
-    byId("sgst").value = "0";
-
-    byId("invoiceNote").value =
-        "NOTE: GST will be paid at the time of final bill.";
 
     setDefaults();
+
+
+    clearSignature();
+
 
     updateInvoice();
 
 }
 
 
+
 /* ============================================================
-   LIVE UPDATES
+   LIVE INPUT
 ============================================================ */
 
 document
-    .querySelectorAll(".editor input, .editor textarea")
-    .forEach(element => {
+    .querySelectorAll(
+        ".editor input, .editor textarea"
+    )
+    .forEach(
+        element => {
 
-        element.addEventListener("input", updateInvoice);
 
-        element.addEventListener("change", updateInvoice);
+            element.addEventListener(
+                "input",
+                updateInvoice
+            );
 
-    });
+
+            element.addEventListener(
+                "change",
+                updateInvoice
+            );
+
+
+        }
+    );
+
 
 
 /* ============================================================
-   START
+   SIGNATURE PAD
+============================================================ */
+
+const canvas =
+
+    document.getElementById(
+        "signatureCanvas"
+    );
+
+
+const ctx =
+
+    canvas.getContext("2d");
+
+
+let drawing = false;
+
+let hasSignature = false;
+
+
+
+/* Signature appearance */
+
+ctx.strokeStyle = "#111";
+
+ctx.lineWidth = 2;
+
+ctx.lineCap = "round";
+
+ctx.lineJoin = "round";
+
+
+
+/* ============================================================
+   SIGNATURE POSITION
+============================================================ */
+
+function getPosition(e) {
+
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+
+    let clientX;
+
+    let clientY;
+
+
+
+    if (
+        e.touches &&
+        e.touches.length > 0
+    ) {
+
+
+        clientX =
+            e.touches[0].clientX;
+
+
+        clientY =
+            e.touches[0].clientY;
+
+
+    }
+
+    else {
+
+
+        clientX =
+            e.clientX;
+
+
+        clientY =
+            e.clientY;
+
+
+    }
+
+
+
+    return {
+
+
+        x:
+
+            (clientX - rect.left) *
+
+            (
+                canvas.width /
+                rect.width
+            ),
+
+
+        y:
+
+            (clientY - rect.top) *
+
+            (
+                canvas.height /
+                rect.height
+            )
+
+
+    };
+
+}
+
+
+
+/* ============================================================
+   START DRAWING
+============================================================ */
+
+function startDrawing(e) {
+
+
+    e.preventDefault();
+
+
+    drawing = true;
+
+
+    hasSignature = true;
+
+
+    const pos =
+        getPosition(e);
+
+
+    ctx.beginPath();
+
+
+    ctx.moveTo(
+        pos.x,
+        pos.y
+    );
+
+}
+
+
+
+/* ============================================================
+   DRAW
+============================================================ */
+
+function drawSignature(e) {
+
+
+    if (!drawing) {
+
+        return;
+
+    }
+
+
+    e.preventDefault();
+
+
+    const pos =
+        getPosition(e);
+
+
+    ctx.lineTo(
+        pos.x,
+        pos.y
+    );
+
+
+    ctx.stroke();
+
+}
+
+
+
+/* ============================================================
+   STOP
+============================================================ */
+
+function stopDrawing(e) {
+
+
+    if (e) {
+
+        e.preventDefault();
+
+    }
+
+
+    drawing = false;
+
+
+    ctx.beginPath();
+
+}
+
+
+
+/* ============================================================
+   MOUSE
+============================================================ */
+
+canvas.addEventListener(
+    "mousedown",
+    startDrawing
+);
+
+
+canvas.addEventListener(
+    "mousemove",
+    drawSignature
+);
+
+
+canvas.addEventListener(
+    "mouseup",
+    stopDrawing
+);
+
+
+canvas.addEventListener(
+    "mouseleave",
+    stopDrawing
+);
+
+
+
+/* ============================================================
+   TOUCH
+============================================================ */
+
+canvas.addEventListener(
+    "touchstart",
+    startDrawing,
+    {
+        passive: false
+    }
+);
+
+
+canvas.addEventListener(
+    "touchmove",
+    drawSignature,
+    {
+        passive: false
+    }
+);
+
+
+canvas.addEventListener(
+    "touchend",
+    stopDrawing,
+    {
+        passive: false
+    }
+);
+
+
+
+/* ============================================================
+   CLEAR SIGNATURE
+============================================================ */
+
+function clearSignature() {
+
+
+    ctx.clearRect(
+
+        0,
+
+        0,
+
+        canvas.width,
+
+        canvas.height
+
+    );
+
+
+    hasSignature = false;
+
+}
+
+
+
+/* ============================================================
+   INITIALIZE
 ============================================================ */
 
 setDefaults();
 
 updateInvoice();
+
 
 </script>
 
