@@ -10,7 +10,8 @@
     content="width=device-width, initial-scale=1.0"
 >
 
-<title>Professional Invoice Generator</title>
+<title>Invoice Generator</title>
+
 
 <style>
 
@@ -31,6 +32,7 @@ body {
 body {
     background: #f1f2f4;
     color: #222;
+
     font-family:
         Arial,
         Helvetica,
@@ -53,19 +55,22 @@ body {
 
 .toolbar {
     width: min(960px, 100%);
-    margin: 0 auto 18px;
 
-    background: #fff;
+    margin: 0 auto 18px;
 
     padding: 14px 18px;
 
-    border-radius: 10px;
+    background: #fff;
+
+    border-radius: 9px;
 
     box-shadow:
-        0 3px 15px rgba(0,0,0,.07);
+        0 2px 12px rgba(0,0,0,.07);
 
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
     gap: 15px;
@@ -75,16 +80,19 @@ body {
     margin: 0;
 
     font-size: 17px;
+
     font-weight: 800;
 }
 
 .toolbar-actions {
     display: flex;
+
     gap: 8px;
 }
 
 button {
     border: 0;
+
     cursor: pointer;
 
     font-family: Arial, sans-serif;
@@ -98,17 +106,20 @@ button {
 
 .btn-primary {
     background: #222;
+
     color: #fff;
 }
 
 .btn-secondary {
     background: #ededed;
+
     color: #222;
 }
 
 .btn-danger {
-    background: #f8e2e2;
-    color: #8d2222;
+    background: #f8e0e0;
+
+    color: #8c2222;
 
     padding: 6px 10px;
 
@@ -122,16 +133,17 @@ button {
 
 .editor {
     width: min(960px, 100%);
-    margin: 0 auto 25px;
 
-    background: #fff;
+    margin: 0 auto 24px;
 
     padding: 22px;
 
-    border-radius: 10px;
+    background: #fff;
+
+    border-radius: 9px;
 
     box-shadow:
-        0 3px 15px rgba(0,0,0,.07);
+        0 2px 12px rgba(0,0,0,.07);
 }
 
 .editor h3 {
@@ -142,7 +154,7 @@ button {
 
 
 /* =========================================================
-   FORM GRID
+   FORM
 ========================================================= */
 
 .form-grid {
@@ -179,23 +191,24 @@ textarea,
 select {
     width: 100%;
 
+    padding: 10px 11px;
+
     border: 1px solid #d4d4d4;
 
     border-radius: 6px;
 
-    padding: 10px 11px;
-
     background: #fff;
 
-    font-family: Arial, sans-serif;
+    color: #222;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
     font-size: 13px;
 
     outline: none;
-
-    transition:
-        border .15s,
-        box-shadow .15s;
 }
 
 input:focus,
@@ -216,22 +229,22 @@ textarea {
 .section-title {
     grid-column: 1 / -1;
 
-    margin-top: 10px;
+    margin-top: 8px;
 
     padding-bottom: 7px;
 
-    border-bottom: 1px solid #e4e4e4;
+    border-bottom: 1px solid #e2e2e2;
+
+    color: #333;
 
     font-size: 12px;
 
     font-weight: 800;
-
-    color: #333;
 }
 
 
 /* =========================================================
-   ITEMS
+   ITEMS EDITOR
 ========================================================= */
 
 .items-editor {
@@ -245,18 +258,19 @@ textarea {
 }
 
 
-/* =========================================================
-   ITEM CARD
-========================================================= */
+/*
+   Clean item editor.
+   No large heavy boxes around descriptions.
+*/
 
 .item-editor {
-    border: 1px solid #e2e2e2;
+    padding: 10px 0;
 
-    border-radius: 7px;
+    border-bottom: 1px solid #e5e5e5;
+}
 
-    padding: 12px;
-
-    background: #fafafa;
+.item-editor:last-child {
+    border-bottom: 0;
 }
 
 .item-editor-header {
@@ -266,15 +280,15 @@ textarea {
 
     justify-content: space-between;
 
-    margin-bottom: 9px;
+    margin-bottom: 8px;
 }
 
 .item-editor-title {
+    color: #333;
+
     font-size: 12px;
 
     font-weight: 800;
-
-    color: #333;
 }
 
 .item-editor-grid {
@@ -289,17 +303,14 @@ textarea {
     gap: 9px;
 }
 
-
-/* =========================================================
-   ADD ITEM
-========================================================= */
-
 .add-item-wrap {
     grid-column: 1 / -1;
 
     display: flex;
 
     justify-content: flex-start;
+
+    padding-top: 2px;
 }
 
 .add-item-btn {
@@ -314,37 +325,34 @@ textarea {
 
 
 /* =========================================================
-   OPTIONAL ADJUSTMENTS
+   ADJUSTMENTS
 ========================================================= */
 
 .optional-box {
     grid-column: 1 / -1;
 
-    border: 1px solid #e1e1e1;
-
-    border-radius: 7px;
-
     padding: 14px;
 
     background: #fafafa;
+
+    border: 1px solid #e1e1e1;
+
+    border-radius: 7px;
 }
 
 .optional-title {
+    margin-bottom: 12px;
+
     font-size: 12px;
 
     font-weight: 800;
-
-    margin-bottom: 12px;
 }
 
 .optional-grid {
     display: grid;
 
     grid-template-columns:
-        1fr
-        1fr
-        1fr
-        1fr;
+        repeat(4, minmax(0, 1fr));
 
     gap: 10px;
 
@@ -367,12 +375,15 @@ textarea {
 
 
 /* =========================================================
-   INVOICE VIEWPORT
+   A4 PREVIEW AREA
 
-   Mobile = responsive A4 preview
+   This is NOT the A4 itself.
+
+   It is simply a responsive frame which holds
+   the exact 210mm x 297mm invoice.
 ========================================================= */
 
-.invoice-viewport {
+.invoice-preview-area {
     width: 100%;
 
     display: flex;
@@ -381,21 +392,53 @@ textarea {
 
     overflow: hidden;
 
-    padding: 5px 0 35px;
+    padding:
+        5px 0 35px;
 }
 
-.invoice-wrapper {
+
+/*
+   Desktop:
+   actual A4 width.
+*/
+
+.invoice-preview-frame {
+    position: relative;
+
     width: 210mm;
+
+    height: 297mm;
 
     flex: 0 0 210mm;
 }
 
 
+/*
+   Actual A4 invoice.
+*/
+
+.invoice-wrapper {
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 210mm;
+
+    height: 297mm;
+
+    transform-origin: top left;
+}
+
+
 /* =========================================================
-   A4 INVOICE
+   A4 PAGE
 ========================================================= */
 
 .invoice {
+    position: relative;
+
     width: 210mm;
 
     height: 297mm;
@@ -404,9 +447,9 @@ textarea {
 
     max-width: 210mm;
 
-    background: #fff;
+    min-height: 297mm;
 
-    position: relative;
+    max-height: 297mm;
 
     overflow: hidden;
 
@@ -415,8 +458,7 @@ textarea {
         9mm
         10mm;
 
-    box-shadow:
-        0 4px 22px rgba(0,0,0,.16);
+    background: #fff;
 
     color: #222;
 
@@ -424,6 +466,9 @@ textarea {
         "Times New Roman",
         Times,
         serif;
+
+    box-shadow:
+        0 4px 22px rgba(0,0,0,.16);
 }
 
 
@@ -434,9 +479,9 @@ textarea {
 .top-line {
     height: 1.2px;
 
-    background: #68233f;
-
     margin-bottom: 4px;
+
+    background: #68233f;
 }
 
 
@@ -464,19 +509,22 @@ textarea {
 
 .logo-circle {
     width: 43px;
+
     height: 43px;
 
-    border-radius: 50%;
-
-    background: #68233f;
-
-    color: #fff;
+    flex: 0 0 43px;
 
     display: flex;
 
     align-items: center;
 
     justify-content: center;
+
+    border-radius: 50%;
+
+    background: #68233f;
+
+    color: #fff;
 
     font-size: 29px;
 
@@ -509,11 +557,7 @@ textarea {
 ========================================================= */
 
 .invoice-title {
-    border: 1px solid #333;
-
-    border-bottom: none;
-
-    min-height: 24px;
+    height: 24px;
 
     display: flex;
 
@@ -521,7 +565,12 @@ textarea {
 
     justify-content: center;
 
-    padding: 4px;
+    padding: 3px;
+
+    border:
+        1px solid #333;
+
+    border-bottom: none;
 
     font-size: 14px;
 
@@ -536,7 +585,7 @@ textarea {
 ========================================================= */
 
 .meta {
-    min-height: 123px;
+    height: 123px;
 
     display: grid;
 
@@ -550,7 +599,7 @@ textarea {
 }
 
 .seller-block {
-    min-height: 67px;
+    height: 67px;
 
     padding: 5px 7px;
 
@@ -559,16 +608,20 @@ textarea {
     font-size: 9.5px;
 
     line-height: 1.15;
+
+    overflow: hidden;
 }
 
 .buyer-block {
-    min-height: 54px;
+    height: 54px;
 
     padding: 5px 7px;
 
     font-size: 9.5px;
 
     line-height: 1.15;
+
+    overflow: hidden;
 }
 
 .meta-right {
@@ -619,13 +672,13 @@ textarea {
 .items-table {
     width: 100%;
 
-    border-collapse: collapse;
-
     margin-top: 9px;
 
-    font-size: 9.5px;
+    border-collapse: collapse;
 
     table-layout: fixed;
+
+    font-size: 9.5px;
 }
 
 .items-table th,
@@ -636,11 +689,11 @@ textarea {
 .items-table th {
     height: 24px;
 
+    padding: 3px;
+
     text-align: center;
 
     font-weight: bold;
-
-    padding: 3px;
 }
 
 .items-table td {
@@ -680,7 +733,7 @@ textarea {
 }
 
 .item-row {
-    height: 63px;
+    height: 55px;
 }
 
 .item-description {
@@ -692,13 +745,17 @@ textarea {
 }
 
 .number-cell {
-    text-align: right;
-
     padding-right: 6px !important;
+
+    text-align: right;
 }
 
 .summary-row td {
-    height: 20px;
+    height: 19px;
+
+    padding-top: 2px;
+
+    padding-bottom: 2px;
 
     vertical-align: middle;
 }
@@ -717,11 +774,12 @@ textarea {
 .amount-words {
     min-height: 27px;
 
-    border: 1px solid #333;
+    padding: 5px 7px;
+
+    border:
+        1px solid #333;
 
     border-top: none;
-
-    padding: 5px 7px;
 
     font-size: 9.5px;
 
@@ -736,11 +794,12 @@ textarea {
 .bank-details {
     min-height: 35px;
 
-    border: 1px solid #333;
+    padding: 5px;
+
+    border:
+        1px solid #333;
 
     border-top: none;
-
-    padding: 5px;
 
     text-align: center;
 
@@ -753,19 +812,20 @@ textarea {
 
 
 /* =========================================================
-   BOTTOM
+   NOTE + SIGNATURE
 ========================================================= */
 
 .bottom-section {
     height: 68px;
 
-    border: 1px solid #333;
-
-    border-top: none;
-
     display: grid;
 
     grid-template-columns: 1fr 35%;
+
+    border:
+        1px solid #333;
+
+    border-top: none;
 }
 
 .note {
@@ -776,16 +836,18 @@ textarea {
     line-height: 1.2;
 
     white-space: pre-line;
+
+    overflow: hidden;
 }
 
 .signature {
-    border-left: 1px solid #333;
+    position: relative;
 
     padding: 3px 5px;
 
-    text-align: center;
+    border-left: 1px solid #333;
 
-    position: relative;
+    text-align: center;
 }
 
 .signature-label {
@@ -819,17 +881,17 @@ textarea {
 .signature-actions button {
     padding: 1px 5px;
 
-    font-size: 7px;
-
     background: #eee;
 
     border: 1px solid #aaa;
+
+    font-size: 7px;
 }
 
 .signature-line {
-    border-top: 1px solid #333;
-
     padding-top: 2px;
+
+    border-top: 1px solid #333;
 
     font-size: 8px;
 
@@ -839,12 +901,17 @@ textarea {
 
 /* =========================================================
    FOOTER
+
+   IMPORTANT:
+   Footer belongs to the A4 invoice itself.
+   It is NOT outside the invoice.
 ========================================================= */
 
 .footer-line {
     position: absolute;
 
     left: 9mm;
+
     right: 9mm;
 
     bottom: 10mm;
@@ -858,6 +925,7 @@ textarea {
     position: absolute;
 
     left: 9mm;
+
     right: 9mm;
 
     bottom: 4mm;
@@ -875,7 +943,7 @@ textarea {
 
 
 /* =========================================================
-   MOBILE EDITOR
+   MOBILE
 ========================================================= */
 
 @media (max-width: 700px) {
@@ -883,6 +951,7 @@ textarea {
     .app {
         padding: 10px;
     }
+
 
     .toolbar {
         flex-direction: column;
@@ -892,19 +961,21 @@ textarea {
         padding: 14px;
     }
 
+
     .toolbar-actions {
         width: 100%;
     }
+
 
     .toolbar-actions button {
         flex: 1;
     }
 
+
     .editor {
         padding: 15px;
-
-        border-radius: 8px;
     }
+
 
     .form-grid {
         grid-template-columns: 1fr;
@@ -912,59 +983,83 @@ textarea {
         gap: 12px;
     }
 
+
     .field.full {
         grid-column: auto;
     }
+
 
     .section-title {
         grid-column: auto;
     }
 
+
     .items-editor {
         grid-column: auto;
     }
+
 
     .add-item-wrap {
         grid-column: auto;
     }
 
+
     .optional-box {
         grid-column: auto;
     }
+
 
     .optional-grid {
         grid-template-columns: 1fr 1fr;
     }
 
+
     .item-editor-grid {
         grid-template-columns: 1fr 1fr;
     }
 
+
     /*
-       A4 preview is scaled to fit screen.
-       The actual invoice remains 210mm x 297mm.
+       The editor is responsive.
+
+       The invoice remains a real A4 page.
+       JavaScript scales only the A4 preview.
     */
 
-    .invoice-viewport {
-        width: 100%;
-
+    .invoice-preview-area {
         display: block;
 
-        overflow: hidden;
+        width: 100%;
 
         padding:
-            0
-            0
-            30px;
+            0 0 30px;
+
+        overflow: hidden;
     }
+
+
+    .invoice-preview-frame {
+        width: 100%;
+
+        height: auto;
+
+        flex: none;
+
+        overflow: hidden;
+    }
+
 
     .invoice-wrapper {
-        width: 210mm;
+        position: absolute;
 
-        transform-origin: top left;
+        left: 0;
 
-        margin-left: 0;
+        top: 0;
+
+        transform-origin:
+            top left;
     }
+
 }
 
 
@@ -980,6 +1075,7 @@ textarea {
         margin: 0;
     }
 
+
     html,
     body {
         width: 210mm;
@@ -993,72 +1089,101 @@ textarea {
         background: #fff !important;
     }
 
+
     .app {
         padding: 0 !important;
 
         margin: 0 !important;
     }
 
+
     .toolbar,
     .editor {
         display: none !important;
     }
 
-    .invoice-viewport {
+
+    .invoice-preview-area {
         display: block !important;
 
-        overflow: visible !important;
+        width: 210mm !important;
+
+        height: 297mm !important;
 
         padding: 0 !important;
 
         margin: 0 !important;
 
+        overflow: hidden !important;
+    }
+
+
+    .invoice-preview-frame {
+        position: relative !important;
+
         width: 210mm !important;
 
         height: 297mm !important;
-    }
-
-    .invoice-wrapper {
-        width: 210mm !important;
 
         margin: 0 !important;
 
-        transform: none !important;
+        overflow: hidden !important;
     }
+
+
+    .invoice-wrapper {
+        position: absolute !important;
+
+        left: 0 !important;
+
+        top: 0 !important;
+
+        width: 210mm !important;
+
+        height: 297mm !important;
+
+        transform: none !important;
+
+        margin: 0 !important;
+    }
+
 
     .invoice {
         width: 210mm !important;
+
+        height: 297mm !important;
 
         min-width: 210mm !important;
 
         max-width: 210mm !important;
 
-        height: 297mm !important;
-
         min-height: 297mm !important;
 
         max-height: 297mm !important;
 
-        box-shadow: none !important;
-
         overflow: hidden !important;
 
-        page-break-after: avoid !important;
+        box-shadow: none !important;
 
         page-break-before: avoid !important;
 
-        break-after: avoid-page !important;
+        page-break-after: avoid !important;
 
         break-before: avoid-page !important;
+
+        break-after: avoid-page !important;
     }
+
 
     .signature-actions {
         display: none !important;
     }
 
+
     #signatureCanvas {
         cursor: default;
     }
+
 }
 
 </style>
@@ -1082,9 +1207,11 @@ textarea {
         Invoice Generator
     </h2>
 
+
     <div class="toolbar-actions">
 
         <button
+            type="button"
             class="btn-secondary"
             onclick="resetForm()">
 
@@ -1092,7 +1219,9 @@ textarea {
 
         </button>
 
+
         <button
+            type="button"
             class="btn-primary"
             onclick="window.print()">
 
@@ -1103,6 +1232,7 @@ textarea {
     </div>
 
 </div>
+
 
 
 <!-- =========================================================
@@ -1119,9 +1249,7 @@ textarea {
     <div class="form-grid">
 
 
-        <!-- =====================================================
-             BASIC
-        ====================================================== -->
+        <!-- BASIC -->
 
         <div class="section-title">
             Basic Details
@@ -1168,9 +1296,8 @@ textarea {
         </div>
 
 
-        <!-- =====================================================
-             BUYER
-        ====================================================== -->
+
+        <!-- BUYER -->
 
         <div class="section-title">
             Vendor / Buyer Details
@@ -1257,9 +1384,8 @@ textarea {
         </div>
 
 
-        <!-- =====================================================
-             ITEMS
-        ====================================================== -->
+
+        <!-- ITEMS -->
 
         <div class="section-title">
             Items
@@ -1286,9 +1412,8 @@ textarea {
         </div>
 
 
-        <!-- =====================================================
-             ADJUSTMENTS
-        ====================================================== -->
+
+        <!-- ADJUSTMENTS -->
 
         <div class="section-title">
             Optional Adjustments
@@ -1297,6 +1422,7 @@ textarea {
 
         <div class="optional-box">
 
+
             <div class="optional-title">
                 Adjust the invoice total
             </div>
@@ -1304,8 +1430,6 @@ textarea {
 
             <div class="optional-grid">
 
-
-                <!-- DISCOUNT -->
 
                 <div class="field">
 
@@ -1322,8 +1446,6 @@ textarea {
 
                 </div>
 
-
-                <!-- REBATE -->
 
                 <div class="field">
 
@@ -1342,8 +1464,6 @@ textarea {
                 </div>
 
 
-                <!-- CUSTOM LABEL -->
-
                 <div class="field">
 
                     <label>
@@ -1357,8 +1477,6 @@ textarea {
 
                 </div>
 
-
-                <!-- CUSTOM VALUE -->
 
                 <div class="field">
 
@@ -1374,6 +1492,7 @@ textarea {
                         placeholder="₹">
 
                 </div>
+
 
             </div>
 
@@ -1395,12 +1514,12 @@ textarea {
 
             </div>
 
+
         </div>
 
 
-        <!-- =====================================================
-             GST
-        ====================================================== -->
+
+        <!-- GST -->
 
         <div class="section-title">
             GST
@@ -1439,9 +1558,8 @@ textarea {
         </div>
 
 
-        <!-- =====================================================
-             NOTE
-        ====================================================== -->
+
+        <!-- NOTE -->
 
         <div class="section-title">
             Invoice Note
@@ -1461,356 +1579,374 @@ textarea {
 </div>
 
 
+
 <!-- =========================================================
-     INVOICE PREVIEW
+     A4 PREVIEW
 ========================================================= -->
 
 <div
-    class="invoice-viewport"
-    id="invoiceViewport">
+    class="invoice-preview-area"
+    id="invoicePreviewArea">
 
-
-<div
-    class="invoice-wrapper"
-    id="invoiceWrapper">
-
-
-<div class="invoice">
-
-
-    <!-- TOP -->
-
-    <div class="top-line"></div>
-
-
-    <!-- HEADER -->
-
-    <div class="header">
-
-        <div class="brand">
-
-            <div class="logo-circle">
-                R
-            </div>
-
-            <div class="seller-name">
-                Randhir U. Jadhav
-            </div>
-
-        </div>
-
-
-        <div class="seller-title">
-
-            B.E. CIVIL<br>
-
-            Govt. Contractor
-
-        </div>
-
-    </div>
-
-
-    <!-- TITLE -->
 
     <div
-        class="invoice-title"
-        id="previewInvoiceTitle">
-
-        PROFORMA INVOICE
-
-    </div>
-
-
-    <!-- META -->
-
-    <div class="meta">
-
-
-        <div class="meta-left">
-
-
-            <div class="seller-block">
-
-                <strong>
-                    From Shri Randhir U Jadhav
-                </strong>
-
-                <br>
-
-                201, Rushiraj Riviera Apartment,
-                near Makaloo hotel
-
-                <br>
-
-                Gangapur Road,
-                Nashik - 422013,
-                Maharashtra, India
-
-                <br>
-
-                PAN NO- ADPJS872E.
-
-                <br>
-
-                GST NO- 27ADPJS872E1ZE
-
-            </div>
-
-
-            <div class="buyer-block">
-
-                <strong>
-                    To,
-                </strong>
-
-                <br>
-
-                <span id="previewBuyerName">
-                    Vendor / Buyer Name
-                </span>
-
-                <br>
-
-                <span id="previewBuyerAddress">
-                    Vendor / Buyer Address
-                </span>
-
-                <br>
-
-                <span id="previewBuyerCity"></span>
-
-            </div>
-
-        </div>
-
-
-        <div class="meta-right">
-
-
-            <div class="meta-row">
-
-                <div class="meta-label">
-                    Date-
-                </div>
-
-                <div
-                    class="meta-value"
-                    id="previewDate">
-                </div>
-
-            </div>
-
-
-            <div class="meta-row">
-
-                <div class="meta-label">
-                    Invoice No-
-                </div>
-
-                <div
-                    class="meta-value"
-                    id="previewInvoiceNo">
-                </div>
-
-            </div>
-
-
-            <div class="meta-row delivery">
-
-                <div class="meta-label">
-                    Delivery note
-                </div>
-
-                <div
-                    class="meta-value"
-                    id="previewDelivery">
-                </div>
-
-            </div>
-
-
-            <div class="meta-row">
-
-                <div class="meta-label">
-                    Suppliers Ref:
-                </div>
-
-                <div
-                    class="meta-value"
-                    id="previewSupplierRef">
-                </div>
-
-            </div>
-
-
-            <div class="meta-row">
-
-                <div class="meta-label">
-                    Buyer's Order No.
-                </div>
-
-                <div
-                    class="meta-value"
-                    id="previewBuyerOrder">
-                </div>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
-    <!-- ITEMS -->
-
-    <table class="items-table">
-
-        <thead>
-
-            <tr>
-
-                <th class="fy-col">
-                    F.Y.
-                </th>
-
-                <th class="description-col">
-                    Description
-                </th>
-
-                <th class="serial-col">
-                    Serial
-                </th>
-
-                <th class="qty-col">
-                    QTY
-                </th>
-
-                <th class="rate-col">
-                    Rate
-                </th>
-
-                <th class="amount-col">
-                    Amount
-                </th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody id="invoiceItemsBody">
-        </tbody>
-
-    </table>
-
-
-    <!-- AMOUNT WORDS -->
-
-    <div class="amount-words">
-
-        <strong>
-            Amount In Words:
-        </strong>
-
-        <span id="previewWords">
-            Zero Rupees only
-        </span>
-
-    </div>
-
-
-    <!-- BANK -->
-
-    <div class="bank-details">
-
-        Bank- State Bank Of India,
-        Account Number - 34605977589,
-        Account Type - Current,
-        IFSC Code - SBIN0007497,
-        GANGAPUR ROAD Nashik
-
-    </div>
-
-
-    <!-- NOTE + SIGNATURE -->
-
-    <div class="bottom-section">
+        class="invoice-preview-frame"
+        id="invoicePreviewFrame">
 
 
         <div
-            class="note"
-            id="previewNote">
-        </div>
+            class="invoice-wrapper"
+            id="invoiceWrapper">
 
 
-        <div class="signature">
-
-            <div class="signature-label">
-                Signature
-            </div>
+            <div class="invoice">
 
 
-            <canvas
-                id="signatureCanvas"
-                width="260"
-                height="80">
-            </canvas>
+                <!-- TOP LINE -->
+
+                <div class="top-line"></div>
 
 
-            <div class="signature-actions">
+                <!-- HEADER -->
 
-                <button
-                    type="button"
-                    onclick="clearSignature()">
+                <div class="header">
 
-                    Clear
+                    <div class="brand">
 
-                </button>
-
-            </div>
+                        <div class="logo-circle">
+                            R
+                        </div>
 
 
-            <div class="signature-line">
-                Proprietor
+                        <div class="seller-name">
+                            Randhir U. Jadhav
+                        </div>
+
+                    </div>
+
+
+                    <div class="seller-title">
+
+                        B.E. CIVIL<br>
+
+                        Govt. Contractor
+
+                    </div>
+
+                </div>
+
+
+                <!-- TITLE -->
+
+                <div
+                    class="invoice-title"
+                    id="previewInvoiceTitle">
+
+                    PROFORMA INVOICE
+
+                </div>
+
+
+                <!-- META -->
+
+                <div class="meta">
+
+
+                    <div class="meta-left">
+
+
+                        <div class="seller-block">
+
+                            <strong>
+                                From Shri Randhir U Jadhav
+                            </strong>
+
+                            <br>
+
+                            201, Rushiraj Riviera Apartment,
+                            near Makaloo hotel
+
+                            <br>
+
+                            Gangapur Road,
+                            Nashik - 422013,
+                            Maharashtra, India
+
+                            <br>
+
+                            PAN NO- ADPJS872E.
+
+                            <br>
+
+                            GST NO- 27ADPJS872E1ZE
+
+                        </div>
+
+
+                        <div class="buyer-block">
+
+                            <strong>
+                                To,
+                            </strong>
+
+                            <br>
+
+                            <span id="previewBuyerName">
+                                Vendor / Buyer Name
+                            </span>
+
+                            <br>
+
+                            <span id="previewBuyerAddress">
+                                Vendor / Buyer Address
+                            </span>
+
+                            <br>
+
+                            <span id="previewBuyerCity"></span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="meta-right">
+
+
+                        <div class="meta-row">
+
+                            <div class="meta-label">
+                                Date-
+                            </div>
+
+                            <div
+                                class="meta-value"
+                                id="previewDate">
+                            </div>
+
+                        </div>
+
+
+                        <div class="meta-row">
+
+                            <div class="meta-label">
+                                Invoice No-
+                            </div>
+
+                            <div
+                                class="meta-value"
+                                id="previewInvoiceNo">
+                            </div>
+
+                        </div>
+
+
+                        <div class="meta-row delivery">
+
+                            <div class="meta-label">
+                                Delivery note
+                            </div>
+
+                            <div
+                                class="meta-value"
+                                id="previewDelivery">
+                            </div>
+
+                        </div>
+
+
+                        <div class="meta-row">
+
+                            <div class="meta-label">
+                                Suppliers Ref:
+                            </div>
+
+                            <div
+                                class="meta-value"
+                                id="previewSupplierRef">
+                            </div>
+
+                        </div>
+
+
+                        <div class="meta-row">
+
+                            <div class="meta-label">
+                                Buyer's Order No.
+                            </div>
+
+                            <div
+                                class="meta-value"
+                                id="previewBuyerOrder">
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ITEMS TABLE -->
+
+                <table class="items-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="fy-col">
+                                F.Y.
+                            </th>
+
+                            <th class="description-col">
+                                Description
+                            </th>
+
+                            <th class="serial-col">
+                                Serial
+                            </th>
+
+                            <th class="qty-col">
+                                QTY
+                            </th>
+
+                            <th class="rate-col">
+                                Rate
+                            </th>
+
+                            <th class="amount-col">
+                                Amount
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="invoiceItemsBody">
+                    </tbody>
+
+                </table>
+
+
+
+                <!-- WORDS -->
+
+                <div class="amount-words">
+
+                    <strong>
+                        Amount In Words:
+                    </strong>
+
+                    <span id="previewWords">
+                        Zero Rupees only
+                    </span>
+
+                </div>
+
+
+
+                <!-- BANK -->
+
+                <div class="bank-details">
+
+                    Bank- State Bank Of India,
+                    Account Number - 34605977589,
+                    Account Type - Current,
+                    IFSC Code - SBIN0007497,
+                    GANGAPUR ROAD Nashik
+
+                </div>
+
+
+
+                <!-- NOTE + SIGNATURE -->
+
+                <div class="bottom-section">
+
+
+                    <div
+                        class="note"
+                        id="previewNote">
+                    </div>
+
+
+                    <div class="signature">
+
+
+                        <div class="signature-label">
+                            Signature
+                        </div>
+
+
+                        <canvas
+                            id="signatureCanvas"
+                            width="260"
+                            height="80">
+                        </canvas>
+
+
+                        <div class="signature-actions">
+
+                            <button
+                                type="button"
+                                onclick="clearSignature()">
+
+                                Clear
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="signature-line">
+                            Proprietor
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="footer-line"></div>
+
+
+                <div class="footer">
+
+                    201, Rushiraj Riviera Appt.,
+                    Near Makaloo Hotel,
+                    Gangapur Road, Nashik 422 013
+
+                    <br>
+
+                    Phone : 098 22 22 94 63
+
+                    &nbsp;&nbsp;&nbsp;
+
+                    Email : purvajadhav2004@gmail.com
+
+                </div>
+
+
             </div>
 
         </div>
 
     </div>
 
-
-    <!-- FOOTER -->
-
-    <div class="footer-line"></div>
-
-
-    <div class="footer">
-
-        201, Rushiraj Riviera Appt.,
-        Near Makaloo Hotel,
-        Gangapur Road, Nashik 422 013
-
-        <br>
-
-        Phone : 098 22 22 94 63
-
-        &nbsp;&nbsp;&nbsp;
-
-        Email : purvajadhav2004@gmail.com
-
-    </div>
-
-
-</div>
-
-</div>
-
 </div>
 
 
 </div>
+
 
 
 <script>
@@ -1829,13 +1965,17 @@ let itemCounter = 0;
 ========================================================= */
 
 function byId(id) {
+
     return document.getElementById(id);
+
 }
 
 
 function formatNumber(number) {
 
-    number = Number(number) || 0;
+    number =
+        Number(number) || 0;
+
 
     return number.toLocaleString(
         "en-IN",
@@ -1844,32 +1984,43 @@ function formatNumber(number) {
             maximumFractionDigits: 2
         }
     );
+
 }
 
 
 function formatDate(dateString) {
 
     if (!dateString) {
+
         return "";
+
     }
 
+
     const date =
-        new Date(dateString + "T00:00:00");
+        new Date(
+            dateString + "T00:00:00"
+        );
+
 
     const day =
         String(
             date.getDate()
         ).padStart(2, "0");
 
+
     const month =
         String(
             date.getMonth() + 1
         ).padStart(2, "0");
 
+
     const year =
         date.getFullYear();
 
+
     return `${day}/${month}/${year}`;
+
 }
 
 
@@ -1886,6 +2037,7 @@ function escapeHtml(value) {
         .replace(/"/g, "&quot;")
 
         .replace(/'/g, "&#039;");
+
 }
 
 
@@ -1959,18 +2111,23 @@ function numberToWords(num) {
         }
 
 
-        return tens[
-            Math.floor(n / 10)
-        ]
+        return (
 
-        +
+            tens[
+                Math.floor(n / 10)
+            ]
 
-        (
-            n % 10
-            ?
-            " " + ones[n % 10]
-            :
-            ""
+            +
+
+            (
+                n % 10
+                ?
+                " " +
+                ones[n % 10]
+                :
+                ""
+            )
+
         );
 
     }
@@ -2008,7 +2165,8 @@ function numberToWords(num) {
 
         if (n) {
 
-            result += twoDigits(n);
+            result +=
+                twoDigits(n);
 
         }
 
@@ -2026,6 +2184,7 @@ function numberToWords(num) {
             num / 10000000
         );
 
+
     num %= 10000000;
 
 
@@ -2034,6 +2193,7 @@ function numberToWords(num) {
             num / 100000
         );
 
+
     num %= 100000;
 
 
@@ -2041,6 +2201,7 @@ function numberToWords(num) {
         Math.floor(
             num / 1000
         );
+
 
     num %= 1000;
 
@@ -2086,6 +2247,7 @@ function numberToWords(num) {
     return result.trim()
         +
         " Rupees only";
+
 }
 
 
@@ -2143,6 +2305,7 @@ function setDefaults() {
 
     byId("customLess").checked =
         false;
+
 }
 
 
@@ -2163,13 +2326,15 @@ function createItem() {
 
         description: "",
 
-        serial: items.length + 1,
+        serial:
+            items.length + 1,
 
         qty: 1,
 
         rate: 0
 
     };
+
 }
 
 
@@ -2187,6 +2352,7 @@ function addItem() {
 
 
     renderItemEditors();
+
 
     updateInvoice();
 
@@ -2225,13 +2391,14 @@ function removeItem(id) {
 
     renderItemEditors();
 
+
     updateInvoice();
 
 }
 
 
 /* =========================================================
-   RENDER ITEM EDITORS
+   ITEM EDITORS
 ========================================================= */
 
 function renderItemEditors() {
@@ -2240,7 +2407,8 @@ function renderItemEditors() {
         byId("itemsEditor");
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
     items.forEach(
@@ -2432,9 +2600,9 @@ function renderItemEditors() {
 function updateInvoice() {
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        TITLE
-    ===================================================== */
+    ------------------------------------------------------- */
 
     byId(
         "previewInvoiceTitle"
@@ -2447,9 +2615,9 @@ function updateInvoice() {
         "INVOICE";
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        BUYER
-    ===================================================== */
+    ------------------------------------------------------- */
 
     byId(
         "previewBuyerName"
@@ -2482,9 +2650,9 @@ function updateInvoice() {
         ).value;
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        META
-    ===================================================== */
+    ------------------------------------------------------- */
 
     byId(
         "previewDate"
@@ -2533,9 +2701,9 @@ function updateInvoice() {
         ).value;
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        TABLE
-    ===================================================== */
+    ------------------------------------------------------- */
 
     const tbody =
         byId(
@@ -2543,15 +2711,12 @@ function updateInvoice() {
         );
 
 
-    tbody.innerHTML = "";
+    tbody.innerHTML =
+        "";
 
 
     let subtotal = 0;
 
-
-    /* =====================================================
-       ITEMS
-    ===================================================== */
 
     items.forEach(
         item => {
@@ -2569,7 +2734,8 @@ function updateInvoice() {
                 );
 
 
-            subtotal += amount;
+            subtotal +=
+                amount;
 
 
             const row =
@@ -2590,19 +2756,19 @@ function updateInvoice() {
 
                 <td class="description-col">
 
-                    <div class="item-description">
-
-                        ${
-                            item.description
-                            ?
-                            escapeHtml(
+                    ${
+                        item.description
+                        ?
+                        `
+                        <div class="item-description">
+                            ${escapeHtml(
                                 item.description
-                            )
-                            :
-                            ""
-                        }
-
-                    </div>
+                            )}
+                        </div>
+                        `
+                        :
+                        ""
+                    }
 
                 </td>
 
@@ -2631,9 +2797,9 @@ function updateInvoice() {
     );
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        DISCOUNT
-    ===================================================== */
+    ------------------------------------------------------- */
 
     const discount =
 
@@ -2646,9 +2812,9 @@ function updateInvoice() {
         0;
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        REBATE %
-    ===================================================== */
+    ------------------------------------------------------- */
 
     let rebateRate =
 
@@ -2673,14 +2839,16 @@ function updateInvoice() {
 
     const rebateAmount =
 
-        subtotal *
-        rebateRate /
+        subtotal
+        *
+        rebateRate
+        /
         100;
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        CUSTOM
-    ===================================================== */
+    ------------------------------------------------------- */
 
     const customAmount =
 
@@ -2709,9 +2877,9 @@ function updateInvoice() {
         ).checked;
 
 
-    /* =====================================================
-       TAXABLE AMOUNT
-    ===================================================== */
+    /* -------------------------------------------------------
+       TAXABLE
+    ------------------------------------------------------- */
 
     let taxableAmount =
 
@@ -2744,9 +2912,9 @@ function updateInvoice() {
         );
 
 
-    /* =====================================================
-       ADJUSTMENT ROWS
-    ===================================================== */
+    /* -------------------------------------------------------
+       SUMMARY
+    ------------------------------------------------------- */
 
     if (discount > 0) {
 
@@ -2786,9 +2954,9 @@ function updateInvoice() {
     }
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        GST
-    ===================================================== */
+    ------------------------------------------------------- */
 
     const cgstRate =
 
@@ -2839,9 +3007,9 @@ function updateInvoice() {
         sgst;
 
 
-    /* =====================================================
-       SUMMARY
-    ===================================================== */
+    /* -------------------------------------------------------
+       SUMMARY ROWS
+    ------------------------------------------------------- */
 
     addSummaryRow(
         tbody,
@@ -2880,9 +3048,9 @@ function updateInvoice() {
     );
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        WORDS
-    ===================================================== */
+    ------------------------------------------------------- */
 
     byId(
         "previewWords"
@@ -2893,9 +3061,9 @@ function updateInvoice() {
         );
 
 
-    /* =====================================================
+    /* -------------------------------------------------------
        NOTE
-    ===================================================== */
+    ------------------------------------------------------- */
 
     byId(
         "previewNote"
@@ -2906,11 +3074,11 @@ function updateInvoice() {
         ).value;
 
 
-    /* =====================================================
-       MOBILE A4 SCALE
-    ===================================================== */
+    /* -------------------------------------------------------
+       FIT A4
+    ------------------------------------------------------- */
 
-    scaleInvoice();
+    fitA4Preview();
 
 }
 
@@ -2947,8 +3115,7 @@ function addSummaryRow(
 
     row.innerHTML = `
 
-        <td colspan="4">
-        </td>
+        <td colspan="4"></td>
 
         <td class="summary-label">
 
@@ -2975,18 +3142,31 @@ function addSummaryRow(
 
 
     tbody.appendChild(row);
+
 }
 
 
 /* =========================================================
-   MOBILE A4 SCALE
+   A4 RESPONSIVE SCALING
+
+   IMPORTANT:
+
+   The invoice remains exactly 210mm x 297mm.
+
+   Only the preview wrapper is transformed.
 ========================================================= */
 
-function scaleInvoice() {
+function fitA4Preview() {
 
-    const viewport =
+    const area =
         byId(
-            "invoiceViewport"
+            "invoicePreviewArea"
+        );
+
+
+    const frame =
+        byId(
+            "invoicePreviewFrame"
         );
 
 
@@ -2997,7 +3177,8 @@ function scaleInvoice() {
 
 
     if (
-        !viewport ||
+        !area ||
+        !frame ||
         !wrapper
     ) {
 
@@ -3006,73 +3187,86 @@ function scaleInvoice() {
     }
 
 
-    const width =
-        viewport.clientWidth;
-
-
     if (
         window.innerWidth <= 700
     ) {
 
-        const invoiceWidth =
-            793.7;
+        /*
+           210mm at 96 DPI is approximately
+           793.7 CSS pixels.
+        */
+
+        const A4_WIDTH =
+            793.7008;
+
+
+        const A4_HEIGHT =
+            1122.5197;
+
+
+        const availableWidth =
+            area.clientWidth;
 
 
         const scale =
             Math.min(
                 1,
-                width /
-                invoiceWidth
+                availableWidth /
+                A4_WIDTH
             );
+
+
+        const scaledWidth =
+            A4_WIDTH *
+            scale;
+
+
+        const scaledHeight =
+            A4_HEIGHT *
+            scale;
+
+
+        frame.style.width =
+            scaledWidth + "px";
+
+
+        frame.style.height =
+            scaledHeight + "px";
 
 
         wrapper.style.transform =
             `scale(${scale})`;
 
 
-        wrapper.style.transformOrigin =
-            "top left";
-
-
-        wrapper.style.marginLeft =
+        wrapper.style.left =
             "0";
 
 
-        wrapper.style.marginBottom =
-
-            (
-                1122.5 *
-                scale
-            )
-            -
-            1122.5
-            +
-            "px";
-
-
-        viewport.style.height =
-
-            (
-                1122.5 *
-                scale
-            )
-            +
-            "px";
+        wrapper.style.top =
+            "0";
 
     }
 
     else {
 
+        frame.style.width =
+            "210mm";
+
+
+        frame.style.height =
+            "297mm";
+
+
         wrapper.style.transform =
             "none";
 
 
-        wrapper.style.marginBottom =
+        wrapper.style.left =
             "0";
 
 
-        viewport.style.height =
-            "auto";
+        wrapper.style.top =
+            "0";
 
     }
 
@@ -3118,10 +3312,12 @@ function resetForm() {
     setDefaults();
 
 
-    itemCounter = 0;
+    itemCounter =
+        0;
 
 
-    items = [];
+    items =
+        [];
 
 
     const firstItem =
@@ -3136,10 +3332,12 @@ function resetForm() {
         "MYCO CIRCLE, Nashik";
 
 
-    firstItem.qty = 1;
+    firstItem.qty =
+        1;
 
 
-    firstItem.rate = 1500000;
+    firstItem.rate =
+        1500000;
 
 
     items.push(
@@ -3200,7 +3398,8 @@ const ctx =
     );
 
 
-let drawing = false;
+let drawing =
+    false;
 
 
 ctx.strokeStyle =
@@ -3426,12 +3625,12 @@ function clearSignature() {
 
 
 /* =========================================================
-   WINDOW RESIZE
+   RESIZE
 ========================================================= */
 
 window.addEventListener(
     "resize",
-    scaleInvoice
+    fitA4Preview
 );
 
 
@@ -3442,10 +3641,12 @@ window.addEventListener(
 setDefaults();
 
 
-itemCounter = 0;
+itemCounter =
+    0;
 
 
-items = [];
+items =
+    [];
 
 
 const firstItem =
@@ -3477,6 +3678,17 @@ renderItemEditors();
 
 
 updateInvoice();
+
+
+/*
+   Run once again after the browser has
+   finished calculating the mobile viewport.
+*/
+
+setTimeout(
+    fitA4Preview,
+    100
+);
 
 </script>
 
