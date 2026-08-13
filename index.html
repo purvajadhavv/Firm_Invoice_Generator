@@ -1,52 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Invoice Generator</title>
 
+
 <style>
 
-/* ============================================================
-   GLOBAL
-============================================================ */
+/* =========================================================
+   RESET
+========================================================= */
 
 * {
     box-sizing: border-box;
 }
 
+html,
 body {
     margin: 0;
-    background: #e9e9e9;
-    color: #222;
-    font-family: "Times New Roman", Times, serif;
+    padding: 0;
 }
+
+body {
+    background: #eeeeee;
+    color: #222;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
 
 .app {
-    padding: 30px;
+    padding: 25px;
 }
 
 
-/* ============================================================
+/* =========================================================
    TOOLBAR
-============================================================ */
+========================================================= */
 
 .toolbar {
-    max-width: 900px;
-    margin: 0 auto 20px;
+    width: min(900px, 100%);
+    margin: 0 auto 18px;
 
-    background: #fff;
+    background: #ffffff;
 
-    padding: 18px 20px;
+    padding: 15px 18px;
 
     border-radius: 8px;
 
     box-shadow: 0 2px 10px rgba(0,0,0,.08);
 
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
     gap: 15px;
 }
@@ -54,59 +70,57 @@ body {
 .toolbar h2 {
     margin: 0;
 
-    font-family: Arial, sans-serif;
-
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .toolbar-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 button {
     border: 0;
-
-    padding: 10px 18px;
-
-    border-radius: 5px;
-
     cursor: pointer;
 
     font-family: Arial, sans-serif;
-
     font-weight: 600;
+
+    border-radius: 5px;
+
+    padding: 9px 14px;
 }
 
-.btn-print {
+.btn-primary {
     background: #222;
     color: #fff;
 }
 
-.btn-reset {
-    background: #eee;
+.btn-secondary {
+    background: #eeeeee;
     color: #222;
 }
 
+.btn-danger {
+    background: #f3dddd;
+    color: #8b1e1e;
+}
 
-/* ============================================================
+
+/* =========================================================
    EDITOR
-============================================================ */
+========================================================= */
 
 .editor {
-    max-width: 900px;
-
+    width: min(900px, 100%);
     margin: 0 auto 25px;
 
-    background: #fff;
+    background: #ffffff;
 
     padding: 20px;
 
     border-radius: 8px;
 
     box-shadow: 0 2px 10px rgba(0,0,0,.08);
-
-    font-family: Arial, sans-serif;
 }
 
 .editor h3 {
@@ -118,14 +132,13 @@ button {
 .form-grid {
     display: grid;
 
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     gap: 12px;
 }
 
 .field {
     display: flex;
-
     flex-direction: column;
 
     gap: 5px;
@@ -136,9 +149,9 @@ button {
 }
 
 .field label {
-    font-size: 12px;
+    font-size: 11px;
 
-    font-weight: 600;
+    font-weight: 700;
 
     color: #555;
 }
@@ -148,23 +161,31 @@ textarea,
 select {
     width: 100%;
 
-    padding: 9px 10px;
+    border: 1px solid #cccccc;
 
-    border: 1px solid #ccc;
+    border-radius: 5px;
 
-    border-radius: 4px;
+    padding: 9px;
+
+    background: #fff;
 
     font-family: Arial, sans-serif;
 
     font-size: 13px;
 
-    background: #fff;
+    outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #68233f;
 }
 
 textarea {
     resize: vertical;
 
-    min-height: 70px;
+    min-height: 65px;
 }
 
 .section-title {
@@ -174,69 +195,222 @@ textarea {
 
     padding-bottom: 6px;
 
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dddddd;
 
-    font-size: 13px;
+    font-size: 12px;
 
-    font-weight: bold;
+    font-weight: 800;
 }
 
 
-/* ============================================================
-   INVOICE WRAPPER
-============================================================ */
+/* =========================================================
+   ITEM EDITOR
+========================================================= */
 
-.invoice-wrapper {
+.items-editor {
+    grid-column: 1 / -1;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.item-editor {
+    border: 1px solid #ddd;
+
+    border-radius: 6px;
+
+    padding: 12px;
+
+    background: #fafafa;
+}
+
+.item-editor-header {
     display: flex;
 
-    justify-content: center;
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.item-editor-title {
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.item-editor-grid {
+    display: grid;
+
+    grid-template-columns:
+        100px
+        1fr
+        90px
+        110px;
+
+    gap: 10px;
+}
+
+.add-item-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.add-item-btn {
+    background: #68233f;
+    color: #fff;
+
+    padding: 8px 13px;
+
+    font-size: 12px;
 }
 
 
-/* ============================================================
+/* =========================================================
+   OPTIONAL ADJUSTMENTS
+========================================================= */
+
+.optional-box {
+    grid-column: 1 / -1;
+
+    border: 1px solid #ddd;
+
+    border-radius: 6px;
+
+    padding: 12px;
+
+    background: #fafafa;
+}
+
+.optional-title {
+    font-size: 12px;
+
+    font-weight: 800;
+
+    margin-bottom: 10px;
+}
+
+.optional-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        120px
+        120px
+        100px;
+
+    gap: 10px;
+
+    align-items: end;
+}
+
+.checkbox-field {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 12px;
+}
+
+.checkbox-field input {
+    width: auto;
+}
+
+
+/* =========================================================
+   INVOICE VIEWPORT
+
+   IMPORTANT:
+   The viewport allows horizontal scrolling on phones.
+   The invoice itself ALWAYS remains A4 width.
+========================================================= */
+
+.invoice-viewport {
+    width: 100%;
+
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    padding: 5px 0 30px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.invoice-wrapper {
+    width: max-content;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
    A4 INVOICE
-============================================================ */
+
+   210 x 297 mm
+========================================================= */
 
 .invoice {
     width: 210mm;
 
-    min-height: 297mm;
+    height: 297mm;
+
+    min-width: 210mm;
+    max-width: 210mm;
 
     background: #fff;
 
-    padding: 12mm 12mm 10mm;
-
     position: relative;
 
-    box-shadow: 0 2px 15px rgba(0,0,0,.15);
+    overflow: hidden;
+
+    padding:
+        8mm
+        9mm
+        10mm;
+
+    box-shadow:
+        0 2px 15px rgba(0,0,0,.15);
+
+    color: #222;
+
+    font-family:
+        "Times New Roman",
+        Times,
+        serif;
 }
 
 
-/* ============================================================
+/* =========================================================
    TOP LINE
-============================================================ */
+========================================================= */
 
 .top-line {
-    height: 1.5px;
+    height: 1.2px;
 
     background: #68233f;
 
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 }
 
 
-/* ============================================================
+/* =========================================================
    HEADER
-============================================================ */
+========================================================= */
 
 .header {
-    display: flex;
+    height: 47px;
 
-    justify-content: space-between;
+    display: flex;
 
     align-items: center;
 
-    padding: 5px 0 8px;
+    justify-content: space-between;
 }
 
 .brand {
@@ -244,18 +418,18 @@ textarea {
 
     align-items: center;
 
-    gap: 12px;
+    gap: 9px;
 }
 
 .logo-circle {
-    width: 54px;
-    height: 54px;
+    width: 43px;
+    height: 43px;
 
     border-radius: 50%;
 
     background: #68233f;
 
-    color: white;
+    color: #fff;
 
     display: flex;
 
@@ -263,21 +437,17 @@ textarea {
 
     justify-content: center;
 
-    font-size: 38px;
+    font-size: 29px;
 
     font-weight: bold;
-
-    line-height: 1;
 }
 
 .seller-name {
     font-family: Arial, sans-serif;
 
-    font-size: 24px;
+    font-size: 20px;
 
     font-weight: 800;
-
-    color: #292929;
 }
 
 .seller-title {
@@ -285,42 +455,46 @@ textarea {
 
     font-family: Arial, sans-serif;
 
-    font-size: 13px;
+    font-size: 10px;
 
-    font-weight: bold;
+    line-height: 1.25;
 
-    line-height: 1.4;
-
-    color: #333;
+    font-weight: 700;
 }
 
 
-/* ============================================================
-   INVOICE TITLE
-============================================================ */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .invoice-title {
     border: 1px solid #333;
 
     border-bottom: none;
 
-    text-align: center;
+    height: 24px;
 
-    padding: 5px;
+    display: flex;
 
-    font-size: 17px;
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 14px;
 
     font-weight: bold;
 
-    letter-spacing: .4px;
+    letter-spacing: .3px;
 }
 
 
-/* ============================================================
+/* =========================================================
    META
-============================================================ */
+========================================================= */
 
 .meta {
+    height: 123px;
+
     display: grid;
 
     grid-template-columns: 1fr 1fr;
@@ -328,35 +502,30 @@ textarea {
     border: 1px solid #333;
 }
 
-.meta-left,
-.meta-right {
-    min-height: 190px;
-}
-
 .meta-left {
     border-right: 1px solid #333;
 }
 
 .seller-block {
-    padding: 8px;
+    height: 67px;
 
-    height: 105px;
+    padding: 5px 7px;
 
     border-bottom: 1px solid #333;
 
-    font-size: 12px;
+    font-size: 9.5px;
 
-    line-height: 1.25;
+    line-height: 1.15;
 }
 
 .buyer-block {
-    padding: 8px;
+    height: 54px;
 
-    min-height: 85px;
+    padding: 5px 7px;
 
-    font-size: 12px;
+    font-size: 9.5px;
 
-    line-height: 1.3;
+    line-height: 1.15;
 }
 
 .meta-right {
@@ -366,15 +535,15 @@ textarea {
 }
 
 .meta-row {
-    min-height: 25px;
-
-    border-bottom: 1px solid #333;
+    min-height: 20px;
 
     display: grid;
 
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 88px 1fr;
 
-    font-size: 12px;
+    border-bottom: 1px solid #333;
+
+    font-size: 9.5px;
 }
 
 .meta-row:last-child {
@@ -382,13 +551,17 @@ textarea {
 }
 
 .meta-label {
-    padding: 5px;
+    padding: 3px 5px;
 
     border-right: 1px solid #333;
 }
 
 .meta-value {
-    padding: 5px;
+    padding: 3px 5px;
+
+    overflow: hidden;
+
+    word-break: break-word;
 }
 
 .delivery {
@@ -396,18 +569,18 @@ textarea {
 }
 
 
-/* ============================================================
+/* =========================================================
    ITEMS TABLE
-============================================================ */
+========================================================= */
 
 .items-table {
     width: 100%;
 
     border-collapse: collapse;
 
-    margin-top: 15px;
+    margin-top: 9px;
 
-    font-size: 12px;
+    font-size: 9.5px;
 }
 
 .items-table th,
@@ -416,27 +589,29 @@ textarea {
 }
 
 .items-table th {
-    height: 35px;
+    height: 24px;
 
     text-align: center;
 
     font-weight: bold;
+
+    padding: 3px;
 }
 
 .items-table td {
-    padding: 5px;
+    padding: 3px;
 
     vertical-align: top;
 }
 
 .fy-col {
-    width: 11%;
+    width: 10%;
 
     text-align: center;
 }
 
 .description-col {
-    width: 30%;
+    width: 31%;
 }
 
 .serial-col {
@@ -452,27 +627,35 @@ textarea {
 }
 
 .rate-col {
-    width: 20%;
+    width: 19%;
 }
 
 .amount-col {
-    width: 20%;
+    width: 21%;
+}
+
+.item-row {
+    height: 63px;
 }
 
 .item-description {
-    min-height: 160px;
-
     white-space: pre-line;
+
+    line-height: 1.15;
+}
+
+.item-empty {
+    height: 63px;
 }
 
 .number-cell {
     text-align: right;
 
-    padding-right: 8px !important;
+    padding-right: 6px !important;
 }
 
 .summary-row td {
-    height: 26px;
+    height: 20px;
 
     vertical-align: middle;
 }
@@ -484,60 +667,58 @@ textarea {
 }
 
 
-/* ============================================================
+/* =========================================================
    AMOUNT WORDS
-============================================================ */
+========================================================= */
 
 .amount-words {
+    min-height: 27px;
+
     border: 1px solid #333;
 
     border-top: none;
 
-    min-height: 35px;
+    padding: 5px 7px;
 
-    padding: 8px;
+    font-size: 9.5px;
 
-    font-size: 12px;
-}
-
-.amount-words strong {
-    font-weight: bold;
+    line-height: 1.2;
 }
 
 
-/* ============================================================
+/* =========================================================
    BANK
-============================================================ */
+========================================================= */
 
 .bank-details {
+    min-height: 35px;
+
     border: 1px solid #333;
 
     border-top: none;
 
-    min-height: 45px;
-
-    padding: 8px;
+    padding: 5px;
 
     text-align: center;
 
-    font-size: 11px;
+    font-size: 8.5px;
 
     font-weight: bold;
 
-    line-height: 1.4;
+    line-height: 1.25;
 }
 
 
-/* ============================================================
+/* =========================================================
    NOTE + SIGNATURE
-============================================================ */
+========================================================= */
 
 .bottom-section {
+    height: 68px;
+
     border: 1px solid #333;
 
     border-top: none;
-
-    min-height: 95px;
 
     display: grid;
 
@@ -545,22 +726,19 @@ textarea {
 }
 
 .note {
-    padding: 8px;
+    padding: 6px;
 
-    font-size: 12px;
+    font-size: 9px;
+
+    line-height: 1.2;
 
     white-space: pre-line;
 }
 
-
-/* ============================================================
-   SIGNATURE
-============================================================ */
-
 .signature {
     border-left: 1px solid #333;
 
-    padding: 5px;
+    padding: 3px 5px;
 
     text-align: center;
 
@@ -568,104 +746,96 @@ textarea {
 }
 
 .signature-label {
-    font-size: 10px;
+    font-family: Arial, sans-serif;
+
+    font-size: 8px;
 
     font-weight: bold;
-
-    margin-bottom: 2px;
 }
 
 #signatureCanvas {
-    width: 100%;
-
-    height: 55px;
-
     display: block;
 
-    cursor: crosshair;
+    width: 100%;
+
+    height: 39px;
 
     touch-action: none;
+
+    cursor: crosshair;
 }
 
 .signature-actions {
-    text-align: right;
+    position: absolute;
 
-    height: 16px;
+    right: 4px;
+
+    bottom: 2px;
 }
 
 .signature-actions button {
-    padding: 2px 7px;
+    padding: 1px 5px;
 
-    font-size: 9px;
+    font-size: 7px;
 
     background: #eee;
 
-    color: #222;
-
     border: 1px solid #aaa;
-
-    border-radius: 3px;
-
-    cursor: pointer;
 }
 
 .signature-line {
     border-top: 1px solid #333;
 
-    margin-top: 2px;
+    padding-top: 2px;
 
-    padding-top: 3px;
-
-    font-size: 11px;
+    font-size: 8px;
 
     font-weight: bold;
 }
 
 
-/* ============================================================
+/* =========================================================
    FOOTER
-============================================================ */
+========================================================= */
 
 .footer-line {
-    height: 1.5px;
-
-    background: #68233f;
-
     position: absolute;
 
-    left: 12mm;
+    left: 9mm;
+    right: 9mm;
 
-    right: 12mm;
+    bottom: 10mm;
 
-    bottom: 13mm;
+    height: 1.2px;
+
+    background: #68233f;
 }
 
 .footer {
     position: absolute;
 
-    bottom: 5mm;
+    left: 9mm;
+    right: 9mm;
 
-    left: 12mm;
-
-    right: 12mm;
+    bottom: 4mm;
 
     text-align: center;
 
     font-family: Arial, sans-serif;
 
-    font-size: 10px;
+    font-size: 7.5px;
 
     font-weight: 600;
 
-    line-height: 1.3;
+    line-height: 1.15;
 }
 
 
-/* ============================================================
-   RESPONSIVE
-============================================================ */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
 
     .app {
         padding: 10px;
@@ -677,37 +847,84 @@ textarea {
         align-items: stretch;
     }
 
-    .invoice-wrapper {
-        overflow-x: auto;
+    .toolbar-actions {
+        width: 100%;
+    }
 
-        justify-content: flex-start;
+    .toolbar-actions button {
+        flex: 1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .section-title {
+        grid-column: auto;
+    }
+
+    .item-editor-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .optional-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /*
+       IMPORTANT:
+       Do NOT scale the A4 invoice down.
+       Let the user swipe horizontally.
+    */
+
+    .invoice-viewport {
+        margin-left: -10px;
+        width: calc(100% + 20px);
+
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .invoice-wrapper {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
 
-/* ============================================================
+/* =========================================================
    PRINT
-============================================================ */
+========================================================= */
 
 @media print {
 
     @page {
-        size: A4;
+        size: A4 portrait;
 
         margin: 0;
     }
 
     html,
     body {
-        margin: 0;
+        width: 210mm;
 
-        padding: 0;
+        height: 297mm;
 
-        background: white;
+        margin: 0 !important;
+
+        padding: 0 !important;
+
+        background: #fff !important;
     }
 
     .app {
-        padding: 0;
+        padding: 0 !important;
+
+        margin: 0 !important;
     }
 
     .toolbar,
@@ -715,20 +932,48 @@ textarea {
         display: none !important;
     }
 
+    .invoice-viewport {
+        overflow: visible !important;
+
+        padding: 0 !important;
+
+        margin: 0 !important;
+
+        width: 210mm !important;
+
+        height: 297mm !important;
+    }
+
     .invoice-wrapper {
-        display: block;
+        width: 210mm !important;
+
+        margin: 0 !important;
     }
 
     .invoice {
-        width: 210mm;
+        width: 210mm !important;
 
-        min-height: 297mm;
+        min-width: 210mm !important;
 
-        margin: 0;
+        max-width: 210mm !important;
 
-        box-shadow: none;
+        height: 297mm !important;
 
-        page-break-after: always;
+        min-height: 297mm !important;
+
+        max-height: 297mm !important;
+
+        box-shadow: none !important;
+
+        overflow: hidden !important;
+
+        page-break-after: avoid !important;
+
+        page-break-before: avoid !important;
+
+        break-after: avoid-page !important;
+
+        break-before: avoid-page !important;
     }
 
     .signature-actions {
@@ -741,6 +986,7 @@ textarea {
 }
 
 </style>
+
 </head>
 
 
@@ -750,9 +996,9 @@ textarea {
 <div class="app">
 
 
-<!-- ============================================================
+<!-- =========================================================
      TOOLBAR
-============================================================ -->
+========================================================= -->
 
 <div class="toolbar">
 
@@ -764,7 +1010,7 @@ textarea {
     <div class="toolbar-actions">
 
         <button
-            class="btn-reset"
+            class="btn-secondary"
             onclick="resetForm()">
 
             Reset
@@ -773,7 +1019,7 @@ textarea {
 
 
         <button
-            class="btn-print"
+            class="btn-primary"
             onclick="window.print()">
 
             Print / Save PDF
@@ -786,9 +1032,9 @@ textarea {
 
 
 
-<!-- ============================================================
+<!-- =========================================================
      EDITOR
-============================================================ -->
+========================================================= -->
 
 <div class="editor">
 
@@ -800,14 +1046,12 @@ textarea {
     <div class="form-grid">
 
 
-        <!-- ====================================================
-             TITLE + BASIC DETAILS
-        ===================================================== -->
+        <!-- =====================================================
+             BASIC
+        ====================================================== -->
 
         <div class="section-title">
-
-            Basic Invoice Details
-
+            Basic Details
         </div>
 
 
@@ -820,8 +1064,7 @@ textarea {
             <input
                 type="text"
                 id="invoiceTitle"
-                value="PROFORMA INVOICE"
-                placeholder="Enter invoice title">
+                value="PROFORMA INVOICE">
 
         </div>
 
@@ -852,14 +1095,13 @@ textarea {
         </div>
 
 
-        <!-- ====================================================
+
+        <!-- =====================================================
              BUYER
-        ===================================================== -->
+        ====================================================== -->
 
         <div class="section-title">
-
             Vendor / Buyer Details
-
         </div>
 
 
@@ -872,7 +1114,7 @@ textarea {
             <input
                 type="text"
                 id="buyerName"
-                placeholder="Enter buyer name">
+                placeholder="Enter name">
 
         </div>
 
@@ -899,7 +1141,7 @@ textarea {
 
             <textarea
                 id="buyerAddress"
-                placeholder="Enter buyer address"></textarea>
+                placeholder="Enter address"></textarea>
 
         </div>
 
@@ -944,97 +1186,162 @@ textarea {
 
 
 
-        <!-- ====================================================
-             ITEM
-        ===================================================== -->
+        <!-- =====================================================
+             ITEMS
+        ====================================================== -->
 
         <div class="section-title">
+            Items
+        </div>
 
-            Item Details
+
+        <div
+            class="items-editor"
+            id="itemsEditor">
 
         </div>
 
 
-        <div class="field full">
+        <div class="add-item-wrap">
 
-            <label>
-                Description
-            </label>
+            <button
+                type="button"
+                class="add-item-btn"
+                id="addItemButton"
+                onclick="addItem()">
 
-            <textarea
-                id="description"></textarea>
+                + Add Item
 
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Financial Year
-            </label>
-
-            <input
-                type="text"
-                id="financialYear">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Serial No.
-            </label>
-
-            <input
-                type="text"
-                id="serialNo"
-                value="1">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Quantity
-            </label>
-
-            <input
-                type="number"
-                id="quantity"
-                value="1"
-                min="0"
-                step="0.01">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Rate
-            </label>
-
-            <input
-                type="number"
-                id="rate"
-                value="1500000"
-                min="0"
-                step="0.01">
+            </button>
 
         </div>
 
 
 
-        <!-- ====================================================
+        <!-- =====================================================
+             OPTIONAL ADJUSTMENTS
+        ====================================================== -->
+
+        <div class="section-title">
+            Optional Adjustments
+        </div>
+
+
+        <div class="optional-box">
+
+
+            <div class="optional-title">
+                Add adjustments to the invoice total
+            </div>
+
+
+            <div class="optional-grid">
+
+
+                <!-- DISCOUNT -->
+
+                <div class="field">
+
+                    <label>
+                        Discount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="discount"
+                        min="0"
+                        step="0.01"
+                        placeholder="Optional">
+
+                </div>
+
+
+                <!-- REBATE -->
+
+                <div class="field">
+
+                    <label>
+                        Less / Rebate
+                    </label>
+
+                    <input
+                        type="number"
+                        id="rebate"
+                        min="0"
+                        step="0.01"
+                        placeholder="Optional">
+
+                </div>
+
+
+                <!-- CUSTOM LABEL -->
+
+                <div class="field">
+
+                    <label>
+                        Custom Label
+                    </label>
+
+                    <input
+                        type="text"
+                        id="customLabel"
+                        placeholder="e.g. Other Charges">
+
+                </div>
+
+
+                <!-- CUSTOM VALUE -->
+
+                <div class="field">
+
+                    <label>
+                        Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="customAmount"
+                        min="0"
+                        step="0.01"
+                        placeholder="Optional">
+
+                </div>
+
+
+            </div>
+
+
+            <br>
+
+
+            <div class="checkbox-field">
+
+
+                <input
+                    type="checkbox"
+                    id="customLess">
+
+
+                <label for="customLess">
+
+                    Treat custom amount as "Less / Deduction"
+
+                </label>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
              GST
-        ===================================================== -->
+        ====================================================== -->
 
         <div class="section-title">
-
             GST
-
         </div>
 
 
@@ -1071,14 +1378,12 @@ textarea {
 
 
 
-        <!-- ====================================================
+        <!-- =====================================================
              NOTE
-        ===================================================== -->
+        ====================================================== -->
 
         <div class="section-title">
-
             Invoice Note
-
         </div>
 
 
@@ -1096,9 +1401,12 @@ textarea {
 
 
 
-<!-- ============================================================
-     INVOICE
-============================================================ -->
+<!-- =========================================================
+     INVOICE PREVIEW
+========================================================= -->
+
+<div class="invoice-viewport">
+
 
 <div class="invoice-wrapper">
 
@@ -1106,15 +1414,13 @@ textarea {
 <div class="invoice">
 
 
-    <!-- TOP LINE -->
+    <!-- TOP -->
 
     <div class="top-line"></div>
 
 
 
-    <!-- ========================================================
-         HEADER
-    ========================================================= -->
+    <!-- HEADER -->
 
     <div class="header">
 
@@ -1123,16 +1429,12 @@ textarea {
 
 
             <div class="logo-circle">
-
                 R
-
             </div>
 
 
             <div class="seller-name">
-
                 Randhir U. Jadhav
-
             </div>
 
 
@@ -1152,9 +1454,7 @@ textarea {
 
 
 
-    <!-- ========================================================
-         EDITABLE TITLE
-    ========================================================= -->
+    <!-- TITLE -->
 
     <div
         class="invoice-title"
@@ -1166,17 +1466,15 @@ textarea {
 
 
 
-    <!-- ========================================================
+    <!-- =====================================================
          META
-    ========================================================= -->
+    ====================================================== -->
 
     <div class="meta">
 
 
         <div class="meta-left">
 
-
-            <!-- SELLER -->
 
             <div class="seller-block">
 
@@ -1207,8 +1505,6 @@ textarea {
 
 
 
-            <!-- BUYER -->
-
             <div class="buyer-block">
 
                 <strong>
@@ -1217,31 +1513,19 @@ textarea {
 
                 <br>
 
-
                 <span id="previewBuyerName">
-
                     Vendor / Buyer Name
-
                 </span>
 
-
                 <br>
-
 
                 <span id="previewBuyerAddress">
-
                     Vendor / Buyer Address
-
                 </span>
-
 
                 <br>
 
-
-                <span id="previewBuyerCity">
-
-                </span>
-
+                <span id="previewBuyerCity"></span>
 
             </div>
 
@@ -1250,111 +1534,75 @@ textarea {
 
 
 
-        <!-- RIGHT SIDE -->
-
         <div class="meta-right">
 
 
             <div class="meta-row">
 
-
                 <div class="meta-label">
-
                     Date-
-
                 </div>
-
 
                 <div
                     class="meta-value"
                     id="previewDate">
-
                 </div>
-
 
             </div>
 
 
-
             <div class="meta-row">
 
-
                 <div class="meta-label">
-
                     Invoice No-
-
                 </div>
-
 
                 <div
                     class="meta-value"
                     id="previewInvoiceNo">
-
                 </div>
 
-
             </div>
-
 
 
             <div class="meta-row delivery">
 
-
                 <div class="meta-label">
-
                     Delivery note
-
                 </div>
-
 
                 <div
                     class="meta-value"
                     id="previewDelivery">
-
                 </div>
-
 
             </div>
 
 
-
             <div class="meta-row">
 
-
                 <div class="meta-label">
-
                     Suppliers Ref:
-
                 </div>
-
 
                 <div
                     class="meta-value"
                     id="previewSupplierRef">
-
                 </div>
-
 
             </div>
 
 
-
             <div class="meta-row">
 
-
                 <div class="meta-label">
-
                     Buyer's Order No.
-
                 </div>
-
 
                 <div
                     class="meta-value"
                     id="previewBuyerOrder">
-
                 </div>
-
 
             </div>
 
@@ -1366,222 +1614,47 @@ textarea {
 
 
 
-    <!-- ========================================================
-         ITEMS TABLE
-    ========================================================= -->
+    <!-- =====================================================
+         ITEMS
+    ====================================================== -->
 
     <table class="items-table">
 
 
         <thead>
 
-
             <tr>
 
-
                 <th class="fy-col">
-
                     F.Y.
-
                 </th>
-
 
                 <th class="description-col">
-
                     Description
-
                 </th>
-
 
                 <th class="serial-col">
-
                     Serial
-
                 </th>
-
 
                 <th class="qty-col">
-
-                    QTY (NO)
-
+                    QTY
                 </th>
-
 
                 <th class="rate-col">
-
                     Rate
-
                 </th>
-
 
                 <th class="amount-col">
-
                     Amount
-
                 </th>
 
-
             </tr>
-
 
         </thead>
 
 
-
-        <tbody>
-
-
-            <tr>
-
-
-                <td
-                    class="fy-col"
-                    id="previewFY">
-
-                </td>
-
-
-                <td class="description-col">
-
-
-                    <div
-                        class="item-description"
-                        id="previewDescription">
-
-                    </div>
-
-
-                </td>
-
-
-                <td
-                    class="serial-col"
-                    id="previewSerial">
-
-                    1
-
-                </td>
-
-
-                <td
-                    class="qty-col"
-                    id="previewQty">
-
-                    1
-
-                </td>
-
-
-                <td
-                    class="rate-col number-cell"
-                    id="previewRate">
-
-                    0.00
-
-                </td>
-
-
-                <td
-                    class="amount-col number-cell"
-                    id="previewAmount">
-
-                    0.00
-
-                </td>
-
-
-            </tr>
-
-
-
-            <!-- TOTAL -->
-
-            <tr class="summary-row">
-
-
-                <td
-                    colspan="4"
-                    rowspan="3">
-
-                </td>
-
-
-                <td class="summary-label">
-
-                    Total
-
-                </td>
-
-
-                <td
-                    class="number-cell"
-                    id="previewTotal">
-
-                    0.00
-
-                </td>
-
-
-            </tr>
-
-
-
-            <!-- CGST -->
-
-            <tr class="summary-row">
-
-
-                <td class="summary-label">
-
-                    CGST @
-
-                    <span id="previewCGSTPercent">
-                        0
-                    </span>%
-
-                </td>
-
-
-                <td
-                    class="number-cell"
-                    id="previewCGST">
-
-                    0.00
-
-                </td>
-
-
-            </tr>
-
-
-
-            <!-- SGST -->
-
-            <tr class="summary-row">
-
-
-                <td class="summary-label">
-
-                    SGST @
-
-                    <span id="previewSGSTPercent">
-                        0
-                    </span>%
-
-                </td>
-
-
-                <td
-                    class="number-cell"
-                    id="previewSGST">
-
-                    0.00
-
-                </td>
-
-
-            </tr>
-
+        <tbody id="invoiceItemsBody">
 
         </tbody>
 
@@ -1590,34 +1663,27 @@ textarea {
 
 
 
-    <!-- ========================================================
+    <!-- =====================================================
          AMOUNT WORDS
-    ========================================================= -->
+    ====================================================== -->
 
     <div class="amount-words">
 
-
         <strong>
-
             Amount In Words:
-
         </strong>
 
-
         <span id="previewWords">
-
             Zero Rupees only
-
         </span>
-
 
     </div>
 
 
 
-    <!-- ========================================================
-         BANK DETAILS
-    ========================================================= -->
+    <!-- =====================================================
+         BANK
+    ====================================================== -->
 
     <div class="bank-details">
 
@@ -1631,32 +1697,24 @@ textarea {
 
 
 
-    <!-- ========================================================
+    <!-- =====================================================
          NOTE + SIGNATURE
-    ========================================================= -->
+    ====================================================== -->
 
     <div class="bottom-section">
 
 
-        <!-- NOTE -->
-
         <div
             class="note"
             id="previewNote">
-
         </div>
 
-
-
-        <!-- SIGNATURE -->
 
         <div class="signature">
 
 
             <div class="signature-label">
-
                 Signature
-
             </div>
 
 
@@ -1664,12 +1722,10 @@ textarea {
                 id="signatureCanvas"
                 width="260"
                 height="80">
-
             </canvas>
 
 
             <div class="signature-actions">
-
 
                 <button
                     type="button"
@@ -1679,14 +1735,11 @@ textarea {
 
                 </button>
 
-
             </div>
 
 
             <div class="signature-line">
-
                 Proprietor
-
             </div>
 
 
@@ -1697,9 +1750,7 @@ textarea {
 
 
 
-    <!-- ========================================================
-         FOOTER
-    ========================================================= -->
+    <!-- FOOTER -->
 
     <div class="footer-line"></div>
 
@@ -1725,6 +1776,8 @@ textarea {
 
 </div>
 
+</div>
+
 
 </div>
 
@@ -1732,27 +1785,25 @@ textarea {
 
 <script>
 
+/* =========================================================
+   STATE
+========================================================= */
 
-/* ============================================================
-   HELPER
-============================================================ */
+let items = [];
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
 
 function byId(id) {
-
     return document.getElementById(id);
-
 }
 
-
-
-/* ============================================================
-   NUMBER FORMAT
-============================================================ */
 
 function formatNumber(number) {
 
     number = Number(number) || 0;
-
 
     return number.toLocaleString("en-IN", {
 
@@ -1761,232 +1812,137 @@ function formatNumber(number) {
         maximumFractionDigits: 2
 
     });
-
 }
 
-
-
-/* ============================================================
-   DATE FORMAT
-============================================================ */
 
 function formatDate(dateString) {
 
     if (!dateString) {
-
         return "";
-
     }
-
 
     const date =
         new Date(dateString + "T00:00:00");
 
-
     const day =
         String(date.getDate()).padStart(2, "0");
-
 
     const month =
         String(date.getMonth() + 1).padStart(2, "0");
 
-
     const year =
         date.getFullYear();
 
-
     return `${day}/${month}/${year}`;
-
 }
 
 
-
-/* ============================================================
+/* =========================================================
    NUMBER TO WORDS
-============================================================ */
+========================================================= */
 
 function numberToWords(num) {
 
-
-    num = Math.floor(
-        Number(num) || 0
-    );
-
+    num = Math.floor(Number(num) || 0);
 
     if (num === 0) {
-
         return "Zero Rupees only";
-
     }
 
-
     const ones = [
-
         "",
-
         "One",
-
         "Two",
-
         "Three",
-
         "Four",
-
         "Five",
-
         "Six",
-
         "Seven",
-
         "Eight",
-
         "Nine",
-
         "Ten",
-
         "Eleven",
-
         "Twelve",
-
         "Thirteen",
-
         "Fourteen",
-
         "Fifteen",
-
         "Sixteen",
-
         "Seventeen",
-
         "Eighteen",
-
         "Nineteen"
-
     ];
-
 
     const tens = [
-
         "",
-
         "",
-
         "Twenty",
-
         "Thirty",
-
         "Forty",
-
         "Fifty",
-
         "Sixty",
-
         "Seventy",
-
         "Eighty",
-
         "Ninety"
-
     ];
-
 
 
     function twoDigits(n) {
 
-
         if (n < 20) {
-
             return ones[n];
-
         }
 
-
-        return tens[
-            Math.floor(n / 10)
-        ] +
-
-        (
-            n % 10
+        return tens[Math.floor(n / 10)] +
+            (n % 10
                 ? " " + ones[n % 10]
-                : ""
-        );
-
+                : "");
     }
-
 
 
     function threeDigits(n) {
 
-
         let result = "";
-
 
         if (n >= 100) {
 
-
             result +=
-
-                ones[
-                    Math.floor(n / 100)
-                ] +
-
+                ones[Math.floor(n / 100)] +
                 " Hundred";
-
 
             n %= 100;
 
-
             if (n) {
-
                 result += " ";
-
             }
-
         }
-
 
         if (n) {
-
             result += twoDigits(n);
-
         }
 
-
         return result;
-
     }
-
 
 
     let result = "";
 
 
     const crore =
-        Math.floor(
-            num / 10000000
-        );
-
+        Math.floor(num / 10000000);
 
     num %= 10000000;
 
 
     const lakh =
-        Math.floor(
-            num / 100000
-        );
-
+        Math.floor(num / 100000);
 
     num %= 100000;
 
 
     const thousand =
-        Math.floor(
-            num / 1000
-        );
-
+        Math.floor(num / 1000);
 
     num %= 1000;
-
 
 
     if (crore) {
@@ -1994,7 +1950,6 @@ function numberToWords(num) {
         result +=
             threeDigits(crore) +
             " Crore ";
-
     }
 
 
@@ -2003,7 +1958,6 @@ function numberToWords(num) {
         result +=
             threeDigits(lakh) +
             " Lakh ";
-
     }
 
 
@@ -2012,7 +1966,6 @@ function numberToWords(num) {
         result +=
             threeDigits(thousand) +
             " Thousand ";
-
     }
 
 
@@ -2020,111 +1973,635 @@ function numberToWords(num) {
 
         result +=
             threeDigits(num);
-
     }
 
 
     return result.trim() +
         " Rupees only";
-
 }
 
 
-
-/* ============================================================
-   DEFAULT VALUES
-============================================================ */
+/* =========================================================
+   DEFAULTS
+========================================================= */
 
 function setDefaults() {
 
-
-    const today =
-        new Date();
-
-
-    byId("invoiceDate").value =
-
-        today.toISOString()
-        .split("T")[0];
-
+    const today = new Date();
 
     byId("invoiceTitle").value =
-
         "PROFORMA INVOICE";
 
+    byId("invoiceDate").value =
+        today.toISOString().split("T")[0];
 
     byId("invoiceNumber").value =
-
         "RJ/01/2026-27";
 
-
-    byId("financialYear").value =
-
-        "2026-2027";
-
-
-    byId("quantity").value =
-
-        "1";
-
-
-    byId("rate").value =
-
-        "1500000";
-
-
-    byId("cgst").value =
-
-        "0";
-
-
-    byId("sgst").value =
-
-        "0";
-
-
-    byId("description").value =
-
-        "1st RA Bill for Proposed Civil\n" +
-
-        "Works of VVIP Guest House\n" +
-
-        "For State Bank of India @\n" +
-
-        "MYCO CIRCLE, Nashik";
-
-
     byId("invoiceNote").value =
-
         "NOTE: GST will be paid at the time of final bill.";
 
+    byId("cgst").value = "0";
+
+    byId("sgst").value = "0";
+
+    byId("discount").value = "";
+
+    byId("rebate").value = "";
+
+    byId("customLabel").value = "";
+
+    byId("customAmount").value = "";
+
+    byId("customLess").checked = false;
 }
 
 
+/* =========================================================
+   ADD ITEM
+========================================================= */
 
-/* ============================================================
+function addItem() {
+
+    if (items.length >= 2) {
+
+        alert("Maximum 2 items can be added.");
+
+        return;
+    }
+
+
+    const item = {
+
+        id: Date.now(),
+
+        fy: "2026-2027",
+
+        description: "",
+
+        serial: items.length + 1,
+
+        qty: 1,
+
+        rate: 0
+
+    };
+
+
+    items.push(item);
+
+
+    renderItemEditors();
+
+    updateInvoice();
+}
+
+
+/* =========================================================
+   REMOVE ITEM
+========================================================= */
+
+function removeItem(id) {
+
+    if (items.length <= 1) {
+
+        return;
+    }
+
+
+    items =
+        items.filter(
+            item => item.id !== id
+        );
+
+
+    items.forEach(
+        (item, index) => {
+
+            item.serial = index + 1;
+
+        }
+    );
+
+
+    renderItemEditors();
+
+    updateInvoice();
+}
+
+
+/* =========================================================
+   RENDER ITEM EDITORS
+========================================================= */
+
+function renderItemEditors() {
+
+    const container =
+        byId("itemsEditor");
+
+
+    container.innerHTML = "";
+
+
+    items.forEach(
+        (item, index) => {
+
+
+            const box =
+                document.createElement("div");
+
+
+            box.className =
+                "item-editor";
+
+
+            box.innerHTML = `
+
+                <div class="item-editor-header">
+
+                    <div class="item-editor-title">
+                        Item ${index + 1}
+                    </div>
+
+                    ${
+                        items.length > 1
+                        ?
+                        `
+                        <button
+                            type="button"
+                            class="btn-danger"
+                            onclick="removeItem(${item.id})">
+
+                            Remove
+
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+
+                <div class="item-editor-grid">
+
+
+                    <div class="field">
+
+                        <label>
+                            F.Y.
+                        </label>
+
+                        <input
+                            type="text"
+                            value="${escapeHtml(item.fy)}"
+                            data-item="${item.id}"
+                            data-field="fy">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <input
+                            type="text"
+                            value="${escapeHtml(item.description)}"
+                            data-item="${item.id}"
+                            data-field="description">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Quantity
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value="${item.qty}"
+                            data-item="${item.id}"
+                            data-field="qty">
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            Rate
+                        </label>
+
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value="${item.rate}"
+                            data-item="${item.id}"
+                            data-field="rate">
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            container.appendChild(box);
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(
+            "[data-item][data-field]"
+        )
+        .forEach(
+            input => {
+
+
+                input.addEventListener(
+                    "input",
+                    function() {
+
+
+                        const item =
+                            items.find(
+                                x =>
+                                x.id ==
+                                this.dataset.item
+                            );
+
+
+                        if (!item) {
+                            return;
+                        }
+
+
+                        const field =
+                            this.dataset.field;
+
+
+                        if (
+                            field === "qty" ||
+                            field === "rate"
+                        ) {
+
+                            item[field] =
+                                Number(this.value) || 0;
+
+                        }
+
+                        else {
+
+                            item[field] =
+                                this.value;
+
+                        }
+
+
+                        updateInvoice();
+
+                    }
+                );
+
+            }
+        );
+
+
+    byId("addItemButton").style.display =
+        items.length >= 2
+        ? "none"
+        : "inline-block";
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =========================================================
    UPDATE INVOICE
-============================================================ */
+========================================================= */
 
 function updateInvoice() {
 
 
-    /* --------------------------------------------------------
-       CALCULATIONS
-    -------------------------------------------------------- */
+    /* -------------------------------------------------------
+       TITLE
+    ------------------------------------------------------- */
+
+    byId("previewInvoiceTitle")
+        .textContent =
+        byId("invoiceTitle").value ||
+        "INVOICE";
 
 
-    const quantity =
+    /* -------------------------------------------------------
+       BUYER
+    ------------------------------------------------------- */
+
+    byId("previewBuyerName")
+        .textContent =
+        byId("buyerName").value ||
+        "Vendor / Buyer Name";
+
+
+    byId("previewBuyerAddress")
+        .textContent =
+        byId("buyerAddress").value ||
+        "Vendor / Buyer Address";
+
+
+    byId("previewBuyerCity")
+        .textContent =
+        byId("buyerCity").value;
+
+
+    /* -------------------------------------------------------
+       META
+    ------------------------------------------------------- */
+
+    byId("previewDate")
+        .textContent =
+        formatDate(
+            byId("invoiceDate").value
+        );
+
+
+    byId("previewInvoiceNo")
+        .textContent =
+        byId("invoiceNumber").value;
+
+
+    byId("previewDelivery")
+        .textContent =
+        byId("deliveryNote").value;
+
+
+    byId("previewSupplierRef")
+        .textContent =
+        byId("supplierRef").value;
+
+
+    byId("previewBuyerOrder")
+        .textContent =
+        byId("buyerOrder").value;
+
+
+    /* -------------------------------------------------------
+       ITEM TABLE
+    ------------------------------------------------------- */
+
+    const tbody =
+        byId("invoiceItemsBody");
+
+
+    tbody.innerHTML = "";
+
+
+    let subtotal = 0;
+
+
+    items.forEach(
+        item => {
+
+
+            const amount =
+                Number(item.qty || 0) *
+                Number(item.rate || 0);
+
+
+            subtotal += amount;
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.className =
+                "item-row";
+
+
+            row.innerHTML = `
+
+                <td class="fy-col">
+                    ${escapeHtml(item.fy)}
+                </td>
+
+                <td class="description-col">
+
+                    <div class="item-description">
+
+                        ${escapeHtml(
+                            item.description
+                        )}
+
+                    </div>
+
+                </td>
+
+                <td class="serial-col">
+                    ${item.serial}
+                </td>
+
+                <td class="qty-col">
+                    ${item.qty}
+                </td>
+
+                <td class="rate-col number-cell">
+                    ${formatNumber(item.rate)}
+                </td>
+
+                <td class="amount-col number-cell">
+                    ${formatNumber(amount)}
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
+
+
+    /*
+       If only one item exists,
+       add an empty row to keep the
+       invoice visually balanced.
+    */
+
+    if (items.length === 1) {
+
+        const emptyRow =
+            document.createElement("tr");
+
+
+        emptyRow.className =
+            "item-row";
+
+
+        emptyRow.innerHTML = `
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+            <td></td>
+
+        `;
+
+
+        tbody.appendChild(emptyRow);
+    }
+
+
+    /* -------------------------------------------------------
+       DISCOUNT
+    ------------------------------------------------------- */
+
+    const discount =
         Number(
-            byId("quantity").value
+            byId("discount").value
         ) || 0;
 
 
-    const rate =
+    /* -------------------------------------------------------
+       REBATE
+    ------------------------------------------------------- */
+
+    const rebate =
         Number(
-            byId("rate").value
+            byId("rebate").value
         ) || 0;
 
+
+    /* -------------------------------------------------------
+       CUSTOM
+    ------------------------------------------------------- */
+
+    const customAmount =
+        Number(
+            byId("customAmount").value
+        ) || 0;
+
+
+    const customLabel =
+        byId("customLabel").value ||
+        "Adjustment";
+
+
+    const customLess =
+        byId("customLess").checked;
+
+
+    /*
+       Amount before GST
+    */
+
+    let taxableAmount =
+        subtotal -
+        discount -
+        rebate;
+
+
+    if (customLess) {
+
+        taxableAmount -=
+            customAmount;
+
+    }
+
+    else {
+
+        taxableAmount +=
+            customAmount;
+
+    }
+
+
+    if (taxableAmount < 0) {
+
+        taxableAmount = 0;
+
+    }
+
+
+    /* -------------------------------------------------------
+       ADJUSTMENT ROWS
+    ------------------------------------------------------- */
+
+    if (discount > 0) {
+
+        addSummaryRow(
+            tbody,
+            "Discount",
+            discount,
+            true
+        );
+
+    }
+
+
+    if (rebate > 0) {
+
+        addSummaryRow(
+            tbody,
+            "Less / Rebate",
+            rebate,
+            true
+        );
+
+    }
+
+
+    if (customAmount > 0) {
+
+        addSummaryRow(
+            tbody,
+            customLabel,
+            customAmount,
+            customLess
+        );
+
+    }
+
+
+    /* -------------------------------------------------------
+       GST
+    ------------------------------------------------------- */
 
     const cgstRate =
         Number(
@@ -2138,234 +2615,142 @@ function updateInvoice() {
         ) || 0;
 
 
-    const amount =
-        quantity * rate;
-
-
     const cgst =
-        amount * cgstRate / 100;
+        taxableAmount *
+        cgstRate /
+        100;
 
 
     const sgst =
-        amount * sgstRate / 100;
+        taxableAmount *
+        sgstRate /
+        100;
 
 
     const grandTotal =
-        amount + cgst + sgst;
+        taxableAmount +
+        cgst +
+        sgst;
 
 
+    /* -------------------------------------------------------
+       TOTAL SUMMARY
+    ------------------------------------------------------- */
 
-    /* --------------------------------------------------------
-       TITLE
-    -------------------------------------------------------- */
+    addSummaryRow(
+        tbody,
+        "Subtotal",
+        subtotal,
+        false
+    );
 
 
-    byId(
-        "previewInvoiceTitle"
-    ).textContent =
+    addSummaryRow(
+        tbody,
+        "CGST @ " + cgstRate + "%",
+        cgst,
+        false
+    );
 
-        byId("invoiceTitle").value ||
 
-        "INVOICE";
+    addSummaryRow(
+        tbody,
+        "SGST @ " + sgstRate + "%",
+        sgst,
+        false
+    );
 
 
+    addSummaryRow(
+        tbody,
+        "Grand Total",
+        grandTotal,
+        false,
+        true
+    );
 
-    /* --------------------------------------------------------
-       BUYER
-    -------------------------------------------------------- */
 
+    /* -------------------------------------------------------
+       WORDS
+    ------------------------------------------------------- */
 
-    byId(
-        "previewBuyerName"
-    ).textContent =
+    byId("previewWords")
+        .textContent =
+        numberToWords(grandTotal);
 
-        byId("buyerName").value ||
 
-        "Vendor / Buyer Name";
-
-
-    byId(
-        "previewBuyerAddress"
-    ).textContent =
-
-        byId("buyerAddress").value ||
-
-        "Vendor / Buyer Address";
-
-
-    byId(
-        "previewBuyerCity"
-    ).textContent =
-
-        byId("buyerCity").value;
-
-
-
-    /* --------------------------------------------------------
-       INVOICE DETAILS
-    -------------------------------------------------------- */
-
-
-    byId(
-        "previewDate"
-    ).textContent =
-
-        formatDate(
-            byId("invoiceDate").value
-        );
-
-
-    byId(
-        "previewInvoiceNo"
-    ).textContent =
-
-        byId("invoiceNumber").value;
-
-
-    byId(
-        "previewDelivery"
-    ).textContent =
-
-        byId("deliveryNote").value;
-
-
-    byId(
-        "previewSupplierRef"
-    ).textContent =
-
-        byId("supplierRef").value;
-
-
-    byId(
-        "previewBuyerOrder"
-    ).textContent =
-
-        byId("buyerOrder").value;
-
-
-
-    /* --------------------------------------------------------
-       ITEM
-    -------------------------------------------------------- */
-
-
-    byId(
-        "previewFY"
-    ).textContent =
-
-        byId("financialYear").value;
-
-
-    byId(
-        "previewDescription"
-    ).textContent =
-
-        byId("description").value;
-
-
-    byId(
-        "previewSerial"
-    ).textContent =
-
-        byId("serialNo").value;
-
-
-    byId(
-        "previewQty"
-    ).textContent =
-
-        quantity;
-
-
-    byId(
-        "previewRate"
-    ).textContent =
-
-        formatNumber(rate);
-
-
-    byId(
-        "previewAmount"
-    ).textContent =
-
-        formatNumber(amount);
-
-
-
-    /* --------------------------------------------------------
-       TOTALS
-    -------------------------------------------------------- */
-
-
-    byId(
-        "previewTotal"
-    ).textContent =
-
-        formatNumber(amount);
-
-
-    byId(
-        "previewCGST"
-    ).textContent =
-
-        formatNumber(cgst);
-
-
-    byId(
-        "previewSGST"
-    ).textContent =
-
-        formatNumber(sgst);
-
-
-    byId(
-        "previewCGSTPercent"
-    ).textContent =
-
-        cgstRate;
-
-
-    byId(
-        "previewSGSTPercent"
-    ).textContent =
-
-        sgstRate;
-
-
-
-    /* --------------------------------------------------------
-       AMOUNT WORDS
-    -------------------------------------------------------- */
-
-
-    byId(
-        "previewWords"
-    ).textContent =
-
-        numberToWords(
-            grandTotal
-        );
-
-
-
-    /* --------------------------------------------------------
+    /* -------------------------------------------------------
        NOTE
-    -------------------------------------------------------- */
+    ------------------------------------------------------- */
 
-
-    byId(
-        "previewNote"
-    ).textContent =
-
+    byId("previewNote")
+        .textContent =
         byId("invoiceNote").value;
-
 }
 
 
+/* =========================================================
+   SUMMARY ROW
+========================================================= */
 
-/* ============================================================
+function addSummaryRow(
+    tbody,
+    label,
+    amount,
+    isLess,
+    grandTotal = false
+) {
+
+    const row =
+        document.createElement("tr");
+
+
+    row.className =
+        "summary-row";
+
+
+    const sign =
+        isLess
+        ? "-"
+        : "";
+
+
+    row.innerHTML = `
+
+        <td
+            colspan="4">
+        </td>
+
+        <td class="summary-label">
+
+            ${escapeHtml(label)}
+
+        </td>
+
+        <td class="number-cell">
+
+            ${sign}
+            ${formatNumber(amount)}
+
+        </td>
+
+    `;
+
+
+    if (grandTotal) {
+
+        row.style.fontWeight =
+            "bold";
+    }
+
+
+    tbody.appendChild(row);
+}
+
+
+/* =========================================================
    RESET
-============================================================ */
+========================================================= */
 
 function resetForm() {
 
@@ -2376,7 +2761,6 @@ function resetForm() {
 
     byId("buyerCity").value = "";
 
-
     byId("supplierRef").value = "";
 
     byId("buyerOrder").value = "";
@@ -2384,73 +2768,83 @@ function resetForm() {
     byId("deliveryNote").value = "";
 
 
-    byId("serialNo").value = "1";
-
-
     setDefaults();
+
+
+    items = [
+
+        {
+
+            id: Date.now(),
+
+            fy: "2026-2027",
+
+            description:
+                "1st RA Bill for Proposed Civil\n" +
+                "Works of VVIP Guest House\n" +
+                "For State Bank of India @\n" +
+                "MYCO CIRCLE, Nashik",
+
+            serial: 1,
+
+            qty: 1,
+
+            rate: 1500000
+
+        }
+
+    ];
+
+
+    renderItemEditors();
 
 
     clearSignature();
 
 
     updateInvoice();
-
 }
 
 
-
-/* ============================================================
-   LIVE INPUT
-============================================================ */
+/* =========================================================
+   GENERAL INPUT LISTENERS
+========================================================= */
 
 document
     .querySelectorAll(
-        ".editor input, .editor textarea"
+        ".editor input:not([data-item]), .editor textarea"
     )
     .forEach(
         element => {
-
 
             element.addEventListener(
                 "input",
                 updateInvoice
             );
 
-
             element.addEventListener(
                 "change",
                 updateInvoice
             );
 
-
         }
     );
 
 
-
-/* ============================================================
-   SIGNATURE PAD
-============================================================ */
+/* =========================================================
+   SIGNATURE
+========================================================= */
 
 const canvas =
-
-    document.getElementById(
-        "signatureCanvas"
-    );
+    byId("signatureCanvas");
 
 
 const ctx =
-
     canvas.getContext("2d");
 
 
 let drawing = false;
 
-let hasSignature = false;
-
-
-
-/* Signature appearance */
 
 ctx.strokeStyle = "#111";
 
@@ -2461,13 +2855,7 @@ ctx.lineCap = "round";
 ctx.lineJoin = "round";
 
 
-
-/* ============================================================
-   SIGNATURE POSITION
-============================================================ */
-
-function getPosition(e) {
-
+function getSignaturePosition(e) {
 
     const rect =
         canvas.getBoundingClientRect();
@@ -2478,85 +2866,53 @@ function getPosition(e) {
     let clientY;
 
 
-
     if (
         e.touches &&
-        e.touches.length > 0
+        e.touches.length
     ) {
-
 
         clientX =
             e.touches[0].clientX;
 
-
         clientY =
             e.touches[0].clientY;
-
 
     }
 
     else {
 
-
         clientX =
             e.clientX;
-
 
         clientY =
             e.clientY;
 
-
     }
-
 
 
     return {
 
-
         x:
-
             (clientX - rect.left) *
-
-            (
-                canvas.width /
-                rect.width
-            ),
-
+            (canvas.width / rect.width),
 
         y:
-
             (clientY - rect.top) *
-
-            (
-                canvas.height /
-                rect.height
-            )
-
+            (canvas.height / rect.height)
 
     };
-
 }
 
 
-
-/* ============================================================
-   START DRAWING
-============================================================ */
-
-function startDrawing(e) {
-
+function startSignature(e) {
 
     e.preventDefault();
-
 
     drawing = true;
 
 
-    hasSignature = true;
-
-
     const pos =
-        getPosition(e);
+        getSignaturePosition(e);
 
 
     ctx.beginPath();
@@ -2566,22 +2922,13 @@ function startDrawing(e) {
         pos.x,
         pos.y
     );
-
 }
 
 
-
-/* ============================================================
-   DRAW
-============================================================ */
-
 function drawSignature(e) {
 
-
     if (!drawing) {
-
         return;
-
     }
 
 
@@ -2589,7 +2936,7 @@ function drawSignature(e) {
 
 
     const pos =
-        getPosition(e);
+        getSignaturePosition(e);
 
 
     ctx.lineTo(
@@ -2599,75 +2946,54 @@ function drawSignature(e) {
 
 
     ctx.stroke();
-
 }
 
 
-
-/* ============================================================
-   STOP
-============================================================ */
-
-function stopDrawing(e) {
-
+function stopSignature(e) {
 
     if (e) {
-
         e.preventDefault();
-
     }
 
 
     drawing = false;
 
-
     ctx.beginPath();
-
 }
 
 
-
-/* ============================================================
-   MOUSE
-============================================================ */
+/* Mouse */
 
 canvas.addEventListener(
     "mousedown",
-    startDrawing
+    startSignature
 );
-
 
 canvas.addEventListener(
     "mousemove",
     drawSignature
 );
 
-
 canvas.addEventListener(
     "mouseup",
-    stopDrawing
+    stopSignature
 );
-
 
 canvas.addEventListener(
     "mouseleave",
-    stopDrawing
+    stopSignature
 );
 
 
-
-/* ============================================================
-   TOUCH
-============================================================ */
+/* Touch */
 
 canvas.addEventListener(
     "touchstart",
-    startDrawing,
+    startSignature,
     {
         passive: false
     }
 );
-
 
 canvas.addEventListener(
     "touchmove",
@@ -2677,53 +3003,68 @@ canvas.addEventListener(
     }
 );
 
-
 canvas.addEventListener(
     "touchend",
-    stopDrawing,
+    stopSignature,
     {
         passive: false
     }
 );
 
 
-
-/* ============================================================
+/* =========================================================
    CLEAR SIGNATURE
-============================================================ */
+========================================================= */
 
 function clearSignature() {
 
-
     ctx.clearRect(
-
         0,
-
         0,
-
         canvas.width,
-
         canvas.height
-
     );
-
-
-    hasSignature = false;
-
 }
 
 
-
-/* ============================================================
+/* =========================================================
    INITIALIZE
-============================================================ */
+========================================================= */
 
 setDefaults();
 
+
+items = [
+
+    {
+
+        id: Date.now(),
+
+        fy: "2026-2027",
+
+        description:
+            "1st RA Bill for Proposed Civil\n" +
+            "Works of VVIP Guest House\n" +
+            "For State Bank of India @\n" +
+            "MYCO CIRCLE, Nashik",
+
+        serial: 1,
+
+        qty: 1,
+
+        rate: 1500000
+
+    }
+
+];
+
+
+renderItemEditors();
+
 updateInvoice();
 
-
 </script>
+
 
 </body>
 </html>
